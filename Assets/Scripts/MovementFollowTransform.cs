@@ -9,8 +9,6 @@ public class MovementFollowTransform : MonoBehaviour
     public Vector3 offset;
     public bool usePhysics;
 
-    // todo: implement custom conditional field
-    //[ConditionalField(nameof(usePhysics))]
     [CoreConditional(nameof(usePhysics))]
     public CoreBody body;
 

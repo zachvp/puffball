@@ -9,10 +9,12 @@ public class CoreConditionalAttributeDrawer : PropertyDrawer
         Debug.Assert(attribute is CoreConditionalAttribute,
                     $"wrong type for custom drawer; expected {nameof(CoreConditionalAttribute)}");
 
+        // attribute containing the name of the property that drives the display logic.
         var cast = attribute as CoreConditionalAttribute;
-        var compareProperty = property.serializedObject.FindProperty(cast.property);
+        var sourceProperty = property.serializedObject.FindProperty(cast.sourcePropertyName);
 
-        if (compareProperty.boolValue)
+        // Only display this field if the source property is enabled.
+        if (sourceProperty.boolValue)
         {
             EditorGUI.PropertyField(position, property, label);
         }

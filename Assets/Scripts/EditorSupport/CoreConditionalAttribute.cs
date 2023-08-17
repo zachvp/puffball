@@ -4,10 +4,10 @@ using UnityEngine;
 [AttributeUsage(AttributeTargets.Field)]
 public class CoreConditionalAttribute : PropertyAttribute
 {
-    public readonly string property;
+    public readonly string sourcePropertyName;
 
-    public CoreConditionalAttribute(string p)
+    public CoreConditionalAttribute(string sourceName)
     {
-        property = p;
+        sourcePropertyName = sourceName;
     }
 }
