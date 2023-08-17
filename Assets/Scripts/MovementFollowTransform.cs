@@ -11,6 +11,7 @@ public class MovementFollowTransform : MonoBehaviour
 
     // todo: implement custom conditional field
     //[ConditionalField(nameof(usePhysics))]
+    [CoreConditional(nameof(usePhysics))]
     public CoreBody body;
 
     public void LateUpdate()
