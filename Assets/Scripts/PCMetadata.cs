@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class PCMetadata : MonoBehaviour
 {
-    // 1-time write vars
-    public int playerID;
-    public PCInputCommandEmitter commandEmitter;
     public Action onInitialized;
+
+    // 1-time write vars
+    [NonSerialized]
+    public PCInputCommandEmitter commandEmitter;
+    [NonSerialized]
+    public int playerID;
 
     public void OnEnable()
     {
