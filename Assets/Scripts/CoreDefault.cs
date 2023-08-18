@@ -3,8 +3,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// todo: use ZCore namespace
 public static class CoreUtilities
 {
+    private static int testRecurse;
+
     public static IEnumerator RunTask(Action task)
     {
         while (true)
@@ -52,6 +55,62 @@ public static class CoreUtilities
     public static bool Compare(float lhs, float rhs)
     {
         return Mathf.Abs(lhs - rhs) < CoreConstants.DEADZONE_FLOAT;
+    }
+
+    //public static void CopyCollider<T>(T source, T copy) where T : Collider2D
+    //{
+    //    if (testRecurse > 0)
+    //    {
+    //        Debug.LogError("recursive call!");
+    //        return;
+    //    }
+
+    //    if (source.GetType() == typeof(CircleCollider2D))
+    //    {
+    //        CopyCollider(source as CircleCollider2D, copy as CircleCollider2D);
+    //    }
+
+    //    testRecurse += 1;
+    //}
+
+    public static void CopyCollider(CircleCollider2D source, CircleCollider2D copy)
+    {
+        Debug.Log($"circle collider called for copy");
+
+        Debug.Assert(source != null && copy != null,
+            $"At least one NULL ref passed to {nameof(CopyCollider)}");
+
+        CopyColliderBase(source, copy);
+
+        copy.radius = source.radius;
+    }
+
+    public static void CopyCollider(PolygonCollider2D source, PolygonCollider2D copy)
+    {
+        CopyColliderBase(source, copy);
+
+        copy.autoTiling = source.autoTiling;
+        copy.useDelaunayMesh = source.useDelaunayMesh;
+        copy.points = source.points;
+        copy.pathCount = source.pathCount;
+    }
+
+    public static void CopyColliderBase(Collider2D source, Collider2D copy)
+    {
+        // misc
+        copy.isTrigger = source.isTrigger;
+        copy.offset = (Vector2)source.transform.position + source.offset;
+        copy.sharedMaterial = source.sharedMaterial;
+        copy.usedByEffector = source.usedByEffector;
+
+        // layer overrides
+        copy.layerOverridePriority = source.layerOverridePriority;
+        copy.includeLayers = source.includeLayers;
+        copy.excludeLayers = source.excludeLayers;
+        copy.forceSendLayers = source.forceSendLayers;
+        copy.forceReceiveLayers = source.forceReceiveLayers;
+        copy.contactCaptureLayers = source.contactCaptureLayers;
+        copy.callbackLayers = source.callbackLayers;
     }
 }
 
