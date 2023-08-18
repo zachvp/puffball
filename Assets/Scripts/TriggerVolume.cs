@@ -5,7 +5,7 @@ public class TriggerVolume : MonoBehaviour
     public bool isTriggered;
     public LayerMask mask;
     new public Collider2D collider;
-    public Collider2D[] overlappingObjects;
+    public Collider2D[] overlappingObjects = new Collider2D[1];
 
 #if DEBUG
     public void Awake()

@@ -45,15 +45,6 @@ public class AssignHierarchy : MonoBehaviour
                 Debug.LogError($"Unhandled type: {relationship}");
                 break;
         }
-
-        // Changing hierarchy implicitly activates the GameObject. Set to inactive for random.
-        target.gameObject.SetActive(false);
-
-        // todo: this is just a fun thing
-        StartCoroutine(CoreUtilities.DelayedTask(random.Range(0.15f, 3.2f), () =>
-        {
-            target.gameObject.SetActive(true);
-        }));
     }
 
     public enum Relationship
