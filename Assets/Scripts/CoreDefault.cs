@@ -57,22 +57,6 @@ public static class CoreUtilities
         return Mathf.Abs(lhs - rhs) < CoreConstants.DEADZONE_FLOAT;
     }
 
-    //public static void CopyCollider<T>(T source, T copy) where T : Collider2D
-    //{
-    //    if (testRecurse > 0)
-    //    {
-    //        Debug.LogError("recursive call!");
-    //        return;
-    //    }
-
-    //    if (source.GetType() == typeof(CircleCollider2D))
-    //    {
-    //        CopyCollider(source as CircleCollider2D, copy as CircleCollider2D);
-    //    }
-
-    //    testRecurse += 1;
-    //}
-
     public static void CopyCollider(CircleCollider2D source, CircleCollider2D copy)
     {
         Debug.Log($"circle collider called for copy");
@@ -93,6 +77,14 @@ public static class CoreUtilities
         copy.useDelaunayMesh = source.useDelaunayMesh;
         copy.points = source.points;
         copy.pathCount = source.pathCount;
+    }
+
+    public static void CopyCollider(CapsuleCollider2D source, CapsuleCollider2D copy)
+    {
+        CopyColliderBase(source, copy);
+
+        copy.size = source.size;
+        copy.direction = source.direction;
     }
 
     public static void CopyColliderBase(Collider2D source, Collider2D copy)
@@ -211,3 +203,20 @@ public struct VarWatch<T>
         }
     }
 }
+
+// Used for cases in which the random call will be called repeatedly in a single frame/within a short time
+public struct RandomInstant
+{
+    public int seed;
+
+    public float Range(float minInclusive, float minExcluse)
+    {
+        var result = UnityEngine.Random.Range(minInclusive, minExcluse);
+
+        UnityEngine.Random.InitState(seed);
+        seed += 1 + (int)(seed % result);
+
+        return result;
+    }
+}
+
