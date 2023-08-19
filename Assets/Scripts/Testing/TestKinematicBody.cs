@@ -113,49 +113,6 @@ public class TestKinematicBody : MonoBehaviour
         // todo: if any part of the character is touching something else, and RigidBody does not change position after X time, zero out velocity
     }
 
-    private void Move1()
-    {
-        if (command.HasFlag(Command.MOVE_RIGHT))
-        {
-            var newPos = body.position;
-
-            newPos.x += 0.5f;
-
-            body.MovePosition(newPos);
-            command ^= Command.MOVE_RIGHT;
-        }
-
-        if (command.HasFlag(Command.MOVE_LEFT))
-        {
-            var newPos = body.position;
-
-            newPos.x -= 0.5f;
-
-            body.MovePosition(newPos);
-            command ^= Command.MOVE_LEFT;
-        }
-
-        if (!triggerDown.isTriggered)
-        {
-            var newPos = body.position;
-
-            newPos.y -= 0.75f;
-
-            body.MovePosition(newPos);
-        }
-
-        if (command.HasFlag(Command.JUMP))
-        {
-            var newPos = body.position;
-
-            newPos.y += 0.75f * 8 * Time.deltaTime;
-            command ^= Command.JUMP;
-            command |= Command.JUMP_PHASE_1;
-
-            body.MovePosition(newPos);
-        }
-    }
-
     [Flags]
     public enum Command
     {
