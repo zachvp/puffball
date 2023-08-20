@@ -14,6 +14,7 @@ public class CoreConditionalAttributeDrawer : PropertyDrawer
         var sourceProperty = property.serializedObject.FindProperty(cast.sourcePropertyName);
 
         // Only display this field if the source property is enabled.
+
         if (sourceProperty.boolValue)
         {
             EditorGUI.PropertyField(position, property, label);

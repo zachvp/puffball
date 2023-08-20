@@ -31,14 +31,12 @@ public static class CoreUtilities
     {
         yield return new WaitForFixedUpdate();
         task();
-        yield return null;
     }
 
     public static IEnumerator DelayedTask(float delay, Action task)
     {
         yield return new WaitForSeconds(delay);
         task();
-        yield return null;
     }
 
     // rounds given number to closest multiple of unit

@@ -14,7 +14,7 @@ public class Ball : MonoBehaviour
     // Activate the held object, deactivate the pickup object.
     public void Grab(Transform holdAnchor)
     {
-        heldMovement.root = holdAnchor;
+        heldMovement.anchor = holdAnchor;
         body.StopVertical();
         body.FreezeRotation();
         

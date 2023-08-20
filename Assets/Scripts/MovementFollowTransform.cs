@@ -1,43 +1,74 @@
 using UnityEngine;
+using System;
 
 public class MovementFollowTransform : MonoBehaviour
 {
-    public Transform root;
-    public bool followX = true;
-    public bool followY = true;
-    public bool followZ = true;
+    public FollowType type;
+    public Transform anchor;
     public Vector3 offset;
     public bool usePhysics;
 
     [CoreConditional(nameof(usePhysics))]
     public CoreBody body;
 
-    public void LateUpdate()
+    // todo: add core conditional support for FollowType
+    public float time = 1f;
+
+    [NonSerialized]
+    public float t;
+
+    public void Update()
     {
-        var modPosition = transform.position;
-
-        if (followX)
+        switch (type)
         {
-            modPosition.x = root.position.x;
+            case FollowType.SNAP:
+                SnapUpdate();
+                break;
+            case FollowType.LAG:
+                LagUpdate();
+                break;
         }
-        if (followY)
-        {
-            modPosition.y = root.position.y;
-        }
-        if (followZ)
-        {
-            modPosition.z = root.position.z;
-        }
+    }
 
-        modPosition += offset;
+    public void LagUpdate()
+    {
+        var toAnchor = anchor.position - transform.position;
 
-        if (usePhysics)
+        if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT)
         {
-            body.position = modPosition;
+            UpdatePosition(anchor.position);
+            t = 0;
         }
         else
         {
-            transform.position = modPosition;
+            var modPos = Vector3.Lerp(transform.position, anchor.position, Mathf.Min(1, t / time));
+
+            t += Time.deltaTime;
+
+            UpdatePosition(modPos);
         }
+    }
+
+    public void SnapUpdate()
+    {
+        UpdatePosition(anchor.position + offset);
+    }
+
+    public void UpdatePosition(Vector3 position)
+    {
+        if (usePhysics)
+        {
+            body.position = position;
+        }
+        else
+        {
+            transform.position = position;
+        }
+    }
+
+    public enum FollowType
+    {
+        SNAP,
+        LAG
     }
 }

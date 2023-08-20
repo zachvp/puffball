@@ -11,7 +11,7 @@ public class CoreBody : MonoBehaviour
     
     public Vector2 velocity { get { return body.velocity; } set { Trigger(value); } }
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
-    public Vector2 position { get { return body.position; } set { body.position = value; } }
+    public Vector2 position { get { return body.position; } set { Move(value); } }
 
     public void Awake()
     {
@@ -47,6 +47,12 @@ public class CoreBody : MonoBehaviour
 
             body.velocity = result;
         }));
+    }
+
+    public void Move(Vector2 position)
+    {
+        //body.MovePosition(position);
+        body.position = position;
     }
 
     // -- STATE CONTROL
