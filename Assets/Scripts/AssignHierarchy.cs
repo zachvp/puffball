@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [Tooltip("Attach to a GameObject to mutate its Transform hierarchy on game start.")]
+// todo: rename to "InitHierarchy"
 public class AssignHierarchy : MonoBehaviour
 {
     [Tooltip("The other object to assign to this component's Transform hierarchy.")]
