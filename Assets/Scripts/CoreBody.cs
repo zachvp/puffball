@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 // split into separate 'PlatformBody' class?
+[RequireComponent(typeof(Rigidbody2D))]
 public class CoreBody : MonoBehaviour
 {
     public Rigidbody2D body;
@@ -13,6 +14,7 @@ public class CoreBody : MonoBehaviour
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { Move(value); } }
 
+    [ExecuteInEditMode]
     public void Awake()
     {
         originalGravity = body.gravityScale;

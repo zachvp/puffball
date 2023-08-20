@@ -32,7 +32,7 @@ public class MovementFollowTransform : MonoBehaviour
 
     public void LagUpdate()
     {
-        var toAnchor = anchor.position - transform.position;
+        var toAnchor = anchor.position - transform.position; // TODO: FOOT
 
         if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT)
         {
