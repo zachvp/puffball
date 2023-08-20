@@ -75,10 +75,6 @@ public class TestKinematicBody : MonoBehaviour
         if (command.HasFlag(Command.MOVE_NONE))
         {
             velocity.x = 0;
-            //newPos = CoreUtilities.RoundTo(body.position, CoreConstants.UNIT_ROUND_POSITION);
-
-            Debug.Log($"{newPos}: newPos");
-
             command &= ~Command.MOVE_NONE;
         }
 

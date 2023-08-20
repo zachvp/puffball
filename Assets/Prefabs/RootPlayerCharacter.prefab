@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 1889310054390377680}
   - component: {fileID: 5374861750097367794}
   - component: {fileID: 2326874781977619735}
+  - component: {fileID: 7446906765459592420}
   m_Layer: 3
   m_Name: physics
   m_TagString: Untagged
@@ -444,6 +445,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0.025390625, y: 1.5546875}
   m_Size: {x: 1, y: 2.5}
   m_Direction: 0
+--- !u!114 &7446906765459592420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6666270512891023772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33dea246c8c784dd2b15713548606a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 64
+  target: {fileID: 2326874781977619735}
+  overlappingObjects:
+  - {fileID: 0}
+  isBelow: 0
 --- !u!1 &7188887680192770761
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +543,7 @@ Transform:
   - {fileID: 306507913140501161}
   - {fileID: 23359460135033210}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1400401066461234039
 PrefabInstance:

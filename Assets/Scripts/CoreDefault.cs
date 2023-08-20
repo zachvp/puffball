@@ -109,7 +109,8 @@ public static class CoreConstants
     public const float DEADZONE_FLOAT = 0.01f;
     public const float DEADZONE_VELOCITY = 2;
     public const float UNIT_ROUND_POSITION = 1f / 16f;
-    public const float THRESHOLD_DOT = 0.84f;
+    public const float THRESHOLD_DOT_INPUT = 0.84f;
+    public const float THRESHOLD_DOT_PRECISE = 0.99f;
 }
 
 public static class Emitter

@@ -86,15 +86,15 @@ public class PCHandMotor : MonoBehaviour
         var dotUpLeft = Vector2.Dot(inputDirection, Vector2.left + Vector2.up);
         var dotRight = Vector2.Dot(inputDirection, Vector2.right);
 
-        if (dotUpRight > CoreConstants.THRESHOLD_DOT || dotUpLeft > CoreConstants.THRESHOLD_DOT)
+        if (dotUpRight > CoreConstants.THRESHOLD_DOT_INPUT || dotUpLeft > CoreConstants.THRESHOLD_DOT_INPUT)
         {
             ball.Shoot(body.velocity,
                        inputDirection,
-                       dotUpRight > CoreConstants.THRESHOLD_DOT || dotUpLeft > CoreConstants.THRESHOLD_DOT,
+                       dotUpRight > CoreConstants.THRESHOLD_DOT_INPUT || dotUpLeft > CoreConstants.THRESHOLD_DOT_INPUT,
                        Mathf.Abs(motor.body.velocity.y) < CoreConstants.DEADZONE_VELOCITY);
         }
 
-        if (Mathf.Abs(dotRight) > CoreConstants.THRESHOLD_DOT)
+        if (Mathf.Abs(dotRight) > CoreConstants.THRESHOLD_DOT_INPUT)
         {
             // direct, straight throw
             //modVelocity.x = 1;
