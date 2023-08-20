@@ -1,12 +1,19 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
-public class ActorStatePlatform : MonoBehaviour
+[Serializable]
+public struct ActorStateTrigger
 {
     // proximity triggers
     public TriggerVolume right;
     public TriggerVolume left;
     public TriggerVolume down;
+}
+
+public class ActorStatePlatform : MonoBehaviour
+{
+    public ActorStateTrigger trigger;
 
     // current state data
     public PlatformState platformState;
@@ -26,7 +33,7 @@ public class ActorStatePlatform : MonoBehaviour
 
     public void Update()
     {
-        triggerState = EnumHelper.FromBool(left.isTriggered, right.isTriggered, down.isTriggered, false);
+        triggerState = EnumHelper.FromBool(trigger.left.isTriggered, trigger.right.isTriggered, trigger.down.isTriggered, false);
 
         // state buffers
         var triggerEntry = triggerStateBuffer.AddLast(triggerState);

@@ -34,7 +34,7 @@ public class PCPlatformMotor : MonoBehaviour
         {
             case CoreActionMap.Player.JUMP:
                 // ground jump
-                if (state.down.isTriggered)
+                if (state.trigger.down.isTriggered)
                 {
                     state.platformState |= PlatformState.JUMP;
                     state.platformState &= ~PlatformState.WALL_JUMPING;
@@ -69,7 +69,7 @@ public class PCPlatformMotor : MonoBehaviour
     public void Update()
     {
         // wall cling & release
-        if (!state.down.isTriggered)
+        if (!state.trigger.down.isTriggered)
         {
             if (IsWallClingState())
             {
@@ -98,7 +98,7 @@ public class PCPlatformMotor : MonoBehaviour
         // todo: implement air movement
         if (state.platformState.HasFlag(PlatformState.MOVE))
         {
-            if (state.down.isTriggered)
+            if (state.trigger.down.isTriggered)
             {
                 adjustedVelocityX = groundMoveSpeed * state.inputMove;
             }

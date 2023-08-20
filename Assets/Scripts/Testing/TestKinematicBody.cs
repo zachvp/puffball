@@ -1,7 +1,5 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using System.Linq;
-using System.Collections.Generic;
 
 using System;
 
@@ -10,6 +8,7 @@ public class TestKinematicBody : MonoBehaviour
     public Rigidbody2D body;
     public Collider2D attachedCollider;
     public TriggerVolume triggerDown;
+    public ActorStateTrigger trigger;
     public Command command;
     public Command commandPrev;
 
@@ -33,17 +32,19 @@ public class TestKinematicBody : MonoBehaviour
         }
         
         // horizontal
-        if (Keyboard.current.rightArrowKey.isPressed && !Keyboard.current.leftArrowKey.isPressed)
+        if (Keyboard.current.rightArrowKey.isPressed && !Keyboard.current.leftArrowKey.isPressed && !trigger.right.isTriggered)
         {
             command |= Command.MOVE_RIGHT;
         }
-        else if (Keyboard.current.leftArrowKey.isPressed && !Keyboard.current.rightArrowKey.isPressed)
+        else if (Keyboard.current.leftArrowKey.isPressed && !Keyboard.current.rightArrowKey.isPressed && !trigger.left.isTriggered)
         {
             command |= Command.MOVE_LEFT;
         }
         else
         {
             command |= Command.MOVE_NONE;
+            command &= ~Command.MOVE_LEFT;
+            command &= ~Command.MOVE_RIGHT;
         }
     }
 

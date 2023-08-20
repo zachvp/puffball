@@ -1,15 +1,21 @@
 using UnityEngine;
+using System;
 
 public class TriggerVolume : MonoBehaviour
 {
     public bool isTriggered;
     public LayerMask mask;
-    new public Collider2D collider;
     public Collider2D[] overlappingObjects = new Collider2D[1];
+
+    [NonSerialized]
+    new public Collider2D collider;
 
 #if DEBUG
     public void Awake()
     {
+        collider = GetComponent<Collider2D>();
+
+        Debug.AssertFormat(collider != null, $"Script:{nameof(TriggerVolume)} requires collider attached to the same game object");
         Debug.AssertFormat(overlappingObjects.Length > 0, "non-zero length required for trigger");
         Debug.AssertFormat(collider.isTrigger, "attached collider required to be trigger");
     }
