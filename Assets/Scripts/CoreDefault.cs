@@ -219,3 +219,22 @@ public struct RandomInstant
     }
 }
 
+public class BufferCircular<T>
+{
+    public readonly T[] buffer;
+    public readonly int size;
+
+    private int index;
+
+    public BufferCircular(int inSize)
+    {
+        buffer = new T[inSize];
+        size = inSize;
+    }
+
+    public void Add(T item)
+    {
+        buffer[index] = item;
+        index = (index + 1) % size;
+    }
+}

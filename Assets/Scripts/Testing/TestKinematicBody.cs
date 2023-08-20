@@ -1,5 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 
 using System;
 
@@ -12,6 +14,7 @@ public class TestKinematicBody : MonoBehaviour
     public Command commandPrev;
 
     public Vector2 velocity;
+    public Vector3 previousPosition;
 
     public float speed = 5;
     public float jumpStrength = 10;
@@ -22,6 +25,11 @@ public class TestKinematicBody : MonoBehaviour
         if (Keyboard.current.upArrowKey.wasPressedThisFrame && triggerDown.isTriggered)
         {
             command |= Command.JUMP;
+        }
+
+        if (!triggerDown.isTriggered)
+        {
+            command |= Command.FALL;
         }
         
         // horizontal
@@ -53,25 +61,27 @@ public class TestKinematicBody : MonoBehaviour
             velocity.y = jumpStrength;
             command &= ~Command.JUMP;
         }
+        else if (command.HasFlag(Command.FALL))
+        {
+            velocity.y -= gravity;
+            command &= ~Command.FALL;
+        }
         else if (triggerDown.isTriggered)
         {
             velocity.y = 0;
         }
-        else
-        {
-            velocity.y -= gravity;
-        }
 
-        if (command.HasFlag(Command.MOVE_RIGHT))
+        if (command.HasFlag(Command.MOVE_RIGHT) && !command.HasFlag(Command.MOVE_NONE))
         {
             velocity.x = speed;
             command &= ~Command.MOVE_RIGHT;
         }
-        if (command.HasFlag(Command.MOVE_LEFT))
+        if (command.HasFlag(Command.MOVE_LEFT) && !command.HasFlag(Command.MOVE_NONE))
         {
             velocity.x = -speed;
             command &= ~Command.MOVE_LEFT;
         }
+
         if (command.HasFlag(Command.MOVE_NONE))
         {
             velocity.x = 0;
@@ -84,17 +94,18 @@ public class TestKinematicBody : MonoBehaviour
 
         body.MovePosition(newPos);
 
-        // todo: if any part of the character is touching something else, and RigidBody does not change position after X time, zero out velocity
     }
 
     [Flags]
+    // todo: stop hardcoding values
     public enum Command
     {
         NONE = 0,
-        JUMP = 1 << 0,
-        MOVE_LEFT = 1 << 1,
-        MOVE_RIGHT = 1 << 2,
-        MOVE_NONE = 1 << 3,
-        JUMP_PHASE_1 = 1 << 4,
+        FALL = 1 << 0,
+        JUMP = 1 << 1,
+        MOVE_LEFT = 1 << 2,
+        MOVE_RIGHT = 1 << 3,
+        MOVE_NONE = 1 << 4,
+        CORRECTED_Y = 1 << 6
     }
 }
