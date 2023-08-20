@@ -23,6 +23,7 @@ public class AssignHierarchy : MonoBehaviour
         {
             foreach (var o in others)
             {
+                Debug.Assert(o != null, $"'None' entry in {nameof(Transform)}[]:{nameof(others)}");
                 Mutate(o);
             }
         }
@@ -30,6 +31,7 @@ public class AssignHierarchy : MonoBehaviour
 
     public void Mutate(Transform target)
     {
+
         switch (relationship)
         {
             case Relationship.NONE:

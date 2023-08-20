@@ -1,7 +1,5 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
 
 using System;
 
@@ -41,30 +39,9 @@ public class TestKinematicBody : MonoBehaviour
         }
     }
 
-    //public void LateUpdate()
-    //{
-    //    var fixedPos = body.position;
-
-    //    fixedPos.x = CoreUtilities.RoundTo(fixedPos.x, 1f / 16f);
-    //    fixedPos.y = CoreUtilities.RoundTo(fixedPos.y, 1f / 16f);
-
-    //    CoreUtilities.PostFixedUpdateTask(() =>
-    //    {
-    //        //body.MovePosition(fixedPos);
-    //        body.position = fixedPos;
-    //    });
-
-    //    //transform.position = fixedPos;
-    //}
-
     public void FixedUpdate()
     {
         Move0();
-
-        //var roundedPos = body.position;
-        //roundedPos.Set(Mathf.RoundToInt(body.position.x), Mathf.RoundToInt(body.position.y));
-
-        //body.MovePosition(roundedPos);
     }
 
     private void Move0()
@@ -88,25 +65,26 @@ public class TestKinematicBody : MonoBehaviour
         if (command.HasFlag(Command.MOVE_RIGHT))
         {
             velocity.x = speed;
-            //velocity.y += 0.001f; // fudge y to avoid getting stuck on ground
             command &= ~Command.MOVE_RIGHT;
         }
         if (command.HasFlag(Command.MOVE_LEFT))
         {
             velocity.x = -speed;
-            //velocity.y += 0.001f; // fudge y to avoid getting stuck on ground
             command &= ~Command.MOVE_LEFT;
         }
         if (command.HasFlag(Command.MOVE_NONE))
         {
             velocity.x = 0;
+            //newPos = CoreUtilities.RoundTo(body.position, CoreConstants.UNIT_ROUND_POSITION);
+
+            Debug.Log($"{newPos}: newPos");
+
             command &= ~Command.MOVE_NONE;
         }
 
         newPos += velocity * Time.fixedDeltaTime;
 
-        newPos.x = CoreUtilities.RoundTo(newPos.x, CoreConstants.UNIT_ROUND_POSITION);
-        newPos.y = CoreUtilities.RoundTo(newPos.y, CoreConstants.UNIT_ROUND_POSITION);
+        newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
 
         body.MovePosition(newPos);
 
