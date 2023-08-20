@@ -4,6 +4,7 @@ using UnityEngine;
 // todo: rename to "InitHierarchy"
 public class AssignHierarchy : MonoBehaviour
 {
+    // todo: remove
     [Tooltip("The other object to assign to this component's Transform hierarchy.")]
     public Transform other;
 
@@ -11,8 +12,6 @@ public class AssignHierarchy : MonoBehaviour
 
     [Tooltip("The type of assignment. For example, type CHILD will assign the other Transform as this Transform's child.")]
     public Relationship relationship = Relationship.CHILD;
-
-    public RandomInstant random;
 
     public void Start()
     {
