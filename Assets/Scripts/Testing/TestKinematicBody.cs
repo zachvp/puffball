@@ -89,7 +89,7 @@ public class TestKinematicBody : MonoBehaviour
             command &= ~Command.MOVE_NONE;
         }
 
-        newPos += velocity * Time.fixedDeltaTime;
+        newPos += velocity * (Time.fixedDeltaTime / 2);
 
         newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
 
