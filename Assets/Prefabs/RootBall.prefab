@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5353977148857473916}
   - component: {fileID: 7772554432304816483}
   - component: {fileID: 2929907812155122330}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: actor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 1174332713928130130}
   - component: {fileID: 172908975045862522}
   - component: {fileID: 5197060269025866395}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: physics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,8 +171,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4209639398675424973}
   - component: {fileID: 4832460686187000355}
-  m_Layer: 0
-  m_Name: body
+  m_Layer: 7
+  m_Name: movement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,9 +205,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba2b0749178e4caf80159b0360e5408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 0}
+  body: {fileID: 2929907812155122330}
   velocity: {x: 0, y: 0}
-  gravity: 0
+  gravity: 1
+  bounceVelocity: 20
+  bounceCount: 14
+  bounceCoefficient: 1
+  isGrounded: 0
+  ticksBounce: 0
+  gravityOffset: 0
+  lastTime: 0
+  isSettled: 0
 --- !u!1 &4306355448787393934
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +246,7 @@ Transform:
   m_Children:
   - {fileID: 5353977148857473916}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7277118177074574734
 GameObject:
@@ -250,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6861819258362338329}
   - component: {fileID: 4243370409903736171}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: visible
   m_TagString: Untagged
   m_Icon: {fileID: 0}

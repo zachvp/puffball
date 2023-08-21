@@ -4,10 +4,19 @@ using System.Collections.Generic;
 public class MovementBall : MonoBehaviour
 {
     public CoreBody body;
-    public Dictionary<Vector2, int> normals = new Dictionary<Vector2, int>();
+    public Dictionary<Collider2D, int> collisionMap = new Dictionary<Collider2D, int>();
+    public List<Vector2> normals = new List<Vector2>();
     public Vector2 velocity;
-    public float gravity = 1;
+    [Range(0, 7)] public float gravity = 1;
+    public float bounceVelocity = 20;
+    public int bounceCount = 20;
+    public float bounceCoefficient = 0.5f;
+
     public bool isGrounded;
+    public int ticksBounce;
+    public float gravityOffset;
+    public float lastTime;
+    public bool isSettled;
 
     public void Start()
     {
@@ -17,14 +26,12 @@ public class MovementBall : MonoBehaviour
 
     public void Update()
     {
-        if (isGrounded)
+        if (!isGrounded)
         {
-            velocity.y = 10;
-            isGrounded = false;
-        }
-        else
-        {
-            velocity.y -= gravity * Time.fixedDeltaTime;
+            var diff = (gravity + gravityOffset) * Time.fixedDeltaTime;
+
+            //velocity.y -= Mathf.Min(32*gravity, diff);
+            velocity.y -= diff;
         }
     }
 
@@ -34,7 +41,7 @@ public class MovementBall : MonoBehaviour
 
         // Update body to new velocity-driven position.
         newPos += velocity * (Time.fixedDeltaTime * 0.5f);
-        newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
+        //newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
         body.MoveKinematic(newPos);
     }
 
@@ -44,13 +51,20 @@ public class MovementBall : MonoBehaviour
         var count = collision.GetContacts(points);
 
         Debug.Log("on collision exit");
-
-        for (var i = 0; i < count; i++)
+        collisionMap[collision.collider] -= 1;
+        if (collisionMap[collision.collider] == 0)
         {
-            var p = points[i];
+            collisionMap.Remove(collision.collider);
+        }
 
-            Debug.Log($"normal: {p.normal}");
-            CoreUtilities.Decrement(normals, p.normal);
+        if (collisionMap.Count == 0)
+        {
+            isGrounded = false;
+
+            if (isSettled)
+            {
+                isSettled = false;
+            }
         }
     }
 
@@ -59,12 +73,23 @@ public class MovementBall : MonoBehaviour
         var points = new ContactPoint2D[1];
         var count = collision.GetContacts(points);
 
+        Debug.Log($"collision collider: {collision.collider}");
+
+        if (collisionMap.ContainsKey(collision.collider))
+        {
+            collisionMap[collision.collider] += 1;
+        }
+        else
+        {
+            collisionMap.Add(collision.collider, 1);
+        }
+
         for (var i = 0; i < count; i++)
         {
             var p = points[i];
 
             Debug.Log($"normal: {p.normal}");
-            CoreUtilities.Increment(normals, p.normal);
+            //CoreUtilities.Increment(normals, collision);
 
             if (Vector2.Dot(Vector2.up, p.normal) > CoreConstants.THRESHOLD_DOT_LOOSE)
             {
@@ -72,6 +97,43 @@ public class MovementBall : MonoBehaviour
                 //velocity.y = 15;
                 velocity.y = 0;
                 isGrounded = true;
+
+                if (Time.time - lastTime < 1f / 60f + 0.01f)
+                {
+                    Debug.Log("bail out");
+                    return;
+                }
+                if (isSettled)
+                {
+                    velocity.y = 0;
+                    lastTime = Time.time;
+                    return;
+                }
+
+                if (!isSettled)
+                {
+                    if (ticksBounce < bounceCount)
+                    {
+                        velocity.y = bounceVelocity;
+                        ticksBounce++;
+                        isGrounded = false;
+                        gravityOffset += gravity * bounceCoefficient;
+                    }
+                    else
+                    {
+                        gravityOffset = 0;
+                        ticksBounce = 0;
+                        velocity.y = 0;
+                        isSettled = true;
+                    }
+                }
+
+                lastTime = Time.time;
+            }
+
+            if (Vector2.Dot(Vector2.left, p.normal) > CoreConstants.THRESHOLD_DOT_LOOSE)
+            {
+                velocity.x = -10;
             }
         }
     }
