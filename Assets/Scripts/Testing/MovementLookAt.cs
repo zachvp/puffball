@@ -12,9 +12,12 @@ public class MovementLookAt : MonoBehaviour
     public float multiplier = 0.5f;
     public float sensitivity = 0.04f;
 
+    private GameObject focus;
+
     public void Start()
     {
         camera = GameObject.Find("CameraStandard").GetComponent<Camera>();
+        focus = GameObject.Find("WorldTarget");
     }
 
     public void Update()
@@ -23,9 +26,9 @@ public class MovementLookAt : MonoBehaviour
         var target = camera.ScreenToWorldPoint(mousePos.value);
         target.z = 0;
 
-
+        //target = focus.transform.position;
         //transform.position = anchor.position + target;
-        target += anchor.position;
+        //target += anchor.position;
 
         //var newPos = new Vector2(Mathf.Lerp(root.position.x, target.x, sensitivity * 8), Mathf.Lerp(root.position.y, target.y, sensitivity));
         var newPos = Vector2.Lerp(root.position, target, sensitivity);
