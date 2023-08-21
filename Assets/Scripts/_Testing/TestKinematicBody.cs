@@ -7,7 +7,7 @@ public class TestKinematicBody : MonoBehaviour
 {
     public Rigidbody2D body;
     public Collider2D attachedCollider;
-    public TriggerVolume triggerDown;
+    public TriggerVolume triggerDown; // todo: remove
     public ActorStateTrigger trigger;
     public Command command;
     public Command commandPrev;
@@ -17,7 +17,7 @@ public class TestKinematicBody : MonoBehaviour
 
     public float speed = 5;
     public float jumpStrength = 10;
-    public float gravity = 1;
+    public float gravity = 1; // todo: more intuitive as negative value
 
     public void Update()
     {
@@ -89,7 +89,7 @@ public class TestKinematicBody : MonoBehaviour
             command &= ~Command.MOVE_NONE;
         }
 
-        newPos += velocity * (Time.fixedDeltaTime / 2);
+        newPos += velocity * (Time.fixedDeltaTime * 0.5f);
 
         newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
 

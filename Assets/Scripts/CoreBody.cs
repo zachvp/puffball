@@ -1,15 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-// split into separate 'PlatformBody' class?
+// todo: split into separate 'PlatformBody' class - only use what ball and PC have in common
 [RequireComponent(typeof(Rigidbody2D))]
 public class CoreBody : MonoBehaviour
 {
     public Rigidbody2D body;
     public float originalGravity;
     public RigidbodyType2D originalType;
-    public UnityAction<Collider2D> OnAnyColliderEnter;
-    
+    public Action<Collider2D> onAnyColliderEnter;
+    public Action<Collision2D> onCollisionBodyEnter;
+    public Action<Collision2D> onCollisionBodyExit;
+
     public Vector2 velocity { get { return body.velocity; } set { Trigger(value); } }
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { Move(value); } }
@@ -57,6 +60,11 @@ public class CoreBody : MonoBehaviour
         body.position = position;
     }
 
+    public void MoveKinematic(Vector2 position)
+    {
+        body.MovePosition(position);
+    }
+
     // -- STATE CONTROL
     public void StopVertical()
     {
@@ -92,17 +100,19 @@ public class CoreBody : MonoBehaviour
     // -- COLLISIONS
     public void OnCollisionEnter2D(Collision2D c)
     {
-        if (OnAnyColliderEnter != null)
-        {
-            OnAnyColliderEnter(c.collider);
-        }
+        Debug.Log("core body: on collision");
+
+        Emitter.Send(onAnyColliderEnter, c.collider);
+        Emitter.Send(onCollisionBodyEnter, c);
+    }
+
+    public void OnCollisionExit2D(Collision2D c)
+    {
+        Emitter.Send(onCollisionBodyExit, c);
     }
 
     public void OnTriggerEnter2D(Collider2D c)
     {
-        if (OnAnyColliderEnter != null)
-        {
-            OnAnyColliderEnter(c);
-        }
+        Emitter.Send(onAnyColliderEnter, c);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -102,6 +103,37 @@ public static class CoreUtilities
         copy.contactCaptureLayers = source.contactCaptureLayers;
         copy.callbackLayers = source.callbackLayers;
     }
+
+    public static void Increment<T>(Dictionary<T, int> d, T key)
+    {
+        if (d.ContainsKey(key))
+        {
+            d[key] += 1;
+        }
+        else
+        {
+            d.Add(key, 1);
+        }
+    }
+
+    public static bool Decrement<T>(Dictionary<T, int> d, T key)
+    {
+        if (d.ContainsKey(key))
+        {
+            d[key] -= 1;
+            if (d[key] == 0)
+            {
+                d.Remove(key);
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }
 
 public static class CoreConstants
@@ -111,6 +143,7 @@ public static class CoreConstants
     public const float UNIT_ROUND_POSITION = 1f / 32f;
     public const float THRESHOLD_DOT_INPUT = 0.84f;
     public const float THRESHOLD_DOT_PRECISE = 0.99f;
+    public const float THRESHOLD_DOT_LOOSE = 0.7f;
 }
 
 public static class Emitter
