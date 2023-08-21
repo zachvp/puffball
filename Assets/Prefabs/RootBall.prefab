@@ -31,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6861819258362338329}
-  - {fileID: 4209639398675424973}
   - {fileID: 1174332713928130130}
   m_Father: {fileID: 2427864931376940926}
   m_RootOrder: -1
@@ -62,7 +61,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2929907812155122330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +88,7 @@ GameObject:
   - component: {fileID: 1174332713928130130}
   - component: {fileID: 172908975045862522}
   - component: {fileID: 5197060269025866395}
+  - component: {fileID: 6866198480811129063}
   m_Layer: 7
   m_Name: physics
   m_TagString: Untagged
@@ -161,61 +161,29 @@ CircleCollider2D:
   m_Offset: {x: 0.5, y: 0.5}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!1 &1259884508375186001
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4209639398675424973}
-  - component: {fileID: 4832460686187000355}
-  m_Layer: 7
-  m_Name: movement
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4209639398675424973
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259884508375186001}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5353977148857473916}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4832460686187000355
+--- !u!114 &6866198480811129063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259884508375186001}
+  m_GameObject: {fileID: 533316926251231584}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aba2b0749178e4caf80159b0360e5408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 2929907812155122330}
+  attachedCollider: {fileID: 0}
   velocity: {x: 0, y: 0}
-  gravity: 1
-  bounceVelocity: 20
-  bounceCount: 14
-  bounceCoefficient: 1
+  gravity: 32
+  bounceCoefficient: 0.4
+  settleThreshold: 1
   isGrounded: 0
-  ticksBounce: 0
-  gravityOffset: 0
-  lastTime: 0
-  isSettled: 0
+  newPos: {x: 0, y: 0}
+  prevPos: {x: 0, y: 0}
+  repeatCount: 2147483647
+  countThreshold: 10
 --- !u!1 &4306355448787393934
 GameObject:
   m_ObjectHideFlags: 0
