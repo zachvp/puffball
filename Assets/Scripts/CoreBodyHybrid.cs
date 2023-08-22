@@ -10,7 +10,7 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
     // -- properties
     public Vector2 velocity { get { return _velocity; } set { Velocity(value); } }
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
-    public Vector2 position { get { return body.position; } set { Move(value); } }
+    public Vector2 position { get { return body.position; } set { body.position = value; } }
 
     // -- config
     public float gravity = 1; // todo: move to scriptable object

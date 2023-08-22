@@ -5,7 +5,7 @@ using System;
 
 public class TestKinematicBody : MonoBehaviour
 {
-    public Rigidbody2D body;
+    public CoreBodyHybrid body;
     public Collider2D attachedCollider;
     public ActorStateTrigger trigger;
     public Command command;
@@ -15,7 +15,6 @@ public class TestKinematicBody : MonoBehaviour
 
     public float speed = 5;
     public float jumpStrength = 10;
-    public float gravity = 1; // todo: more intuitive as negative value
 
     public void Update()
     {
@@ -62,7 +61,7 @@ public class TestKinematicBody : MonoBehaviour
         }
         else if (command.HasFlag(Command.FALL))
         {
-            velocity.y -= gravity;
+            velocity.y -= body.gravity;
             command &= ~Command.FALL;
         }
         else if (trigger.down.isTriggered)
@@ -91,7 +90,7 @@ public class TestKinematicBody : MonoBehaviour
 
         newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
 
-        body.MovePosition(newPos);
+        body.Move(newPos);
 
     }
 

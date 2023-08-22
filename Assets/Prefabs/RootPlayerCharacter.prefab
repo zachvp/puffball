@@ -44,7 +44,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6148466683661181128}
   - component: {fileID: 7996584023077809358}
-  - component: {fileID: 1764509908606162502}
   m_Layer: 3
   m_Name: body
   m_TagString: Untagged
@@ -101,31 +100,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1764509908606162502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 603233255204119080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c3b7a695c374f0484a532627f94910, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 7996584023077809358}
-  attachedCollider: {fileID: 2326874781977619735}
-  trigger:
-    right: {fileID: 3767572644954372262}
-    left: {fileID: 8089274627303935791}
-    down: {fileID: 2244545240863293287}
-  command: 16
-  commandPrev: 0
-  velocity: {x: 0, y: 0}
-  previousPosition: {x: 0, y: 0, z: 0}
-  speed: 13
-  jumpStrength: 32
-  gravity: 1.4
 --- !u!1 &931427943157148877
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebc885b574b44eb5aadc6fe18d067e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  other: {fileID: 0}
   others:
   - {fileID: 7087431961497076306}
   - {fileID: 5340257663110556701}
@@ -185,8 +158,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8967352061388735389}
-  - component: {fileID: 1288980036025034028}
-  - component: {fileID: 1309638061972402903}
+  - component: {fileID: 6548856271682483524}
+  - component: {fileID: 105510562916713702}
+  - component: {fileID: 1894359249196475103}
   m_Layer: 0
   m_Name: movement
   m_TagString: Untagged
@@ -209,34 +183,7 @@ Transform:
   m_Father: {fileID: 6148466683661181128}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1288980036025034028
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3174573510162014297}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &1309638061972402903
+--- !u!114 &6548856271682483524
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,12 +192,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 3174573510162014297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 943277d62283e4ee4b3120daf0236aeb, type: 3}
+  m_Script: {fileID: 11500000, guid: a0c8f9c420bb344788cb7340540d857d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &105510562916713702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3174573510162014297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd401343e7d44faa96d161bb878aeb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 7996584023077809358}
+  signals: {fileID: 6548856271682483524}
+  gravity: 1.4
   originalGravity: 0
-  originalType: 0
+  _velocity: {x: 0, y: 0}
+--- !u!114 &1894359249196475103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3174573510162014297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c3b7a695c374f0484a532627f94910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 105510562916713702}
+  attachedCollider: {fileID: 2326874781977619735}
+  trigger:
+    right: {fileID: 3767572644954372262}
+    left: {fileID: 8089274627303935791}
+    down: {fileID: 2244545240863293287}
+  command: 16
+  commandPrev: 0
+  velocity: {x: 0, y: 0}
+  speed: 13
+  jumpStrength: 32
 --- !u!1 &3765306959373598623
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebc885b574b44eb5aadc6fe18d067e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  other: {fileID: 0}
   others:
   - {fileID: 6846672599090158002}
   relationship: 2

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6229341320613957517}
   - component: {fileID: 6671828058515439253}
   m_Layer: 0
-  m_Name: PCSpawnRoot
+  m_Name: SpawnPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
