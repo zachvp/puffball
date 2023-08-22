@@ -4,19 +4,23 @@ using UnityEngine;
 public class CoreBody : MonoBehaviour
 {
     // Links
+    // TODO: common, shared
     public Rigidbody2D body;
 
     // One-time write state.
+    // TODO: common, shared
     public float originalGravity;
     public RigidbodyType2D originalType;
 
     // Action events
-    public Action<Collider2D> onAnyColliderEnter;
+    // TODO: common, shared
+    public Action<Collider2D>  onAnyColliderEnter;
     public Action<Collision2D> onCollisionBodyEnter;
     public Action<Collision2D> onCollisionBodyExit;
     public Action<Collision2D> onCollisionBodyStay;
 
     // Properties
+    // TODO: common, not shared
     public Vector2 velocity { get { return body.velocity; } set { Velocity(value); } }
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { Move(value); } }

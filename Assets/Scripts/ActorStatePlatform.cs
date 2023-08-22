@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
+// todo: migrate to pure C# class
 public class ActorStatePlatform : MonoBehaviour
 {
     public ActorStateTrigger trigger;
