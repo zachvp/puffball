@@ -2,10 +2,10 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-// todo: migrate to pure C# class
-public class ActorStatePlatform
+// todo: migrate to scriptable object that spawns at runtime
+[Serializable]
+public class ActorStatePlatform : MonoBehaviour
 {
-    public MonoBehaviour behaviour;
     public ActorStateTrigger trigger;
 
     // current state data
@@ -18,11 +18,6 @@ public class ActorStatePlatform
     public LinkedList<Direction2D> triggerStateBuffer = new LinkedList<Direction2D>();
     public LinkedList<float> inputMoveBuffer = new LinkedList<float>();
 
-    public void Init(MonoBehaviour b)
-    {
-        behaviour = b;
-    }
-
     public void Update()
     {
         triggerState = EnumHelper.FromBool(trigger.left.isTriggered, trigger.right.isTriggered, trigger.down.isTriggered, false);
@@ -31,7 +26,7 @@ public class ActorStatePlatform
         var triggerEntry = triggerStateBuffer.AddLast(triggerState);
         var inputMoveEntry = inputMoveBuffer.AddLast(inputMove);
 
-        behaviour.StartCoroutine(CoreUtilities.TaskDelayed(bufferLifetime, triggerEntry, inputMoveEntry, (trigger, input) =>
+        StartCoroutine(CoreUtilities.TaskDelayed(bufferLifetime, triggerEntry, inputMoveEntry, (trigger, input) =>
         {
             triggerStateBuffer.Remove(trigger);
             inputMoveBuffer.Remove(input);

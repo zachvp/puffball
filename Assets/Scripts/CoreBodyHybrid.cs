@@ -13,6 +13,7 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
     public Vector2 position { get { return body.position; } set { body.position = value; } }
 
     // -- config
+    public float stepCoefficient = 0.5f;
     public float gravity = 1; // todo: move to scriptable object
     public float originalGravity; // todo: move to scriptable object
 
@@ -24,8 +25,19 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
         originalGravity = gravity;
     }
 
+    public void Tick()
+    {
+        var newPos = body.position;
+        newPos += velocity * (Time.fixedDeltaTime * stepCoefficient);
+
+        newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
+
+        Move(newPos);
+    }
+
     #region IBody
 
+    // todo: remove to enforce only velocity used?
     public void Move(Vector2 position)
     {
         body.MovePosition(position);

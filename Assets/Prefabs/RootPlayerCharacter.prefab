@@ -160,7 +160,8 @@ GameObject:
   - component: {fileID: 8967352061388735389}
   - component: {fileID: 6548856271682483524}
   - component: {fileID: 105510562916713702}
-  - component: {fileID: 1894359249196475103}
+  - component: {fileID: 1352300995860335606}
+  - component: {fileID: 2316993849719470132}
   m_Layer: 0
   m_Name: movement
   m_TagString: Untagged
@@ -209,10 +210,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 7996584023077809358}
   signals: {fileID: 6548856271682483524}
+  velocity: {x: 0, y: 0}
+  stepCoefficient: 0.5
   gravity: 1.4
   originalGravity: 0
-  _velocity: {x: 0, y: 0}
---- !u!114 &1894359249196475103
+--- !u!114 &1352300995860335606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,20 +223,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 3174573510162014297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c3b7a695c374f0484a532627f94910, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a39b08c275824fc19ebd7abd4fb01f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 105510562916713702}
-  attachedCollider: {fileID: 2326874781977619735}
   trigger:
     right: {fileID: 3767572644954372262}
     left: {fileID: 8089274627303935791}
     down: {fileID: 2244545240863293287}
-  command: 16
-  commandPrev: 0
-  velocity: {x: 0, y: 0}
-  speed: 13
-  jumpStrength: 32
+  platformState: 0
+  triggerState: 0
+  inputMove: 0
+  bufferLifetime: 0.5
+--- !u!114 &2316993849719470132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3174573510162014297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb2eee11cf5e49bb81ce8e6c652d47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 105510562916713702}
+  state: {fileID: 1352300995860335606}
+  metadata: {fileID: 8844957231240594207}
+  jumpStrength: 10
+  groundMoveSpeed: 13
+  airMoveSpeed: 18
+  maxSpeedX: 20
+  wallJumpDelay: 0.1
+  wallJumpSpeed: {x: 20, y: 10}
+  adjustedVelocityX: 0
 --- !u!1 &3765306959373598623
 GameObject:
   m_ObjectHideFlags: 0

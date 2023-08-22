@@ -6,7 +6,6 @@ using System;
 public class TestKinematicBody : MonoBehaviour
 {
     public CoreBodyHybrid body;
-    public Collider2D attachedCollider;
     public ActorStateTrigger trigger;
     public Command command;
     public Command commandPrev;
@@ -25,6 +24,10 @@ public class TestKinematicBody : MonoBehaviour
         if (!trigger.down.isTriggered)
         {
             command |= Command.FALL;
+        }
+        else
+        {
+            command &= ~Command.FALL;
         }
         
         // horizontal

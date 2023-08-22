@@ -1,24 +1,23 @@
 using UnityEngine;
 using System;
 
-public class PCMotorPlatform : MonoBehaviour
+public class MotorPlatformPC : MonoBehaviour
 {
     // -- read vars
-    public CoreBody body;
+    public CoreBodyHybrid body;
     public ActorStatePlatform state;
     public PCMetadata metadata;
 
     // -- config vars
-    public float jumpStrength = 100;
-    public float groundMoveSpeed = 100;
-    public float airMoveSpeed = 25;
-    public float maxSpeedX = 200;
+    public float jumpStrength = 10;
+    public float groundMoveSpeed = 10;
+    public float airMoveSpeed = 5;
+    public float maxSpeedX = 15;
     public float wallJumpDelay = 0.1f;
-    public Vector2 wallJumpSpeed = new Vector2Int(40, 80);
+    public Vector2 wallJumpSpeed = new Vector2Int(20, 10);
 
     // -- write vars
     public float adjustedVelocityX;
-    public Vector2 velocity;
 
     public void Awake()
     {
@@ -26,8 +25,6 @@ public class PCMotorPlatform : MonoBehaviour
         {
             metadata.commandEmitter.onPCCommand += HandleCommand;
         };
-
-        state.Init(this);
     }
 
     public void HandleCommand(PCInputArgs args)
@@ -69,11 +66,13 @@ public class PCMotorPlatform : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         // wall cling & release
         if (!state.trigger.down.isTriggered)
         {
+            body.velocity.y -= body.gravity;
+
             if (IsWallClingState())
             {
                 state.platformState |= PlatformState.WALL_CLING;
@@ -96,6 +95,8 @@ public class PCMotorPlatform : MonoBehaviour
             state.platformState &= ~PlatformState.WALL_CLING;
             state.platformState &= ~PlatformState.WALL_RELEASE;
             state.platformState &= ~PlatformState.WALL_JUMPING;
+
+            body.velocity.y = 0;
         }
 
         // todo: implement air movement
@@ -117,7 +118,7 @@ public class PCMotorPlatform : MonoBehaviour
 
         if (state.platformState.HasFlag(PlatformState.JUMP))
         {
-            velocity.y = jumpStrength;
+            body.velocity.y = jumpStrength;
 
             state.platformState &= ~PlatformState.JUMP;
         }
@@ -148,11 +149,9 @@ public class PCMotorPlatform : MonoBehaviour
         }
 
         adjustedVelocityX = Mathf.Clamp(adjustedVelocityX, -maxSpeedX, maxSpeedX);
+        body.velocity.x = adjustedVelocityX;
 
-        if (Math.Abs(adjustedVelocityX) > 0)
-        {
-            velocity.x = adjustedVelocityX;
-        }
+        body.Tick();
     }
 
     public bool IsWallClingState()
