@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// todo: remove: this is currently useless
 public interface IBody
 {
     public void Velocity(Vector2 value);

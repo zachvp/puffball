@@ -154,6 +154,13 @@ public static class CoreConstants
     public const float THRESHOLD_DOT_INPUT = 0.84f;
     public const float THRESHOLD_DOT_PRECISE = 0.99f;
     public const float THRESHOLD_DOT_LOOSE = 0.7f;
+
+    public const string DEFAULT_MENU = "Custom/";
+
+    public static string DefaultMenuItem(string name)
+    {
+        return $"{DEFAULT_MENU}{name}";
+    }
 }
 
 public static class Emitter
