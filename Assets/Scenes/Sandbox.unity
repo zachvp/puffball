@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 957811082822879378, guid: 2db569ee6c7214ae6b4dec1db570d459, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4503778523266271689, guid: 2db569ee6c7214ae6b4dec1db570d459, type: 3}
       propertyPath: m_Mass
       value: 2
@@ -427,11 +431,15 @@ PrefabInstance:
       objectReference: {fileID: 6200000, guid: 3406b7b2e6dbc4850863fafa386485fd, type: 2}
     - target: {fileID: 4503778523266271689, guid: 2db569ee6c7214ae6b4dec1db570d459, type: 3}
       propertyPath: m_LinearDrag
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4503778523266271689, guid: 2db569ee6c7214ae6b4dec1db570d459, type: 3}
       propertyPath: m_AngularDrag
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503778523266271689, guid: 2db569ee6c7214ae6b4dec1db570d459, type: 3}
+      propertyPath: m_GravityScale
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5571521156754120018, guid: 2db569ee6c7214ae6b4dec1db570d459, type: 3}
       propertyPath: m_Sprite
