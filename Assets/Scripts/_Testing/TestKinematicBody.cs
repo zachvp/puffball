@@ -7,7 +7,6 @@ public class TestKinematicBody : MonoBehaviour
 {
     public Rigidbody2D body;
     public Collider2D attachedCollider;
-    public TriggerVolume triggerDown; // todo: remove
     public ActorStateTrigger trigger;
     public Command command;
     public Command commandPrev;
@@ -21,12 +20,12 @@ public class TestKinematicBody : MonoBehaviour
 
     public void Update()
     {
-        if (Keyboard.current.upArrowKey.wasPressedThisFrame && triggerDown.isTriggered)
+        if (Keyboard.current.upArrowKey.wasPressedThisFrame && trigger.down.isTriggered)
         {
             command |= Command.JUMP;
         }
 
-        if (!triggerDown.isTriggered)
+        if (!trigger.down.isTriggered)
         {
             command |= Command.FALL;
         }
@@ -67,7 +66,7 @@ public class TestKinematicBody : MonoBehaviour
             velocity.y -= gravity;
             command &= ~Command.FALL;
         }
-        else if (triggerDown.isTriggered)
+        else if (trigger.down.isTriggered)
         {
             velocity.y = 0;
         }
@@ -98,7 +97,6 @@ public class TestKinematicBody : MonoBehaviour
     }
 
     [Flags]
-    // todo: stop hardcoding values
     public enum Command
     {
         NONE = 0,
@@ -107,6 +105,6 @@ public class TestKinematicBody : MonoBehaviour
         MOVE_LEFT = 1 << 2,
         MOVE_RIGHT = 1 << 3,
         MOVE_NONE = 1 << 4,
-        CORRECTED_Y = 1 << 6
+        CORRECTED_Y = 1 << 5
     }
 }

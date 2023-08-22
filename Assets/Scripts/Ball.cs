@@ -16,7 +16,7 @@ public class Ball : MonoBehaviour
     {
         heldMovement.anchor = holdAnchor;
         body.StopVertical();
-        body.FreezeRotation();
+        body.ToggleRotationFreeze(true);
         
         held.SetActive(true);
         pickup.SetActive(false);
@@ -30,7 +30,7 @@ public class Ball : MonoBehaviour
         released.SetActive(true);
 
         body.ResetVertical();
-        body.UnfreezeRotation();
+        body.ToggleRotationFreeze(false);
     }
 
     // Deactivate the released object, activate the pickup object.
@@ -40,7 +40,7 @@ public class Ball : MonoBehaviour
         pickup.SetActive(true);
 
         body.ResetVertical();
-        body.UnfreezeRotation();
+        body.ToggleRotationFreeze(false);
 
         pickup.transform.position = released.transform.position;
     }
@@ -98,7 +98,7 @@ public class Ball : MonoBehaviour
             //Debug.Log($"shot magic: {shotMagic / 100}");
         }
 
-        body.Trigger(modVelocity);
+        body.Velocity(modVelocity);
     }
 
     // Deactivate the held object, activate the temp released object.
@@ -116,7 +116,7 @@ public class Ball : MonoBehaviour
             modVelocity.x -= 2 * assistThrow.x;
         }
 
-        body.Trigger(modVelocity);
+        body.Velocity(modVelocity);
     }
 
     public void Dribble(Vector2 baseVelocity)
@@ -127,6 +127,6 @@ public class Ball : MonoBehaviour
 
         Debug.Log("dribble");
 
-        body.Trigger(modVelocity);
+        body.Velocity(modVelocity);
     }
 }

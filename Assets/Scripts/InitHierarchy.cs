@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [Tooltip("Attach to a GameObject to mutate its Transform hierarchy on game start.")]
-// todo: rename to "InitHierarchy"
-public class AssignHierarchy : MonoBehaviour
+public class InitHierarchy : MonoBehaviour
 {
     // todo: remove
     [Tooltip("The other object to assign to this component's Transform hierarchy.")]
@@ -26,6 +25,15 @@ public class AssignHierarchy : MonoBehaviour
                 Debug.Assert(o != null, $"'None' entry in {nameof(Transform)}[]:{nameof(others)}");
                 Mutate(o);
             }
+        }
+
+        if (transform.parent)
+        {
+            Debug.Log($"init hierarchy object: {transform.parent.name}.{name}");
+        }
+        else
+        {
+            Debug.Log($"init hierarchy object: {name}");
         }
     }
 

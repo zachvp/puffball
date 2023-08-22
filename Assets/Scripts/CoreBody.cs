@@ -1,20 +1,23 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-// todo: split into separate 'PlatformBody' class - only use what ball and PC have in common
-[RequireComponent(typeof(Rigidbody2D))]
 public class CoreBody : MonoBehaviour
 {
+    // Links
     public Rigidbody2D body;
+
+    // One-time write state.
     public float originalGravity;
     public RigidbodyType2D originalType;
+
+    // Action events
     public Action<Collider2D> onAnyColliderEnter;
     public Action<Collision2D> onCollisionBodyEnter;
     public Action<Collision2D> onCollisionBodyExit;
     public Action<Collision2D> onCollisionBodyStay;
 
-    public Vector2 velocity { get { return body.velocity; } set { Trigger(value); } }
+    // Properties
+    public Vector2 velocity { get { return body.velocity; } set { Velocity(value); } }
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { Move(value); } }
 
@@ -25,7 +28,7 @@ public class CoreBody : MonoBehaviour
     }
 
     // -- MOVEMENT
-    public void Trigger(Vector2 value)
+    public void Velocity(Vector2 value)
     {
         StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
         {
@@ -33,7 +36,7 @@ public class CoreBody : MonoBehaviour
         }));
     }
 
-    public void TriggerX(float value)
+    public void VelocityX(float value)
     {
         StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
         {
@@ -44,7 +47,7 @@ public class CoreBody : MonoBehaviour
         }));
     }
 
-    public void TriggerY(float value)
+    public void VelocityY(float value)
     {
         StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
         {
@@ -57,7 +60,6 @@ public class CoreBody : MonoBehaviour
 
     public void Move(Vector2 position)
     {
-        //body.MovePosition(position);
         body.position = position;
     }
 
@@ -88,14 +90,9 @@ public class CoreBody : MonoBehaviour
         }));
     }
 
-    public void FreezeRotation()
+    public void ToggleRotationFreeze(bool value)
     {
-        body.freezeRotation = true;
-    }
-
-    public void UnfreezeRotation()
-    {
-        body.freezeRotation = false;
+        body.freezeRotation = value;
     }
 
     // -- COLLISIONS

@@ -114,7 +114,7 @@ public class PCPlatformMotor : MonoBehaviour
 
         if (state.platformState.HasFlag(PlatformState.JUMP))
         {
-            body.TriggerY(jumpStrength);
+            body.VelocityY(jumpStrength);
 
             state.platformState &= ~PlatformState.JUMP;
         }
@@ -122,7 +122,7 @@ public class PCPlatformMotor : MonoBehaviour
         {
             var velocity = wallJumpSpeed;
             velocity.x *= state.inputMove;
-            body.TriggerY(velocity.y);
+            body.VelocityY(velocity.y);
             adjustedVelocityX = velocity.x;
 
             state.platformState &= ~PlatformState.WALL_JUMP;
@@ -148,7 +148,7 @@ public class PCPlatformMotor : MonoBehaviour
 
         if (Math.Abs(adjustedVelocityX) > 0)
         {
-            body.TriggerX(adjustedVelocityX);
+            body.VelocityX(adjustedVelocityX);
         }
     }
 
