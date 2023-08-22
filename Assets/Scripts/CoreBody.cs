@@ -1,33 +1,30 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CoreSignalsCollision))]
-public class CoreBody : MonoBehaviour
+public class CoreBody : MonoBehaviour, IBody
 {
     // Links
-    // TODO: common, shared
     public Rigidbody2D body;
 
     // One-time write state.
-    // TODO: common, shared
     public float originalGravity;
-    public RigidbodyType2D originalType;
 
     // Action events
-    public CoreSignalsCollision actions;
+    public CoreSignalsCollision signals;
 
     // Properties
-    // TODO: common, not shared
     public Vector2 velocity { get { return body.velocity; } set { Velocity(value); } }
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { Move(value); } }
 
-    [ExecuteInEditMode]
     public void Awake()
     {
         originalGravity = body.gravityScale;
     }
 
-    // -- MOVEMENT
+    #region IBody
+
+    // -- movement
     public void Velocity(Vector2 value)
     {
         StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
@@ -68,17 +65,12 @@ public class CoreBody : MonoBehaviour
         body.MovePosition(position);
     }
 
-    // -- STATE CONTROL
     public void StopVertical()
     {
         StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
         {
-            var newVelocity = body.velocity;
-
-            newVelocity.y = 0;
             body.gravityScale = 0;
-
-            body.velocity = newVelocity;
+            VelocityY(0);
         }));
     }
 
@@ -94,4 +86,6 @@ public class CoreBody : MonoBehaviour
     {
         body.freezeRotation = value;
     }
+
+    #endregion
 }

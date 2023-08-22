@@ -19,7 +19,7 @@ public class LogicScore : MonoBehaviour
         ballBody = SceneRefs.instance.ball.body;
         ballCollider = SceneRefs.instance.ball.mainCollider;
 
-        ballBody.actions.onAnyColliderEnter += HandleBallColliderEntry;
+        ballBody.signals.onAnyColliderEnter += HandleBallColliderEntry;
     }
 
     public void HandleBallColliderEntry(Collider2D c)

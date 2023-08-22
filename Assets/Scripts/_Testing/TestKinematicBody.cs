@@ -12,7 +12,6 @@ public class TestKinematicBody : MonoBehaviour
     public Command commandPrev;
 
     public Vector2 velocity;
-    public Vector3 previousPosition;
 
     public float speed = 5;
     public float jumpStrength = 10;
