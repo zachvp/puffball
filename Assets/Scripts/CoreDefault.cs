@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 // todo: use ZCore namespace
 public static class CoreUtilities
 {
-    private static int testRecurse;
-
     public static IEnumerator RunTask(Action task)
     {
         while (true)

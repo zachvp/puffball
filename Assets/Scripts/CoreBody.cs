@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 
+[RequireComponent(typeof(CoreSignalsCollision))]
 public class CoreBody : MonoBehaviour
 {
     // Links
@@ -13,11 +13,7 @@ public class CoreBody : MonoBehaviour
     public RigidbodyType2D originalType;
 
     // Action events
-    // TODO: common, shared
-    public Action<Collider2D>  onAnyColliderEnter;
-    public Action<Collision2D> onCollisionBodyEnter;
-    public Action<Collision2D> onCollisionBodyExit;
-    public Action<Collision2D> onCollisionBodyStay;
+    public CoreSignalsCollision actions;
 
     // Properties
     // TODO: common, not shared
@@ -97,30 +93,5 @@ public class CoreBody : MonoBehaviour
     public void ToggleRotationFreeze(bool value)
     {
         body.freezeRotation = value;
-    }
-
-    // -- COLLISIONS
-    public void OnCollisionStay2D(Collision2D c)
-    {
-        //Debug.Log($"stay collision:  {c.gameObject.name}");
-        Emitter.Send(onCollisionBodyStay, c);
-    }
-
-    public void OnCollisionEnter2D(Collision2D c)
-    {
-        //Debug.Log("core body: on collision");
-
-        Emitter.Send(onAnyColliderEnter, c.collider);
-        Emitter.Send(onCollisionBodyEnter, c);
-    }
-
-    public void OnCollisionExit2D(Collision2D c)
-    {
-        Emitter.Send(onCollisionBodyExit, c);
-    }
-
-    public void OnTriggerEnter2D(Collider2D c)
-    {
-        Emitter.Send(onAnyColliderEnter, c);
     }
 }

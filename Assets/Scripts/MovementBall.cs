@@ -20,8 +20,8 @@ public class MovementBall : MonoBehaviour
 
     public void Start()
     {
-        body.onCollisionBodyEnter += HandleCollisionBodyEnter;
-        body.onCollisionBodyExit += HandleCollisionBodyExit;
+        body.actions.onCollisionBodyEnter += HandleCollisionBodyEnter;
+        body.actions.onCollisionBodyExit += HandleCollisionBodyExit;
         //body.onCollisionBodyStay += HandleCollisionBodyStay;
 
         attachedCollider = GetComponent<Collider2D>();

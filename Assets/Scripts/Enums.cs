@@ -1,16 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-public enum CustomHook : Int32
-{
-    INPUT_BUTTON,
-    INPUT_AXIS1D,
-    INPUT_AXIS2D,
-
-    COMMAND
-}
-
-
 [Flags]
 public enum Direction2D
 {
