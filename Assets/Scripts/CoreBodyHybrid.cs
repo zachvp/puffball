@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CoreBodyHybrid : MonoBehaviour, IBody
+public class CoreBodyHybrid : MonoBehaviour
 {
     // -- links
     public Rigidbody2D body;
@@ -25,7 +25,7 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
         originalGravity = gravity;
     }
 
-    public void Tick()
+    public void MoveBasedOnVelocity()
     {
         var newPos = body.position;
         newPos += velocity * (Time.fixedDeltaTime * stepCoefficient);
@@ -34,8 +34,6 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
 
         Move(newPos);
     }
-
-    #region IBody
 
     // todo: remove to enforce only velocity used?
     public void Move(Vector2 position)
@@ -51,28 +49,11 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
     public void StopVertical()
     {
         gravity = 0;
-        VelocityY(0);
+        velocity.y = 0;
     }
 
     public void ToggleRotationFreeze(bool value)
     {
         body.freezeRotation = value;
     }
-
-    public void Velocity(Vector2 value)
-    {
-        velocity = value;
-    }
-
-    public void VelocityX(float value)
-    {
-        velocity.x = value;
-    }
-
-    public void VelocityY(float value)
-    {
-        velocity.y = value;
-    }
-
-    #endregion
 }

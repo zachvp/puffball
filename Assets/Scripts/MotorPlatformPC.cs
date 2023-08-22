@@ -126,7 +126,8 @@ public class MotorPlatformPC : MonoBehaviour
         {
             var velocity = wallJumpSpeed;
             velocity.x *= state.inputMove;
-            body.VelocityY(velocity.y);
+
+            body.velocity.y = velocity.y;
             adjustedVelocityX = velocity.x;
 
             state.platformState &= ~PlatformState.WALL_JUMP;
@@ -151,7 +152,7 @@ public class MotorPlatformPC : MonoBehaviour
         adjustedVelocityX = Mathf.Clamp(adjustedVelocityX, -maxSpeedX, maxSpeedX);
         body.velocity.x = adjustedVelocityX;
 
-        body.Tick();
+        body.MoveBasedOnVelocity();
     }
 
     public bool IsWallClingState()

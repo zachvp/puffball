@@ -233,7 +233,7 @@ MonoBehaviour:
   platformState: 0
   triggerState: 0
   inputMove: 0
-  bufferLifetime: 0.5
+  bufferLifetime: 0.1
 --- !u!114 &2316993849719470132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,12 +249,12 @@ MonoBehaviour:
   body: {fileID: 105510562916713702}
   state: {fileID: 1352300995860335606}
   metadata: {fileID: 8844957231240594207}
-  jumpStrength: 10
+  jumpStrength: 30
   groundMoveSpeed: 13
   airMoveSpeed: 18
   maxSpeedX: 20
   wallJumpDelay: 0.1
-  wallJumpSpeed: {x: 20, y: 10}
+  wallJumpSpeed: {x: 15, y: 25}
   adjustedVelocityX: 0
 --- !u!1 &3765306959373598623
 GameObject:
@@ -861,7 +861,7 @@ Transform:
   - {fileID: 306507913140501161}
   - {fileID: 23359460135033210}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1400401066461234039
 PrefabInstance:
