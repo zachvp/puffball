@@ -3,10 +3,8 @@ using UnityEngine;
 [Tooltip("Attach to a GameObject to mutate its Transform hierarchy on game start.")]
 public class InitHierarchy : MonoBehaviour
 {
-    // todo: remove
-    [Tooltip("The other object to assign to this component's Transform hierarchy.")]
-    public Transform other;
 
+    [Tooltip("The other objects to assign to this component's Transform hierarchy.")]
     public Transform[] others = new Transform[1];
 
     [Tooltip("The type of assignment. For example, type CHILD will assign the other Transform as this Transform's child.")]
@@ -14,26 +12,10 @@ public class InitHierarchy : MonoBehaviour
 
     public void Start()
     {
-        if (other)
+        foreach (var o in others)
         {
-            Mutate(other);
-        }
-        else
-        {
-            foreach (var o in others)
-            {
-                Debug.Assert(o != null, $"'None' entry in {nameof(Transform)}[]:{nameof(others)}");
-                Mutate(o);
-            }
-        }
-
-        if (transform.parent)
-        {
-            Debug.Log($"init hierarchy object: {transform.parent.name}.{name}");
-        }
-        else
-        {
-            Debug.Log($"init hierarchy object: {name}");
+            Debug.Assert(o != null, $"'None' entry in {nameof(Transform)}[]:{nameof(others)}");
+            Mutate(o);
         }
     }
 
