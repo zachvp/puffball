@@ -8,16 +8,13 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
     public CoreSignalsCollision signals;
 
     // -- properties
-    public Vector2 velocity { get { return _velocity; } set { Velocity(value); } }
+    public Vector2 velocity;
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { body.position = value; } }
 
     // -- config
     public float gravity = 1; // todo: move to scriptable object
     public float originalGravity; // todo: move to scriptable object
-
-    // -- state
-    public Vector2 _velocity;
 
     public void Awake()
     {
@@ -52,17 +49,17 @@ public class CoreBodyHybrid : MonoBehaviour, IBody
 
     public void Velocity(Vector2 value)
     {
-        _velocity = value;
+        velocity = value;
     }
 
     public void VelocityX(float value)
     {
-        _velocity.x = value;
+        velocity.x = value;
     }
 
     public void VelocityY(float value)
     {
-        _velocity.y = value;
+        velocity.y = value;
     }
 
     #endregion

@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 
 // todo: migrate to pure C# class
-public class ActorStatePlatform : MonoBehaviour
+public class ActorStatePlatform
 {
+    public MonoBehaviour behaviour;
     public ActorStateTrigger trigger;
 
     // current state data
@@ -14,13 +15,12 @@ public class ActorStatePlatform : MonoBehaviour
 
     // buffered state data
     public float bufferLifetime = 0.5f;
-    public LinkedList<Direction2D> triggerStateBuffer;
-    public LinkedList<float> inputMoveBuffer;
+    public LinkedList<Direction2D> triggerStateBuffer = new LinkedList<Direction2D>();
+    public LinkedList<float> inputMoveBuffer = new LinkedList<float>();
 
-    public void Awake()
+    public void Init(MonoBehaviour b)
     {
-        triggerStateBuffer = new LinkedList<Direction2D>();
-        inputMoveBuffer = new LinkedList<float>();
+        behaviour = b;
     }
 
     public void Update()
@@ -31,10 +31,10 @@ public class ActorStatePlatform : MonoBehaviour
         var triggerEntry = triggerStateBuffer.AddLast(triggerState);
         var inputMoveEntry = inputMoveBuffer.AddLast(inputMove);
 
-        StartCoroutine(CoreUtilities.DelayedTask(bufferLifetime, () =>
+        behaviour.StartCoroutine(CoreUtilities.TaskDelayed(bufferLifetime, triggerEntry, inputMoveEntry, (trigger, input) =>
         {
-            triggerStateBuffer.Remove(triggerEntry);
-            inputMoveBuffer.Remove(inputMoveEntry);
+            triggerStateBuffer.Remove(trigger);
+            inputMoveBuffer.Remove(input);
         }));
     }
 }

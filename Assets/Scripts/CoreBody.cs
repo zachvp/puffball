@@ -27,15 +27,16 @@ public class CoreBody : MonoBehaviour, IBody
     // -- movement
     public void Velocity(Vector2 value)
     {
-        StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
             body.velocity = value;
         }));
     }
 
+    // todo: remove this and VelocityY; callers should use utility method instead to update Vector components.
     public void VelocityX(float value)
     {
-        StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
             var result = body.velocity;
             result.x = value;
@@ -46,7 +47,7 @@ public class CoreBody : MonoBehaviour, IBody
 
     public void VelocityY(float value)
     {
-        StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
             var result = body.velocity;
             result.y = value;
@@ -67,7 +68,7 @@ public class CoreBody : MonoBehaviour, IBody
 
     public void StopVertical()
     {
-        StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
             body.gravityScale = 0;
             VelocityY(0);
@@ -76,7 +77,7 @@ public class CoreBody : MonoBehaviour, IBody
 
     public void ResetVertical()
     {
-        StartCoroutine(CoreUtilities.PostFixedUpdateTask(() =>
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
             body.gravityScale = originalGravity;
         }));

@@ -11,9 +11,8 @@ public class TestKinematicBody : MonoBehaviour
     public Command command;
     public Command commandPrev;
 
-    public Vector2 velocity;
-
     public float speed = 5;
+    public float stepCoefficient = 0.5f;
     public float jumpStrength = 10;
 
     public void Update()
@@ -56,37 +55,37 @@ public class TestKinematicBody : MonoBehaviour
 
         if (command.HasFlag(Command.JUMP))
         {
-            velocity.y = jumpStrength;
+            body.velocity.y = jumpStrength;
             command &= ~Command.JUMP;
         }
         else if (command.HasFlag(Command.FALL))
         {
-            velocity.y -= body.gravity;
+            body.velocity.y -= body.gravity;
             command &= ~Command.FALL;
         }
         else if (trigger.down.isTriggered)
         {
-            velocity.y = 0;
+            body.velocity.y = 0;
         }
 
         if (command.HasFlag(Command.MOVE_RIGHT) && !command.HasFlag(Command.MOVE_NONE))
         {
-            velocity.x = speed;
+            body.velocity.x = speed;
             command &= ~Command.MOVE_RIGHT;
         }
         if (command.HasFlag(Command.MOVE_LEFT) && !command.HasFlag(Command.MOVE_NONE))
         {
-            velocity.x = -speed;
+            body.velocity.x = -speed;
             command &= ~Command.MOVE_LEFT;
         }
 
         if (command.HasFlag(Command.MOVE_NONE))
         {
-            velocity.x = 0;
+            body.velocity.x = 0;
             command &= ~Command.MOVE_NONE;
         }
 
-        newPos += velocity * (Time.fixedDeltaTime * 0.5f);
+        newPos += body.velocity * (Time.fixedDeltaTime * stepCoefficient);
 
         newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
 

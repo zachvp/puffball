@@ -167,10 +167,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842072dfb169a4df0a774b333ce21d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawn:
-  - {fileID: 0}
   trigger:
     value: 0
+  test: 
+  counter: 0
+  t: 0
+  maxT: 1
 --- !u!1001 &692774376
 PrefabInstance:
   m_ObjectHideFlags: 0

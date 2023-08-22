@@ -38,7 +38,7 @@ public class PCHandMotor : MonoBehaviour
                     state &= ~State.GRIP;
                     state |= State.BLOCKED;
 
-                    StartCoroutine(CoreUtilities.DelayedTask(interactionBlockDelay, () =>
+                    StartCoroutine(CoreUtilities.TaskDelayed(interactionBlockDelay, () =>
                     {
                         state &= ~State.BLOCKED;
                         ball.ThrowReset();
@@ -55,7 +55,7 @@ public class PCHandMotor : MonoBehaviour
                         state |= State.BLOCKED;
                         state |= State.GRIP;
 
-                        StartCoroutine(CoreUtilities.DelayedTask(interactionBlockDelay, () =>
+                        StartCoroutine(CoreUtilities.TaskDelayed(interactionBlockDelay, () =>
                         {
                             state &= ~State.BLOCKED;
                         }));
@@ -69,7 +69,7 @@ public class PCHandMotor : MonoBehaviour
                     state |= State.BLOCKED;
                     state &= ~State.GRIP;
 
-                    StartCoroutine(CoreUtilities.DelayedTask(interactionBlockDelay, () =>
+                    StartCoroutine(CoreUtilities.TaskDelayed(interactionBlockDelay, () =>
                     {
                         state &= ~State.BLOCKED;
                         ball.ActivatePickup();

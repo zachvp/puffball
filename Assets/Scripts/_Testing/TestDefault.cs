@@ -1,40 +1,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class TestDefault : MonoBehaviour
 {
-    public GameObject[] spawn;
     public VarWatch<bool> trigger;
 
-    public void Start()
-    {
-        trigger.onChanged += (old, updated) =>
-        {
-            if (updated)
-            {
-                Spawn();
-                trigger.value = false;
-            }
-        };
-    }
+    public List<int> test = new List<int>();
+    public int counter;
+    public float t;
+    public float maxT = 1;
 
     public void Update()
     {
-        trigger.Update(trigger.value);
-
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        if (t < maxT)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            t += Time.deltaTime;
         }
-    }
-
-    public void Spawn()
-    {
-        foreach (var s in spawn)
+        else
         {
-            var spawn = Instantiate(s, transform);
-            spawn.transform.position = transform.position;
+            test.Add(counter);
+            counter++;
         }
     }
 }

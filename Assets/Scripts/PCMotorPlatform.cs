@@ -26,6 +26,8 @@ public class PCMotorPlatform : MonoBehaviour
         {
             metadata.commandEmitter.onPCCommand += HandleCommand;
         };
+
+        state.Init(this);
     }
 
     public void HandleCommand(PCInputArgs args)

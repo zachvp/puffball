@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 // todo: use ZCore namespace
 public static class CoreUtilities
 {
-    public static IEnumerator RunTask(Action task)
+    public static IEnumerator TaskContinuous(Action task)
     {
         while (true)
         {
@@ -16,7 +16,7 @@ public static class CoreUtilities
         }
     }
 
-    public static IEnumerator RepeatTask(float interval, Action task)
+    public static IEnumerator TaskRepeat(float interval, Action task)
     {
         while (true)
         {
@@ -26,16 +26,28 @@ public static class CoreUtilities
         }
     }
 
-    public static IEnumerator PostFixedUpdateTask(Action task)
+    public static IEnumerator TaskFixedUpdate(Action task)
     {
         yield return new WaitForFixedUpdate();
         task();
     }
 
-    public static IEnumerator DelayedTask(float delay, Action task)
+    public static IEnumerator TaskDelayed(float delay, Action task)
     {
         yield return new WaitForSeconds(delay);
         task();
+    }
+
+    public static IEnumerator TaskDelayed<T>(float delay, T arg0, Action<T> task)
+    {
+        yield return new WaitForSeconds(delay);
+        task(arg0);
+    }
+
+    public static IEnumerator TaskDelayed<T, U>(float delay, T arg0, U arg1, Action<T, U> task)
+    {
+        yield return new WaitForSeconds(delay);
+        task(arg0, arg1);
     }
 
     // rounds given number to closest multiple of unit
