@@ -15,9 +15,6 @@ public class AssignSpriteCollider : MonoBehaviour
     [Tooltip("Set this to true to use the existing collider data on 'other', rather than creating one from scratch.")]
     public bool useExisting;
 
-    // todo: select collider type
-    // todo: traverse hierarchy to find sprite collider
-
     public void GenerateAndAssignCollider()
     {
         Debug.Assert(transform.position == Vector3.zero, "current transform is non-zero, collider offset will likely be innacurate");
@@ -30,7 +27,6 @@ public class AssignSpriteCollider : MonoBehaviour
                 "Close");
             return;
         }
-
         if (useExisting && other.GetComponent<Collider2D>() == null)
         {
             EditorUtility.DisplayDialog($"Error: {nameof(GenerateAndAssignCollider)}",
@@ -41,6 +37,7 @@ public class AssignSpriteCollider : MonoBehaviour
             return;
         }
 
+        // Assign collider based on configured type.
         switch (type)
         {
             case ColliderType.CIRCLE:

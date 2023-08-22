@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class DetectTouching : MonoBehaviour
 {
-    // todo: consider moving this group to a struct
     public LayerMask mask;
     public Collider2D target;
     public Collider2D[] overlappingObjects = new Collider2D[1];
