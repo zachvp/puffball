@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PCSpawnContainer : MonoBehaviour
+public class SpawnContainer : MonoBehaviour
 {
     [Tooltip("The object templates to spawn")]
-    public GameObject[] spawnObjects;
+    public GameObject[] spawnObjects = new GameObject[1];
 
     public void Start()
     {
@@ -15,6 +15,8 @@ public class PCSpawnContainer : MonoBehaviour
     {
         foreach (var spawnObject in spawnObjects)
         {
+            Debug.Assert(spawnObject != null, "spawn object item is empty");
+
             Instantiate(spawnObject);
         }
     }

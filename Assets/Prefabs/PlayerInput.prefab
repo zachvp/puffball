@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 282630918716548868}
   - component: {fileID: 8497167310454040637}
-  - component: {fileID: 8845472010209163669}
+  - component: {fileID: 1576443773005791886}
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: f7b78f7abe9a444a2b20d4b9f5f64338, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: e72faf96680dc41c29bd91e5082db593, type: 3}
   m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8845472010209163669
+--- !u!114 &1576443773005791886
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8861914110507934059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39602e915e02441beab1fcbc45c92022, type: 3}
+  m_Script: {fileID: 11500000, guid: 65c95e6d8edaa42aabe815d97c75219d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 8497167310454040637}

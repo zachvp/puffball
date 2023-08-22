@@ -2,15 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-[Serializable]
-public struct ActorStateTrigger
-{
-    // proximity triggers
-    public TriggerVolume right;
-    public TriggerVolume left;
-    public TriggerVolume down;
-}
-
 public class ActorStatePlatform : MonoBehaviour
 {
     public ActorStateTrigger trigger;
@@ -45,4 +36,26 @@ public class ActorStatePlatform : MonoBehaviour
             inputMoveBuffer.Remove(inputMoveEntry);
         }));
     }
+}
+
+[Serializable]
+public struct ActorStateTrigger
+{
+    // proximity triggers
+    public TriggerVolume right;
+    public TriggerVolume left;
+    public TriggerVolume down;
+}
+
+[Flags]
+public enum PlatformState
+{
+    NONE = 0,
+    JUMP = 1 << 0,
+    MOVE = 1 << 1,
+    MOVE_NEUTRAL = 1 << 2,
+    WALL_JUMP = 1 << 3,
+    WALL_JUMPING = 1 << 4,
+    WALL_CLING = 1 << 5,
+    WALL_RELEASE = 1 << 6,
 }
