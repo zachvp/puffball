@@ -728,7 +728,7 @@ MonoBehaviour:
   body: {fileID: 0}
   root: {fileID: 4652500295378191891}
   target: {fileID: 9081336486725928997}
-  range: 2
+  range: 1.2
 --- !u!1 &8092648284696041446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,7 +1750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 307939406976069252, guid: 6866cc0c78cb54eb08dd3274856dc8ed, type: 3}
       propertyPath: m_BodyType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1167453145098205024, guid: 6866cc0c78cb54eb08dd3274856dc8ed, type: 3}
       propertyPath: time

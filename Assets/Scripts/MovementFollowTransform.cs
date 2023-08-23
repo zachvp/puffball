@@ -58,8 +58,8 @@ public class MovementFollowTransform : MonoBehaviour
     {
         if (usePhysics)
         {
-            //body.position = position;
-            body.MoveKinematic(position);
+            body.position = position;
+            //body.MoveKinematic(position);
         }
         else
         {

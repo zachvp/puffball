@@ -39,8 +39,8 @@ public class MovementRadial : MonoBehaviour, IControlPC
 
         if (body)
         {
-            //body.position = newPos;
-            body.MoveKinematic(newPos);
+            body.position = newPos;
+            //body.MoveKinematic(newPos);
         }
         else
         {
