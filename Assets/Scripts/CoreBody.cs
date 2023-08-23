@@ -1,7 +1,7 @@
 using UnityEngine;
+using System;
 
-[RequireComponent(typeof(CoreSignalsCollision))]
-public class CoreBody : MonoBehaviour, IBody
+public class CoreBody : MonoBehaviour
 {
     // Links
     public Rigidbody2D body;
@@ -10,6 +10,7 @@ public class CoreBody : MonoBehaviour, IBody
     public float originalGravity;
 
     // Action events
+    [NonSerialized]
     public CoreSignalsCollision signals;
 
     // Properties
@@ -20,9 +21,17 @@ public class CoreBody : MonoBehaviour, IBody
     public void Awake()
     {
         originalGravity = body.gravityScale;
+
+        // todo: simply add the component
+        signals = GetComponent<CoreSignalsCollision>();
+
+        if (signals = null)
+        {
+            signals = gameObject.AddComponent<CoreSignalsCollision>();
+        }
     }
 
-    #region IBody
+    #region Primary interface
 
     // -- movement
     public void Velocity(Vector2 value)

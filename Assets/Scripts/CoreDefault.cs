@@ -32,6 +32,12 @@ public static class CoreUtilities
         task();
     }
 
+    public static IEnumerator TaskFixedUpdate<T>(T arg0, Action<T> task)
+    {
+        yield return new WaitForFixedUpdate();
+        task(arg0);
+    }
+
     public static IEnumerator TaskDelayed(float delay, Action task)
     {
         yield return new WaitForSeconds(delay);
@@ -149,6 +155,7 @@ public static class CoreUtilities
 public static class CoreConstants
 {
     public const float DEADZONE_FLOAT = 0.01f;
+    public const float DEADZONE_FLOAT_INPUT = 0.05f;
     public const float DEADZONE_VELOCITY = 2;
     public const float UNIT_ROUND_POSITION = 1f / 32f;
     public const float THRESHOLD_DOT_INPUT = 0.84f;

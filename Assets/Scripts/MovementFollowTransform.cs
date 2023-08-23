@@ -11,7 +11,7 @@ public class MovementFollowTransform : MonoBehaviour
     [CoreConditional(nameof(usePhysics))]
     public CoreBody body;
 
-    // todo: add core conditional support for FollowType
+    [CoreConditionalEnum("type", FollowType.LAG)]
     public float time = 1f;
 
     [NonSerialized]
@@ -58,7 +58,8 @@ public class MovementFollowTransform : MonoBehaviour
     {
         if (usePhysics)
         {
-            body.position = position;
+            //body.position = position;
+            body.MoveKinematic(position);
         }
         else
         {

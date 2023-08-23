@@ -5,6 +5,8 @@ public class CoreBodyHybrid : MonoBehaviour
 {
     // -- links
     public Rigidbody2D body;
+
+    [NonSerialized]
     public CoreSignalsCollision signals;
 
     // -- properties
@@ -23,6 +25,14 @@ public class CoreBodyHybrid : MonoBehaviour
         Debug.Assert(body.bodyType == RigidbodyType2D.Dynamic, $"expected attached {nameof(Rigidbody2D)} to be {nameof(RigidbodyType2D.Dynamic)}");
 
         originalGravity = gravity;
+
+        // todo: simply add the component
+        signals = GetComponent<CoreSignalsCollision>();
+
+        if (signals = null)
+        {
+            signals = gameObject.AddComponent<CoreSignalsCollision>();
+        }
     }
 
     public void MoveBasedOnVelocity()

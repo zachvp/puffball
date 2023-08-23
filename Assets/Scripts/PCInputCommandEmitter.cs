@@ -14,21 +14,17 @@ public class PCInputCommandEmitter : MonoBehaviour
     public void Awake()
     {
         data.playerIndex = playerInput.playerIndex;
+        playerInput.onActionTriggered += HandleActionTriggered;
+    }
+
+    public void OnDestroy()
+    {
+        onPCCommand = null;
     }
 
     public void Start()
     {
         Emitter.Send(Signals.instance.onPCCommandEmitterSpawn, this);
-    }
-
-    public void OnEnable()
-    {
-        playerInput.onActionTriggered += HandleActionTriggered;
-    }
-
-    public void OnDisable()
-    {
-        playerInput.onActionTriggered -= HandleActionTriggered;
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)

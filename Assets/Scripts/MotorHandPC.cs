@@ -1,16 +1,16 @@
 using System;
 using UnityEngine;
 
-public class PCHandMotor : MonoBehaviour
+public class MotorHandPC : MonoBehaviour, IControlPC
 {
     public TriggerVolume grabTrigger;
     public CoreBody body;
-    public PCPlatformMotor motor;
+    public MotorPlatformPC motor;
     public Transform holdAnchor;
     public MovementRadial movementHeldPickup;
     public PCMetadata metadata;
 
-    public float interactionBlockDelay;
+    public float interactionBlockDelay = 0.5f;
     public State state;
 
     public void Awake()
@@ -28,7 +28,7 @@ public class PCHandMotor : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.MOVE_HAND:
-                movementHeldPickup.Trigger(args.vVec2);
+                movementHeldPickup.RadialPosition(args.vVec2);
                 break;
             case CoreActionMap.Player.THROW:
                 if (state == State.GRIP)

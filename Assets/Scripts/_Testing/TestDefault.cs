@@ -14,6 +14,8 @@ public class TestDefault : MonoBehaviour
 
     public void Update()
     {
+        var keyboard = Keyboard.current;
+
         if (t < maxT)
         {
             t += Time.deltaTime;
@@ -22,6 +24,11 @@ public class TestDefault : MonoBehaviour
         {
             test.Add(counter);
             counter++;
+        }
+
+        if (keyboard.tabKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

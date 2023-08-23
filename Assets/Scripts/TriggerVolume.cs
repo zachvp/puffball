@@ -10,7 +10,6 @@ public class TriggerVolume : MonoBehaviour
     [NonSerialized]
     new public Collider2D collider;
 
-#if DEBUG
     public void Awake()
     {
         collider = GetComponent<Collider2D>();
@@ -19,7 +18,6 @@ public class TriggerVolume : MonoBehaviour
         Debug.AssertFormat(overlappingObjects.Length > 0, "non-zero length required for trigger");
         Debug.AssertFormat(collider.isTrigger, "attached collider required to be trigger");
     }
-#endif
 
     public void OnTriggerEnter2D(Collider2D other)
     {
