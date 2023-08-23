@@ -53,6 +53,11 @@ public class MovementRadial : MonoBehaviour, IControlPC
 
     public void Reset()
     {
+        if (target == null)
+        {
+            Debug.Log("null target!");
+        }
+
         target.position = root.position;
     }
 }

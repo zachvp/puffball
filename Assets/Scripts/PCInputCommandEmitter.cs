@@ -14,12 +14,16 @@ public class PCInputCommandEmitter : MonoBehaviour
     public void Awake()
     {
         data.playerIndex = playerInput.playerIndex;
+    }
+
+    public void OnEnable()
+    {
         playerInput.onActionTriggered += HandleActionTriggered;
     }
 
-    public void OnDestroy()
+    public void OnDisable()
     {
-        onPCCommand = null;
+        playerInput.onActionTriggered -= HandleActionTriggered;
     }
 
     public void Start()
@@ -29,7 +33,10 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     public void HandleActionTriggered(InputAction.CallbackContext context)
     {
-        if (EnumHelper.GetActionMap(context.action.actionMap.name) == actionMapType)
+        // Check if player input is active. The input system triggers an event when it's disabled
+        // (e.g. when scene is unloaded), which means some downstream objects may be accessed
+        // after they've been deallocated.
+        if (playerInput.isActiveAndEnabled && EnumHelper.GetActionMap(context.action.actionMap.name) == actionMapType)
         {
             var actionType = EnumHelper.GetPlayerAction(context.action.name);
 

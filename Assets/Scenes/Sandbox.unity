@@ -209,19 +209,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5770903003457931662, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
       propertyPath: m_AllowJoining
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047341207529325979, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7157281034299352284, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
       propertyPath: m_Name
       value: DefaultSceneDependencies
-      objectReference: {fileID: 0}
-    - target: {fileID: 7157281034299352284, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -334,7 +326,7 @@ MonoBehaviour:
   metadata: {fileID: 0}
   body: {fileID: 0}
   root: {fileID: 320976656}
-  target: {fileID: 1075464378}
+  target: {fileID: 0}
   range: 2
 --- !u!4 &1075464378
 Transform:
@@ -1463,7 +1455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9039405513902238794, guid: 7f1df5202d2d24363b358a1b489073c5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
