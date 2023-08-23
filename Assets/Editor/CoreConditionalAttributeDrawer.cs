@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using System;
 
 [CustomPropertyDrawer(typeof(CoreConditionalAttribute))]
 public class CoreConditionalAttributeDrawer : PropertyDrawer
@@ -13,9 +14,22 @@ public class CoreConditionalAttributeDrawer : PropertyDrawer
         var cast = attribute as CoreConditionalAttribute;
         var sourceProperty = property.serializedObject.FindProperty(cast.sourcePropertyName);
 
-        // Only display this field if the source property is enabled.
+        // Only display this field if the source property equals the configured value.
+        var display = false;
+        switch (sourceProperty.propertyType)
+        {
+            case SerializedPropertyType.Boolean:
+                display = sourceProperty.boolValue;
+                break;
+            case SerializedPropertyType.Enum:
+                display = sourceProperty.enumValueIndex == Convert.ToInt32(cast.checkValue);
+                break;
+            default:
+                Debug.LogError($"unhandled value type: {sourceProperty.propertyType}");
+                break;
+        }
 
-        if (sourceProperty.boolValue)
+        if (display)
         {
             EditorGUI.PropertyField(position, property, label);
         }

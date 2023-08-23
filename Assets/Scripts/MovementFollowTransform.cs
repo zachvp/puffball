@@ -8,10 +8,11 @@ public class MovementFollowTransform : MonoBehaviour
     public Vector3 offset;
     public bool usePhysics;
 
+    //[CoreConditional(nameof(usePhysics))]
     [CoreConditional(nameof(usePhysics))]
     public CoreBody body;
 
-    [CoreConditionalEnum("type", FollowType.LAG)]
+    [CoreConditional("type", FollowType.LAG)]
     public float time = 1f;
 
     [NonSerialized]

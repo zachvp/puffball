@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class MotorHandPC : MonoBehaviour, IControlPC
+public class MotorHandPC : MonoBehaviour
 {
     public TriggerVolume grabTrigger;
     public CoreBody body;
@@ -28,7 +28,7 @@ public class MotorHandPC : MonoBehaviour, IControlPC
         switch (args.type)
         {
             case CoreActionMap.Player.MOVE_HAND:
-                movementHeldPickup.RadialPosition(args.vVec2);
+                movementHeldPickup.Move(args.vVec2);
                 break;
             case CoreActionMap.Player.THROW:
                 if (state == State.GRIP)

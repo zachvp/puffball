@@ -5,9 +5,16 @@ using UnityEngine;
 public class CoreConditionalAttribute : PropertyAttribute
 {
     public readonly string sourcePropertyName;
+    public readonly object checkValue;
 
     public CoreConditionalAttribute(string sourceName)
     {
         sourcePropertyName = sourceName;
+    }
+
+    public CoreConditionalAttribute(string sourceName, object value)
+        : this(sourceName)
+    {
+        checkValue = value;
     }
 }

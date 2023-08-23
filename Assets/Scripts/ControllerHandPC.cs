@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 
-public class ControllerPC : MonoBehaviour, IControlPC
+public class ControllerHandPC : MonoBehaviour
 {
+    // links
     public PCMetadata meta;
     public MovementFollowTransform handNeutral;
     public MovementRadial handRadial;
+
+    // config
     public float deadzone = 0.05f;
 
     public void Awake()
@@ -24,13 +27,12 @@ public class ControllerPC : MonoBehaviour, IControlPC
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > deadzone)
                 {
                     handNeutral.type = MovementFollowTransform.FollowType.SNAP;
-                    handRadial.RadialPosition(args.vVec2);
-
+                    handRadial.Move(args.vVec2);
                 }
                 else
                 {
                     handNeutral.type = MovementFollowTransform.FollowType.LAG;
-                    handRadial.Reset();
+                    handRadial.ResetPosition();
                 }
                 
                 break;
