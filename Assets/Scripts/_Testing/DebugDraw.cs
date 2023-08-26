@@ -8,6 +8,12 @@ public class DebugDraw : MonoBehaviour
 
     public void Update()
     {
+        DrawHorizontal();
+        DrawVertical();
+    }
+
+    public void DrawHorizontal()
+    {
         var start = transform.position;
         start.x -= length;
 
@@ -15,12 +21,16 @@ public class DebugDraw : MonoBehaviour
         end.x += length;
 
         Debug.DrawLine(start, end, color);
+    }
 
+    public void DrawVertical()
+    {
+        var start = transform.position;
         start.y -= length;
+
+        var end = transform.position;
         end.y += length;
 
-        start.x = transform.position.x;
-        end.x = transform.position.x;
         Debug.DrawLine(start, end, color);
     }
 }

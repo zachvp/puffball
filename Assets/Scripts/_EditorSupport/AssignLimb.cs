@@ -2,41 +2,53 @@
 
 using UnityEngine;
 using UnityEditor;
+using System;
 
-/// <summary>
-/// 
-/// </summary>
+
+[Serializable]
+public struct LimbBinding
+{
+    public GameObject source;
+    public GameObject target;
+}
+
 [Tooltip("Use to generate a limb hierarchy from a source limb GameObject root.")]
 public class AssignLimb : MonoBehaviour
 {
-    [Tooltip("The limb's source GameObject. The hierarchy and components of this source will be copied." +
-        "Thart copy will then be manipulated")]
-    public GameObject[] source = new GameObject[1];
+    [Tooltip("The limb's binding definitions. The hierarchy and components of the sources will be copied to the corresponding targets.")]
+    public LimbBinding[] bindings = new LimbBinding[1];
 
     public void GenerateAll()
     {
-        foreach (var o in source)
+        foreach (var binding in bindings)
         {
-            Generate(o);
+            Generate(binding.source, binding.target);
         }
     }
 
-    public void Generate(GameObject gameObject)
+    public void Generate(GameObject source, GameObject target)
     {
         Debug.Log($"generating limb from source: {source}, destroy current children");
 
         // reset source
-        gameObject.SetActive(true);
+        source.SetActive(true);
 
-        // clean current hierarchy
-        while (transform.childCount > 0)
+        var existing = CoreUtilities.FindChild(target, CoreConstants.NAME_OBJECT_VIS);
+
+        // clean any existing hierarchy
+        if (existing)
         {
-            DestroyImmediate(transform.GetChild(0).gameObject);
+            while (existing.transform.childCount > 0)
+            {
+                DestroyImmediate(existing.transform.GetChild(0).gameObject);
+            }
+
+            DestroyImmediate(existing);
         }
 
         // create limb from source, assign as child
-        var limb = Instantiate(gameObject, transform);
-        limb.name = gameObject.name;
+        var limb = Instantiate(source, target.transform);
+        limb.name = CoreConstants.NAME_OBJECT_VIS;
 
         // set this Transform's current position to be the fill offset,
         // then zero out the instantiated Transform hiarchy positions
@@ -55,8 +67,8 @@ public class AssignLimb : MonoBehaviour
             child.localPosition = Vector3.zero;
         }
 
-        transform.localPosition = newPos;
-        gameObject.SetActive(false);
+        target.transform.localPosition = newPos;
+        source.SetActive(false);
     }
 }
 

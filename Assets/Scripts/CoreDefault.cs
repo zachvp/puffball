@@ -150,6 +150,25 @@ public static class CoreUtilities
         }
 
     }
+
+    public static GameObject FindChild(GameObject source, string name)
+    {
+        GameObject result = null;
+
+        for (var i = 0; i < source.transform.childCount; i++)
+        {
+            var child = source.transform.GetChild(i);
+
+            if (child.name.Equals(name))
+            {
+                Debug.Assert(result == null, $"multiple children {name} found on {nameof(GameObject)} {source}");
+
+                result = child.gameObject;
+            }
+        }
+
+        return result;
+    }
 }
 
 public static class CoreConstants
@@ -165,6 +184,7 @@ public static class CoreConstants
     public const string DEFAULT_MENU = "Custom/";
 
     public const string NAME_OBJECT_FILL = "fill";
+    public const string NAME_OBJECT_VIS = "vis";
 }
 
 public static class Emitter
