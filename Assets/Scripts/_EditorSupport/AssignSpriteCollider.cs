@@ -47,7 +47,8 @@ public class AssignSpriteCollider : MonoBehaviour
         switch (config.type)
         {
             case ColliderType.CIRCLE:
-                attachedCollider = ApplyCircle(config);
+                //attachedCollider = ApplyCircle(config);
+                attachedCollider = ApplyCircleNew(config);
                 break;
             case ColliderType.POLYGON:
                 attachedCollider = ApplyPolygon(config);
@@ -66,10 +67,15 @@ public class AssignSpriteCollider : MonoBehaviour
         }
     }
 
-    //public Collider2D ApplyShape<T>(SpriteColliderConfig config)
-    //{
+    public Collider2D ApplyCircleNew(SpriteColliderConfig config)
+    {
+        var circle = ApplyShape<CircleCollider2D>(config, (original, attached) =>
+        {
+            CoreUtilities.CopyCollider(original, attached);
+        });
 
-    //}
+        return circle;
+    }
 
     public Collider2D ApplyCircle(SpriteColliderConfig config)
     {
@@ -143,6 +149,33 @@ public class AssignSpriteCollider : MonoBehaviour
         var attached = config.target.AddComponent<CapsuleCollider2D>();
 
         CoreUtilities.CopyCollider(original, attached);
+
+        if (!config.useExisting)
+        {
+            DestroyImmediate(original);
+        }
+
+        return attached;
+    }
+
+    public T ApplyShape<T>(SpriteColliderConfig config, Action<T, T> copy) where T : Collider2D
+    {
+        T original;
+
+        RemoveAllAttachedColliders(config.target);
+
+        if (config.useExisting)
+        {
+            original = config.source.GetComponent<T>();
+        }
+        else
+        {
+            RemoveAllAttachedColliders(config.source);
+            original = config.source.AddComponent<T>();
+        }
+        var attached = config.target.AddComponent<T>();
+
+        copy(original, attached);
 
         if (!config.useExisting)
         {
