@@ -20,7 +20,7 @@ public class AssignLimbEditor : Editor
             {
                 var component = (AssignLimb) target;
 
-                component.Generate();
+                component.GenerateAll();
             }
             else
             {

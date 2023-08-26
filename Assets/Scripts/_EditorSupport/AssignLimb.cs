@@ -11,14 +11,22 @@ public class AssignLimb : MonoBehaviour
 {
     [Tooltip("The limb's source GameObject. The hierarchy and components of this source will be copied." +
         "Thart copy will then be manipulated")]
-    public GameObject source;
+    public GameObject[] source = new GameObject[1];
 
-    public void Generate()
+    public void GenerateAll()
+    {
+        foreach (var o in source)
+        {
+            Generate(o);
+        }
+    }
+
+    public void Generate(GameObject gameObject)
     {
         Debug.Log($"generating limb from source: {source}, destroy current children");
 
         // reset source
-        source.SetActive(true);
+        gameObject.SetActive(true);
 
         // clean current hierarchy
         while (transform.childCount > 0)
@@ -27,8 +35,8 @@ public class AssignLimb : MonoBehaviour
         }
 
         // create limb from source, assign as child
-        var limb = Instantiate(source, transform);
-        limb.name = source.name;
+        var limb = Instantiate(gameObject, transform);
+        limb.name = gameObject.name;
 
         // set this Transform's current position to be the fill offset,
         // then zero out the instantiated Transform hiarchy positions
@@ -48,7 +56,7 @@ public class AssignLimb : MonoBehaviour
         }
 
         transform.localPosition = newPos;
-        source.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
 
