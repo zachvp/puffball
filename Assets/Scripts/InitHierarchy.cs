@@ -39,7 +39,6 @@ public class InitHierarchy : MonoBehaviour
             }
 
             transform.position = newPos;
-            //offset.localPosition = Vector3.zero;
         }
     }
 

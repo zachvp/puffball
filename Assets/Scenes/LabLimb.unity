@@ -196,11 +196,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
---- !u!4 &1322948009 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9005420149244875538, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
-  m_PrefabInstance: {fileID: 1706668921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1706668921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,10 +208,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestLimb
       objectReference: {fileID: 0}
-    - target: {fileID: 2633797816968687103, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
-      propertyPath: offset
-      value: 
-      objectReference: {fileID: 1322948009}
     - target: {fileID: 7979042180942611295, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
       propertyPath: m_RootOrder
       value: 1

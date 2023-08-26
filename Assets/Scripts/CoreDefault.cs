@@ -164,10 +164,7 @@ public static class CoreConstants
 
     public const string DEFAULT_MENU = "Custom/";
 
-    public static string DefaultMenuItem(string name)
-    {
-        return $"{DEFAULT_MENU}{name}";
-    }
+    public const string NAME_OBJECT_FILL = "fill";
 }
 
 public static class Emitter
