@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 5571521156754120018}
   - component: {fileID: 7954492993172287882}
   m_Layer: 7
-  m_Name: PhysicsBall
+  m_Name: BallPhysics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7947179616948236649
 Transform:
   m_ObjectHideFlags: 0
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4503778523266271689
 Rigidbody2D:

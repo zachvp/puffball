@@ -2,19 +2,38 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    // links
     public CoreBody body;
     public Collider2D mainCollider;
     public GameObject pickup;
     public GameObject held;
     public GameObject released;
-    public MovementFollowTransform heldMovement;
+    public MovementFollowTransform follow;
 
     public Vector2 assistThrow = new Vector2(50, 50);
 
-    // Activate the held object, deactivate the pickup object.
-    public void Grab(Transform holdAnchor)
+    public void GrabNew(Transform parent)
     {
-        heldMovement.anchor = holdAnchor;
+        body.StopVertical();
+        body.ToggleRotationFreeze(true);
+        //body.body.simulated = false;
+
+        //transform.SetParent(parent);
+        follow.anchor = parent;
+        follow.enabled = true;
+        //transform.localPosition = Vector3.zero;
+        //body.position = transform.position;
+        Debug.Log($"grab ball");
+    }
+
+    public void ReleaseNew()
+    {
+        Debug.Log($"release ball");
+    }
+
+    // Activate the held object, deactivate the pickup object.
+    public void Grab()
+    {
         body.StopVertical();
         body.ToggleRotationFreeze(true);
         

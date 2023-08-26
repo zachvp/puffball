@@ -8,7 +8,6 @@ public class MovementFollowTransform : MonoBehaviour
     public Vector3 offset;
     public bool usePhysics;
 
-    //[CoreConditional(nameof(usePhysics))]
     [CoreConditional(nameof(usePhysics))]
     public CoreBody body;
 
@@ -46,7 +45,7 @@ public class MovementFollowTransform : MonoBehaviour
 
             t += Time.deltaTime;
 
-            UpdatePosition(modPos);
+            UpdatePosition(modPos + offset);
         }
     }
 

@@ -7,9 +7,17 @@ public class ControllerHandPC : MonoBehaviour
     public PCMetadata meta;
     public MovementFollowTransform handNeutral;
     public MovementRadial handRadial;
+    public TriggerVolume triggerGrab;
+    public Collider2D colliderBody;
 
     // config
     public float deadzone = 0.05f;
+
+    // dynamic links
+    private Ball ball;
+
+    // state
+    State state;
 
     public void Awake()
     {
@@ -36,6 +44,32 @@ public class ControllerHandPC : MonoBehaviour
                 }
                 
                 break;
+            case CoreActionMap.Player.GRIP:
+                if (args.vBool && triggerGrab.isTriggered)
+                {
+                    if (state == State.NONE)
+                    {
+                        var grabObject = triggerGrab.overlappingObjects[0];
+                        Debug.Log($"triggered grab on object: {grabObject}");
+                        ball = grabObject.GetComponent<Ball>();
+                        Debug.Assert(ball != null, $"unable to find {nameof(Ball)} component");
+                        ball.GrabNew(transform);
+                        var collider = grabObject.GetComponent<Collider2D>();
+
+                        Physics2D.IgnoreCollision(colliderBody, collider);
+                        state |= State.GRIP;
+                    }
+                }
+                break;
         }
+    }
+
+    // -- Class definitions
+    [Flags]
+    public enum State
+    {
+        NONE = 0,
+        GRIP = 1 << 0,
+        BLOCKED = 1 << 1
     }
 }

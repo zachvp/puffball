@@ -50,7 +50,7 @@ public class MotorHandPC : MonoBehaviour
                 {
                     if (ball != null && state == State.NONE)
                     {
-                        ball.Grab(holdAnchor);
+                        ball.Grab();
 
                         state |= State.BLOCKED;
                         state |= State.GRIP;
