@@ -99,7 +99,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: pupil
+  - name: fill
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -595,18 +595,18 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 1
-  - name: eye
+  - name: pupil
     spriteName: 
     isGroup: 1
     parentIndex: 0
-    spriteID: 51aa80ec1a98e4b5a851d1af0066410f
-    layerID: 81
+    spriteID: cbfd42409a0094923a3c69f48518421c
+    layerID: 86
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
     isVisible: 1
-  - name: pupil
-    spriteName: pupil
+  - name: fill
+    spriteName: fill
     isGroup: 0
     parentIndex: 1
     spriteID: 10e353aa42fa648d885dea44754dc69d
@@ -615,12 +615,12 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: whites
+  - name: eye_whites
     spriteName: 
     isGroup: 1
-    parentIndex: 1
-    spriteID: d82056d83996441e7be6f72e108da365
-    layerID: 83
+    parentIndex: 0
+    spriteID: 51aa80ec1a98e4b5a851d1af0066410f
+    layerID: 81
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0

@@ -2,39 +2,40 @@
 
 using UnityEngine;
 using UnityEditor;
+using System;
 
 [Tooltip("Use to generate a collider on a target GameObject, then assign that collider to this GameObject.")]
 public class AssignSpriteCollider : MonoBehaviour
 {
-    [Tooltip("The other GameObject that is the collider's source.")]
-    public GameObject source;
-
-    [Tooltip("The type of collider to assign")]
-    public ColliderType type;
-
-    [Tooltip("Set this to true to use the existing collider data on 'other', rather than creating one from scratch.")]
-    public bool useExisting;
-
-    [Tooltip("Set this to false to use zero offset for the generated collider.")]
-    public bool useSourceOffset = true;
+    public SpriteColliderConfig[] config = new SpriteColliderConfig[1];
 
     public void GenerateAndAssignCollider()
+    {
+        foreach (var c in config)
+        {
+            GenerateAndAssignCollider(c);
+        }
+
+        EditorUtility.DisplayDialog("Generation complete", "Finished generating colliders.", "Close");
+    }
+
+    public void GenerateAndAssignCollider(SpriteColliderConfig config)
     {
         Debug.Assert(transform.position == Vector3.zero, "current transform is non-zero, collider offset will likely be innacurate");
 
         // Validation
-        if (source == null)
+        if (config.source == null)
         {
             EditorUtility.DisplayDialog($"Error: {nameof(GenerateAndAssignCollider)}",
-                $"'{nameof(GameObject)}:{nameof(source)}' is null. Please assign before generation. Script will halt now.",
+                $"'{nameof(GameObject)}:{nameof(config.source)}' is null. Please assign before generation. Script will halt now.",
                 "Close");
             return;
         }
-        if (useExisting && source.GetComponent<Collider2D>() == null)
+        if (config.useExisting && config.source.GetComponent<Collider2D>() == null)
         {
             EditorUtility.DisplayDialog($"Error: {nameof(GenerateAndAssignCollider)}",
-                $"Script is configured to '{nameof(useExisting)}={useExisting}', " +
-                $"but there is no Collider2D component on '{nameof(GameObject)}:{source.name}'. Script will halt now.",
+                $"Script is configured to '{nameof(config.useExisting)}={config.useExisting}', " +
+                $"but there is no Collider2D component on '{nameof(GameObject)}:{config.source.name}'. Script will halt now.",
                 "Close");
 
             return;
@@ -43,48 +44,53 @@ public class AssignSpriteCollider : MonoBehaviour
         Collider2D attachedCollider = null;
 
         // Assign collider based on configured type.
-        switch (type)
+        switch (config.type)
         {
             case ColliderType.CIRCLE:
-                attachedCollider = ApplyCircle(source);
+                attachedCollider = ApplyCircle(config);
                 break;
             case ColliderType.POLYGON:
-                attachedCollider = ApplyPolygon(source);
+                attachedCollider = ApplyPolygon(config);
                 break;
             case ColliderType.CAPSULE:
-                attachedCollider = ApplyCapsule(source);
+                attachedCollider = ApplyCapsule(config);
                 break;
             default:
-                Debug.LogError($"unhandled collider type: {type}");
+                Debug.LogError($"unhandled collider type: {config.type}");
                 break;
         }
 
-        if (!useSourceOffset && attachedCollider)
+        if (!config.useSourceOffset && attachedCollider)
         {
             attachedCollider.offset = Vector2.zero;
         }
     }
 
-    public Collider2D ApplyCircle(GameObject other)
+    //public Collider2D ApplyShape<T>(SpriteColliderConfig config)
+    //{
+
+    //}
+
+    public Collider2D ApplyCircle(SpriteColliderConfig config)
     {
         CircleCollider2D original;
 
-        RemoveAllAttachedColliders(gameObject);
+        RemoveAllAttachedColliders(config.target);
 
-        if (useExisting)
+        if (config.useExisting)
         {
-            original = other.GetComponent<CircleCollider2D>();
+            original = config.source.GetComponent<CircleCollider2D>();
         }
         else
         {
-            RemoveAllAttachedColliders(other);
-            original = other.AddComponent<CircleCollider2D>();
+            RemoveAllAttachedColliders(config.source);
+            original = config.source.AddComponent<CircleCollider2D>();
         }
-        var attached = gameObject.AddComponent<CircleCollider2D>();
+        var attached = config.target.AddComponent<CircleCollider2D>();
 
         CoreUtilities.CopyCollider(original, attached);
 
-        if (!useExisting)
+        if (!config.useExisting)
         {
             DestroyImmediate(original);
         }
@@ -92,26 +98,26 @@ public class AssignSpriteCollider : MonoBehaviour
         return attached;
     }
 
-    public Collider2D ApplyPolygon(GameObject other)
+    public Collider2D ApplyPolygon(SpriteColliderConfig config)
     {
         PolygonCollider2D original;
 
-        RemoveAllAttachedColliders(gameObject);
+        RemoveAllAttachedColliders(config.target);
 
-        if (useExisting)
+        if (config.useExisting)
         {
-            original = other.GetComponent<PolygonCollider2D>();
+            original = config.source.GetComponent<PolygonCollider2D>();
         }
         else
         {
-            RemoveAllAttachedColliders(other);
-            original = other.AddComponent<PolygonCollider2D>();
+            RemoveAllAttachedColliders(config.source);
+            original = config.source.AddComponent<PolygonCollider2D>();
         }
-        var attached = gameObject.AddComponent<PolygonCollider2D>();
+        var attached = config.target.AddComponent<PolygonCollider2D>();
 
         CoreUtilities.CopyCollider(original, attached);
 
-        if (!useExisting)
+        if (!config.useExisting)
         {
             DestroyImmediate(original);
         }
@@ -119,26 +125,26 @@ public class AssignSpriteCollider : MonoBehaviour
         return attached;
     }
 
-    public Collider2D ApplyCapsule(GameObject other)
+    public Collider2D ApplyCapsule(SpriteColliderConfig config)
     {
         CapsuleCollider2D original;
 
-        RemoveAllAttachedColliders(gameObject);
+        RemoveAllAttachedColliders(config.target);
 
-        if (useExisting)
+        if (config.useExisting)
         {
-            original = other.GetComponent<CapsuleCollider2D>();
+            original = config.source.GetComponent<CapsuleCollider2D>();
         }
         else
         {
-            RemoveAllAttachedColliders(other);
-            original = other.AddComponent<CapsuleCollider2D>();
+            RemoveAllAttachedColliders(config.source);
+            original = config.source.AddComponent<CapsuleCollider2D>();
         }
-        var attached = gameObject.AddComponent<CapsuleCollider2D>();
+        var attached = config.target.AddComponent<CapsuleCollider2D>();
 
         CoreUtilities.CopyCollider(original, attached);
 
-        if (!useExisting)
+        if (!config.useExisting)
         {
             DestroyImmediate(original);
         }
@@ -146,9 +152,9 @@ public class AssignSpriteCollider : MonoBehaviour
         return attached;
     }
 
-    public void RemoveAllAttachedColliders(GameObject gameObject)
+    public void RemoveAllAttachedColliders(GameObject target)
     {
-        var all = gameObject.GetComponents<Collider2D>();
+        var all = target.GetComponents<Collider2D>();
 
         foreach (var c in all)
         {
@@ -162,6 +168,25 @@ public class AssignSpriteCollider : MonoBehaviour
         CIRCLE,
         BOX,
         CAPSULE
+    }
+
+    [Serializable]
+    public struct SpriteColliderConfig
+    {
+        [Tooltip("The collider source GameObject that contains a sprite collider in its hierarchy.")]
+        public GameObject source;
+
+        [Tooltip("The target GameObject that the script will attach a collider to.")]
+        public GameObject target;
+
+        [Tooltip("The type of collider to assign")]
+        public ColliderType type;
+
+        [Tooltip("Set this to true to use the existing collider data on 'other', rather than creating one from scratch.")]
+        public bool useExisting;
+
+        [Tooltip("Set this to true to use the source offset for the generated collider. Otherwise, script will use offset of zero.")]
+        public bool useSourceOffset;
     }
 }
 

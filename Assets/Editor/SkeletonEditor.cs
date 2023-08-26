@@ -1,14 +1,16 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(AssignLimb))]
-public class AssignLimbEditor : Editor
+[CustomEditor(typeof(SkeletonBackend))]
+public class SkeletonEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        if (GUILayout.Button("Generate hierarchy"))
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Generate visible"))
         {
             var response = EditorUtility.DisplayDialog(
                 "This is a destructive Action, continue?",
@@ -18,14 +20,23 @@ public class AssignLimbEditor : Editor
 
             if (response)
             {
-                var component = (AssignLimb) target;
+                var backend = (SkeletonBackend) target;
 
-                component.GenerateAll();
+                backend.GenerateVisible();
             }
             else
             {
                 Debug.Log("User Canceled Action");
             }
         }
+
+        if (GUILayout.Button("Generate colliders"))
+        {
+            var backend = (SkeletonBackend)target;
+
+            backend.GenerateColliders();
+        }
+
+        GUILayout.EndHorizontal();
     }
 }

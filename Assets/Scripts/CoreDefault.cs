@@ -74,8 +74,6 @@ public static class CoreUtilities
 
     public static void CopyCollider(CircleCollider2D source, CircleCollider2D copy)
     {
-        Debug.Log($"circle collider called for copy");
-
         Debug.Assert(source != null && copy != null,
             $"At least one NULL ref passed to {nameof(CopyCollider)}");
 
@@ -86,6 +84,9 @@ public static class CoreUtilities
 
     public static void CopyCollider(PolygonCollider2D source, PolygonCollider2D copy)
     {
+        Debug.Assert(source != null && copy != null,
+            $"At least one NULL ref passed to {nameof(CopyCollider)}");
+
         CopyColliderBase(source, copy);
 
         copy.autoTiling = source.autoTiling;
@@ -96,6 +97,9 @@ public static class CoreUtilities
 
     public static void CopyCollider(CapsuleCollider2D source, CapsuleCollider2D copy)
     {
+        Debug.Assert(source != null && copy != null,
+            $"At least one NULL ref passed to {nameof(CopyCollider)}");
+
         CopyColliderBase(source, copy);
 
         copy.size = source.size;
@@ -104,6 +108,9 @@ public static class CoreUtilities
 
     public static void CopyColliderBase(Collider2D source, Collider2D copy)
     {
+        Debug.Assert(source != null && copy != null,
+            $"At least one NULL ref passed to {nameof(CopyCollider)}");
+
         // misc
         copy.isTrigger = source.isTrigger;
         copy.offset = (Vector2)source.transform.position + source.offset;
@@ -183,8 +190,8 @@ public static class CoreConstants
 
     public const string DEFAULT_MENU = "Custom/";
 
-    public const string NAME_OBJECT_FILL = "fill";
-    public const string NAME_OBJECT_VIS = "vis";
+    public const string NAME_FILL_PREFIX = "fill";
+    public const string NAME_OBJECT_VIS = "_vis";
 }
 
 public static class Emitter

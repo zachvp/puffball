@@ -4,14 +4,6 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-
-[Serializable]
-public struct LimbBinding
-{
-    public GameObject source;
-    public GameObject target;
-}
-
 [Tooltip("Use to generate a limb hierarchy from a source limb GameObject root.")]
 public class AssignLimb : MonoBehaviour
 {
@@ -56,7 +48,7 @@ public class AssignLimb : MonoBehaviour
             var child = limb.transform.GetChild(i);
 
             // the 'fill' child is the source of truth for position
-            if (child.name.StartsWith(CoreConstants.NAME_OBJECT_FILL))
+            if (child.name.StartsWith(CoreConstants.NAME_FILL_PREFIX))
             {
                 newPos = child.localPosition;
             }
@@ -65,6 +57,13 @@ public class AssignLimb : MonoBehaviour
         }
 
         target.transform.localPosition = newPos;
+    }
+
+    [Serializable]
+    public struct LimbBinding
+    {
+        public GameObject source;
+        public GameObject target;
     }
 }
 
