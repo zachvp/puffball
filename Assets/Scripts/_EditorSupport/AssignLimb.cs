@@ -30,9 +30,6 @@ public class AssignLimb : MonoBehaviour
     {
         Debug.Log($"generating limb from source: {source}, destroy current children");
 
-        // reset source
-        source.SetActive(true);
-
         var existing = CoreUtilities.FindChild(target, CoreConstants.NAME_OBJECT_VIS);
 
         // clean any existing hierarchy
@@ -68,7 +65,6 @@ public class AssignLimb : MonoBehaviour
         }
 
         target.transform.localPosition = newPos;
-        source.SetActive(false);
     }
 }
 

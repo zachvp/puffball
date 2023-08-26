@@ -7,7 +7,7 @@ using UnityEditor;
 public class AssignSpriteCollider : MonoBehaviour
 {
     [Tooltip("The other GameObject that is the collider's source.")]
-    public GameObject other;
+    public GameObject source;
 
     [Tooltip("The type of collider to assign")]
     public ColliderType type;
@@ -15,47 +15,57 @@ public class AssignSpriteCollider : MonoBehaviour
     [Tooltip("Set this to true to use the existing collider data on 'other', rather than creating one from scratch.")]
     public bool useExisting;
 
+    [Tooltip("Set this to false to use zero offset for the generated collider.")]
+    public bool useSourceOffset = true;
+
     public void GenerateAndAssignCollider()
     {
         Debug.Assert(transform.position == Vector3.zero, "current transform is non-zero, collider offset will likely be innacurate");
 
         // Validation
-        if (other == null)
+        if (source == null)
         {
             EditorUtility.DisplayDialog($"Error: {nameof(GenerateAndAssignCollider)}",
-                $"'{nameof(GameObject)}:{nameof(other)}' is null. Please assign before generation. Script will halt now.",
+                $"'{nameof(GameObject)}:{nameof(source)}' is null. Please assign before generation. Script will halt now.",
                 "Close");
             return;
         }
-        if (useExisting && other.GetComponent<Collider2D>() == null)
+        if (useExisting && source.GetComponent<Collider2D>() == null)
         {
             EditorUtility.DisplayDialog($"Error: {nameof(GenerateAndAssignCollider)}",
                 $"Script is configured to '{nameof(useExisting)}={useExisting}', " +
-                $"but there is no Collider2D component on '{nameof(GameObject)}:{other.name}'. Script will halt now.",
+                $"but there is no Collider2D component on '{nameof(GameObject)}:{source.name}'. Script will halt now.",
                 "Close");
 
             return;
         }
+
+        Collider2D attachedCollider = null;
 
         // Assign collider based on configured type.
         switch (type)
         {
             case ColliderType.CIRCLE:
-                ApplyCircle(other);
+                attachedCollider = ApplyCircle(source);
                 break;
             case ColliderType.POLYGON:
-                ApplyPolygon(other);
+                attachedCollider = ApplyPolygon(source);
                 break;
             case ColliderType.CAPSULE:
-                ApplyCapsule(other);
+                attachedCollider = ApplyCapsule(source);
                 break;
             default:
                 Debug.LogError($"unhandled collider type: {type}");
                 break;
         }
+
+        if (!useSourceOffset && attachedCollider)
+        {
+            attachedCollider.offset = Vector2.zero;
+        }
     }
 
-    public void ApplyCircle(GameObject other)
+    public Collider2D ApplyCircle(GameObject other)
     {
         CircleCollider2D original;
 
@@ -78,9 +88,11 @@ public class AssignSpriteCollider : MonoBehaviour
         {
             DestroyImmediate(original);
         }
+
+        return attached;
     }
 
-    public void ApplyPolygon(GameObject other)
+    public Collider2D ApplyPolygon(GameObject other)
     {
         PolygonCollider2D original;
 
@@ -103,9 +115,11 @@ public class AssignSpriteCollider : MonoBehaviour
         {
             DestroyImmediate(original);
         }
+
+        return attached;
     }
 
-    public void ApplyCapsule(GameObject other)
+    public Collider2D ApplyCapsule(GameObject other)
     {
         CapsuleCollider2D original;
 
@@ -128,6 +142,8 @@ public class AssignSpriteCollider : MonoBehaviour
         {
             DestroyImmediate(original);
         }
+
+        return attached;
     }
 
     public void RemoveAllAttachedColliders(GameObject gameObject)
