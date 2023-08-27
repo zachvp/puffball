@@ -9,6 +9,8 @@ public class AssignSpriteCollider : MonoBehaviour
 {
     public SpriteColliderConfig[] config = new SpriteColliderConfig[1];
 
+    public GameObject emptyPrefab;
+
     public void GenerateAndAssignCollider()
     {
         foreach (var c in config)
@@ -41,6 +43,7 @@ public class AssignSpriteCollider : MonoBehaviour
             return;
         }
 
+        // Generic collider reference to assign depending on case.
         Collider2D attachedCollider = null;
 
         // Assign collider based on configured type.
@@ -93,10 +96,19 @@ public class AssignSpriteCollider : MonoBehaviour
 
         // find the implied child object in the target - default to 'fill'
         var implicitSource = CoreUtilities.FindChild(config.source, CoreConstants.NAME_FILL_PREFIX);
+        var implicitTarget = CoreUtilities.FindChild(config.target, CoreConstants.NAME_OBJECT_VIS);
 
-        // clean up any existing colliders on the target to start fresh
-        RemoveAllAttachedColliders(config.target);
+        // delete the previous collider container if it exists
+        if (implicitTarget)
+        {
+            DestroyImmediate(implicitTarget);
+        }
 
+        // create a fresh collider container
+        implicitTarget = Instantiate(emptyPrefab, config.target.transform);
+        implicitTarget.name = CoreConstants.NAME_OBJECT_VIS;
+
+        // Configure the source reference component based on config.
         if (config.useExisting)
         {
             original = implicitSource.GetComponent<T>();
@@ -106,7 +118,7 @@ public class AssignSpriteCollider : MonoBehaviour
             RemoveAllAttachedColliders(config.source);
             original = implicitSource.AddComponent<T>();
         }
-        var attached = config.target.AddComponent<T>();
+        var attached = implicitTarget.AddComponent<T>();
 
         // delegate collider class-specific implementation to the caller
         copy(original, attached);

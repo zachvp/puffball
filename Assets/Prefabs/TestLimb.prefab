@@ -470,6 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7389805530228624972}
   - component: {fileID: 2816197624133319600}
+  - component: {fileID: 2495063299019898671}
   m_Layer: 0
   m_Name: limb r
   m_TagString: Untagged
@@ -508,6 +509,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 1, a: 1}
   length: 1
+--- !u!58 &2495063299019898671
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833178735457092227}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.3789062
 --- !u!1 &6188341987408753202
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9065015370244623955}
   - component: {fileID: 2611480814222358625}
+  - component: {fileID: 3788685196379439923}
   m_Layer: 0
   m_Name: limb lower
   m_TagString: Untagged
@@ -556,6 +593,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 1, a: 1}
   length: 1
+--- !u!58 &3788685196379439923
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188341987408753202}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.3789062
 --- !u!1 &6482144763094923807
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +823,7 @@ MonoBehaviour:
     type: 1
     useExisting: 0
     useSourceOffset: 0
+  emptyPrefab: {fileID: 6647791774549383506, guid: 5381b12cde92445229be23eb3c19b7ef, type: 3}
 --- !u!1 &8849722208394032068
 GameObject:
   m_ObjectHideFlags: 0

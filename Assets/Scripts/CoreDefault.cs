@@ -209,7 +209,8 @@ public static class CoreConstants
     public const string DEFAULT_MENU = "Custom/";
 
     public const string NAME_FILL_PREFIX = "fill";
-    public const string NAME_OBJECT_VIS = "_vis";
+    public const string NAME_OBJECT_VIS = "_visible";
+    public const string NAME_OBJECT_COLL = "_collider";
 }
 
 public static class Emitter
