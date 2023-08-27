@@ -5,6 +5,7 @@ using UnityEditor;
 using System;
 
 [Tooltip("Use to generate a limb hierarchy from a source limb GameObject root.")]
+// todo: rename to 'AssignVis'
 public class AssignLimb : MonoBehaviour
 {
     [Tooltip("The limb's binding definitions. The hierarchy and components of the sources will be copied to the corresponding targets.")]
@@ -25,15 +26,7 @@ public class AssignLimb : MonoBehaviour
         var existing = CoreUtilities.FindChild(target, CoreConstants.NAME_OBJECT_VIS);
 
         // clean any existing hierarchy
-        if (existing)
-        {
-            while (existing.transform.childCount > 0)
-            {
-                DestroyImmediate(existing.transform.GetChild(0).gameObject);
-            }
-
-            DestroyImmediate(existing);
-        }
+        CoreUtilities.DestroyDependents(existing);
 
         // create limb from source, assign as child
         var limb = Instantiate(source, target.transform);

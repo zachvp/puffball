@@ -1,8 +1,9 @@
-using UnityEditor;
+using System;
 using UnityEngine;
+using UnityEditor;
 
-[CustomEditor(typeof(AssignSpriteCollider))]
-public class AssignSpriteColliderEditor : Editor
+[CustomEditor(typeof(AssignLimb))]
+public class AssignLimbEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -10,7 +11,7 @@ public class AssignSpriteColliderEditor : Editor
         {
             var response = EditorUtility.DisplayDialog(
                 "This is a destructive Action, continue?",
-                "The Colliders from the existing GameObjects will be removed.",
+                $"The GameObjects named {CoreConstants.NAME_OBJECT_VIS} from the existing targets will be removed.",
                 "Confirm",
                 "Cancel");
 

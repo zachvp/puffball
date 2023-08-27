@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 // todo: use ZCore namespace
 public static class CoreUtilities
@@ -158,7 +159,9 @@ public static class CoreUtilities
 
     }
 
-    public static GameObject FindChild(GameObject source, string name)
+    #region GameObject utils
+
+    public static GameObject FindChild(GameObject source, string prefix)
     {
         GameObject result = null;
 
@@ -166,9 +169,9 @@ public static class CoreUtilities
         {
             var child = source.transform.GetChild(i);
 
-            if (child.name.Equals(name))
+            if (child.name.StartsWith(prefix))
             {
-                Debug.Assert(result == null, $"multiple children {name} found on {nameof(GameObject)} {source}");
+                Debug.Assert(result == null, $"multiple children {prefix} found on {nameof(GameObject)} {source}");
 
                 result = child.gameObject;
             }
@@ -176,6 +179,21 @@ public static class CoreUtilities
 
         return result;
     }
+
+    public static void DestroyDependents(GameObject target)
+    {
+        if (target)
+        {
+            while (target.transform.childCount > 0)
+            {
+                UnityEngine.Object.DestroyImmediate(target.transform.GetChild(0).gameObject);
+            }
+
+            UnityEngine.Object.DestroyImmediate(target);
+        }
+    }
+
+    #endregion
 }
 
 public static class CoreConstants

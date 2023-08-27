@@ -47,8 +47,7 @@ public class AssignSpriteCollider : MonoBehaviour
         switch (config.type)
         {
             case ColliderType.CIRCLE:
-                //attachedCollider = ApplyCircle(config);
-                attachedCollider = ApplyCircleNew(config);
+                attachedCollider = ApplyCircle(config);
                 break;
             case ColliderType.POLYGON:
                 attachedCollider = ApplyPolygon(config);
@@ -67,114 +66,49 @@ public class AssignSpriteCollider : MonoBehaviour
         }
     }
 
-    public Collider2D ApplyCircleNew(SpriteColliderConfig config)
-    {
-        var circle = ApplyShape<CircleCollider2D>(config, (original, attached) =>
-        {
-            CoreUtilities.CopyCollider(original, attached);
-        });
-
-        return circle;
-    }
-
     public Collider2D ApplyCircle(SpriteColliderConfig config)
     {
-        CircleCollider2D original;
+        var shape = ApplyShape<CircleCollider2D>(config, CoreUtilities.CopyCollider);
 
-        RemoveAllAttachedColliders(config.target);
-
-        if (config.useExisting)
-        {
-            original = config.source.GetComponent<CircleCollider2D>();
-        }
-        else
-        {
-            RemoveAllAttachedColliders(config.source);
-            original = config.source.AddComponent<CircleCollider2D>();
-        }
-        var attached = config.target.AddComponent<CircleCollider2D>();
-
-        CoreUtilities.CopyCollider(original, attached);
-
-        if (!config.useExisting)
-        {
-            DestroyImmediate(original);
-        }
-
-        return attached;
+        return shape;
     }
-
     public Collider2D ApplyPolygon(SpriteColliderConfig config)
     {
-        PolygonCollider2D original;
+        var shape = ApplyShape<PolygonCollider2D>(config, CoreUtilities.CopyCollider);
 
-        RemoveAllAttachedColliders(config.target);
-
-        if (config.useExisting)
-        {
-            original = config.source.GetComponent<PolygonCollider2D>();
-        }
-        else
-        {
-            RemoveAllAttachedColliders(config.source);
-            original = config.source.AddComponent<PolygonCollider2D>();
-        }
-        var attached = config.target.AddComponent<PolygonCollider2D>();
-
-        CoreUtilities.CopyCollider(original, attached);
-
-        if (!config.useExisting)
-        {
-            DestroyImmediate(original);
-        }
-
-        return attached;
+        return shape;
     }
 
     public Collider2D ApplyCapsule(SpriteColliderConfig config)
     {
-        CapsuleCollider2D original;
+        var shape = ApplyShape<CapsuleCollider2D>(config, CoreUtilities.CopyCollider);
 
-        RemoveAllAttachedColliders(config.target);
-
-        if (config.useExisting)
-        {
-            original = config.source.GetComponent<CapsuleCollider2D>();
-        }
-        else
-        {
-            RemoveAllAttachedColliders(config.source);
-            original = config.source.AddComponent<CapsuleCollider2D>();
-        }
-        var attached = config.target.AddComponent<CapsuleCollider2D>();
-
-        CoreUtilities.CopyCollider(original, attached);
-
-        if (!config.useExisting)
-        {
-            DestroyImmediate(original);
-        }
-
-        return attached;
+        return shape;
     }
 
+    // Takes delegate param to the implementation to copy the appropriately-typed collider.
     public T ApplyShape<T>(SpriteColliderConfig config, Action<T, T> copy) where T : Collider2D
     {
         T original;
 
+        // find the implied child object in the target - default to 'fill'
+        var implicitSource = CoreUtilities.FindChild(config.source, CoreConstants.NAME_FILL_PREFIX);
+
+        // clean up any existing colliders on the target to start fresh
         RemoveAllAttachedColliders(config.target);
 
         if (config.useExisting)
         {
-            original = config.source.GetComponent<T>();
+            original = implicitSource.GetComponent<T>();
         }
         else
         {
             RemoveAllAttachedColliders(config.source);
-            original = config.source.AddComponent<T>();
+            original = implicitSource.AddComponent<T>();
         }
         var attached = config.target.AddComponent<T>();
 
+        // delegate collider class-specific implementation to the caller
         copy(original, attached);
 
         if (!config.useExisting)
@@ -193,6 +127,16 @@ public class AssignSpriteCollider : MonoBehaviour
         {
             DestroyImmediate(c);
         }
+    }
+
+    public bool IsAnyColliderAttached()
+    {
+        foreach (var c in config)
+        {
+            //var implicitTarget = CoreUtilities.FindChild(config.target, CoreConstants.NAME_FILL_PREFIX)
+        }
+
+        return false;
     }
 
     public enum ColliderType
