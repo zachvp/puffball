@@ -6,7 +6,7 @@ using System;
 
 [Tooltip("Use to generate a limb hierarchy from a source limb GameObject root.")]
 // todo: rename to 'AssignVis'
-public class AssignLimb : MonoBehaviour
+public class AssignVisible : MonoBehaviour
 {
     [Tooltip("The limb's binding definitions. The hierarchy and components of the sources will be copied to the corresponding targets.")]
     public LimbBinding[] bindings = new LimbBinding[1];

@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(AssignLimb))]
-public class AssignLimbEditor : Editor
+[CustomEditor(typeof(AssignVisible))]
+public class AssignVisibleEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -17,7 +17,7 @@ public class AssignLimbEditor : Editor
 
             if (response)
             {
-                var component = (AssignLimb) target;
+                var component = (AssignVisible) target;
 
                 component.GenerateAll();
             }
