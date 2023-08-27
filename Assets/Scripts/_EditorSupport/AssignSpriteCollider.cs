@@ -96,7 +96,7 @@ public class AssignSpriteCollider : MonoBehaviour
 
         // find the implied child object in the target - default to 'fill'
         var implicitSource = CoreUtilities.FindChild(config.source, CoreConstants.NAME_FILL_PREFIX);
-        var implicitTarget = CoreUtilities.FindChild(config.target, CoreConstants.NAME_OBJECT_VIS);
+        var implicitTarget = CoreUtilities.FindChild(config.target, CoreConstants.NAME_OBJECT_COLL);
 
         // delete the previous collider container if it exists
         if (implicitTarget)
@@ -106,7 +106,7 @@ public class AssignSpriteCollider : MonoBehaviour
 
         // create a fresh collider container
         implicitTarget = Instantiate(emptyPrefab, config.target.transform);
-        implicitTarget.name = CoreConstants.NAME_OBJECT_VIS;
+        implicitTarget.name = CoreConstants.NAME_OBJECT_COLL;
 
         // Configure the source reference component based on config.
         if (config.useExisting)

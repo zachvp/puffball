@@ -17,9 +17,9 @@ public class AssignLimbEditor : Editor
 
             if (response)
             {
-                var component = (AssignSpriteCollider)target;
+                var component = (AssignLimb) target;
 
-                component.GenerateAndAssignCollider();
+                component.GenerateAll();
             }
             else
             {
