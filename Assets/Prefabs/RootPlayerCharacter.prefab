@@ -163,6 +163,7 @@ MonoBehaviour:
   - {fileID: 7087431961497076306}
   - {fileID: 5340257663110556701}
   - {fileID: 2006482634973229187}
+  - {fileID: 5252665002922732481}
   relationship: 2
   offset: {fileID: 0}
 --- !u!1 &1522022362903017447
@@ -1264,6 +1265,11 @@ Transform:
 --- !u!4 &5249099248050116570 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6608947435014984877, guid: 4f639474f8c6b488ca9ebc7a23ff20c3, type: 3}
+  m_PrefabInstance: {fileID: 1400401066461234039}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5252665002922732481 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2627270234849548106, guid: 4f639474f8c6b488ca9ebc7a23ff20c3, type: 3}
   m_PrefabInstance: {fileID: 1400401066461234039}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5340257663110556701 stripped

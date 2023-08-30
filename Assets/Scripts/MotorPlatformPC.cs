@@ -34,7 +34,7 @@ public class MotorPlatformPC : MonoBehaviour
         {
             case CoreActionMap.Player.JUMP:
                 // ground jump
-                if (state.trigger.down.isTriggered)
+                if (args.vBool && state.trigger.down.isTriggered)
                 {
                     state.platformState |= PlatformState.JUMP;
                     state.platformState &= ~PlatformState.WALL_JUMPING;
