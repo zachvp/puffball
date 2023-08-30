@@ -4,7 +4,7 @@ using System;
 public class MotorPlatformPC : MonoBehaviour
 {
     // -- read vars
-    public CoreBodyHybrid body;
+    public CoreBody body;
     public ActorStatePlatform state;
     public PCMetadata metadata;
 
@@ -68,37 +68,6 @@ public class MotorPlatformPC : MonoBehaviour
 
     public void FixedUpdate()
     {
-        // wall cling & release
-        if (!state.trigger.down.isTriggered)
-        {
-            body.velocity.y -= body.gravity;
-
-            if (IsWallClingState())
-            {
-                state.platformState |= PlatformState.WALL_CLING;
-                state.platformState &= ~PlatformState.WALL_RELEASE;
-                state.platformState &= ~PlatformState.WALL_JUMPING;
-            }
-            else
-            {
-                state.platformState |= PlatformState.WALL_RELEASE;
-                state.platformState &= ~PlatformState.WALL_CLING;
-            }
-
-            if (IsCurrentWallJumpState())
-            {
-                state.platformState &= ~PlatformState.WALL_JUMPING;
-            }
-        }
-        else
-        {
-            state.platformState &= ~PlatformState.WALL_CLING;
-            state.platformState &= ~PlatformState.WALL_RELEASE;
-            state.platformState &= ~PlatformState.WALL_JUMPING;
-
-            body.velocity.y = 0;
-        }
-
         // todo: implement air movement
         if (state.platformState.HasFlag(PlatformState.MOVE))
         {
@@ -118,7 +87,7 @@ public class MotorPlatformPC : MonoBehaviour
 
         if (state.platformState.HasFlag(PlatformState.JUMP))
         {
-            body.velocity.y = jumpStrength;
+            body.VelocityY(jumpStrength);
 
             state.platformState &= ~PlatformState.JUMP;
         }
@@ -127,32 +96,15 @@ public class MotorPlatformPC : MonoBehaviour
             var velocity = wallJumpSpeed;
             velocity.x *= state.inputMove;
 
-            body.velocity.y = velocity.y;
+            body.VelocityY(velocity.y);
             adjustedVelocityX = velocity.x;
 
             state.platformState &= ~PlatformState.WALL_JUMP;
             state.platformState |= PlatformState.WALL_JUMPING;
         }
 
-        // wall cling
-        if (state.platformState.HasFlag(PlatformState.WALL_CLING))
-        {
-            body.StopVertical();
-        }
-
-        // wall release
-        if (state.platformState.HasFlag(PlatformState.WALL_RELEASE))
-        {
-            body.ResetVertical();
-
-            state.platformState &= ~PlatformState.WALL_RELEASE;
-            state.platformState &= ~PlatformState.WALL_CLING;
-        }
-
         adjustedVelocityX = Mathf.Clamp(adjustedVelocityX, -maxSpeedX, maxSpeedX);
-        body.velocity.x = adjustedVelocityX;
-
-        body.MoveBasedOnVelocity();
+        body.VelocityX(adjustedVelocityX);
     }
 
     public bool IsWallClingState()

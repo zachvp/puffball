@@ -68,33 +68,6 @@ public class PCPlatformMotor : MonoBehaviour
 
     public void Update()
     {
-        // wall cling & release
-        if (!state.trigger.down.isTriggered)
-        {
-            if (IsWallClingState())
-            {
-                state.platformState |= PlatformState.WALL_CLING;
-                state.platformState &= ~PlatformState.WALL_RELEASE;
-                state.platformState &= ~PlatformState.WALL_JUMPING;
-            }
-            else
-            {
-                state.platformState |= PlatformState.WALL_RELEASE;
-                state.platformState &= ~PlatformState.WALL_CLING;
-            }
-
-            if (IsCurrentWallJumpState())
-            {
-                state.platformState &= ~PlatformState.WALL_JUMPING;
-            }
-        }
-        else
-        {
-            state.platformState &= ~PlatformState.WALL_CLING;
-            state.platformState &= ~PlatformState.WALL_RELEASE;
-            state.platformState &= ~PlatformState.WALL_JUMPING;
-        }
-
         // todo: implement air movement
         if (state.platformState.HasFlag(PlatformState.MOVE))
         {
@@ -127,21 +100,6 @@ public class PCPlatformMotor : MonoBehaviour
 
             state.platformState &= ~PlatformState.WALL_JUMP;
             state.platformState |= PlatformState.WALL_JUMPING;
-        }
-
-        // wall cling
-        if (state.platformState.HasFlag(PlatformState.WALL_CLING))
-        {
-            body.StopVertical();
-        }
-
-        // wall release
-        if (state.platformState.HasFlag(PlatformState.WALL_RELEASE))
-        {
-            body.ResetVertical();
-
-            state.platformState &= ~PlatformState.WALL_RELEASE;
-            state.platformState &= ~PlatformState.WALL_CLING;
         }
 
         adjustedVelocityX = Mathf.Clamp(adjustedVelocityX, -maxSpeedX, maxSpeedX);

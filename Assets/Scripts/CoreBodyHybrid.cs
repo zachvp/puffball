@@ -33,6 +33,8 @@ public class CoreBodyHybrid : MonoBehaviour
         {
             signals = gameObject.AddComponent<CoreSignalsCollision>();
         }
+
+        //Debug.LogFormat();
     }
 
     public void MoveBasedOnVelocity()

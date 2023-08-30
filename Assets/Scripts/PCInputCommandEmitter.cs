@@ -57,7 +57,7 @@ public class PCInputCommandEmitter : MonoBehaviour
             case CoreActionMap.Player.GRIP:
             case CoreActionMap.Player.START:
             case CoreActionMap.Player.THROW:
-                data.vBool = context.phase == InputActionPhase.Started;
+                data.vBool = context.phase == InputActionPhase.Performed;
                 break;
             case CoreActionMap.Player.MOVE:
                 data.vFloat = context.ReadValue<float>();

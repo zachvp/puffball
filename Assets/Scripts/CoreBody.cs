@@ -67,12 +67,26 @@ public class CoreBody : MonoBehaviour
 
     public void Move(Vector2 position)
     {
-        body.position = position;
+
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
+        {
+            body.position = position;
+        }));
     }
 
     public void MoveKinematic(Vector2 position)
     {
         body.MovePosition(position);
+    }
+
+    public void MoveBasedOnVelocity()
+    {
+        var newPos = body.position;
+        newPos += velocity * (Time.fixedDeltaTime * 0.5f); // todo: make constant
+
+        newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
+
+        Move(newPos);
     }
 
     public void StopVertical()
