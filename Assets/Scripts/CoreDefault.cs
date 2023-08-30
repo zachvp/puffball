@@ -8,6 +8,7 @@ using UnityEditor;
 // todo: use ZCore namespace
 public static class CoreUtilities
 {
+    #region Coroutines
     public static IEnumerator TaskContinuous(Action task)
     {
         while (true)
@@ -56,6 +57,7 @@ public static class CoreUtilities
         yield return new WaitForSeconds(delay);
         task(arg0, arg1);
     }
+    #endregion
 
     // rounds given number to closest multiple of unit
     public static float RoundTo(float value, float unit)
@@ -73,6 +75,7 @@ public static class CoreUtilities
         return Mathf.Abs(lhs - rhs) < CoreConstants.DEADZONE_FLOAT;
     }
 
+    #region Unity Object content duplication
     public static void CopyCollider(CircleCollider2D source, CircleCollider2D copy)
     {
         Debug.Assert(source != null && copy != null,
@@ -127,6 +130,16 @@ public static class CoreUtilities
         copy.contactCaptureLayers = source.contactCaptureLayers;
         copy.callbackLayers = source.callbackLayers;
     }
+
+    public static void CopyTransform(Transform source, Transform copy)
+    {
+        copy.position = source.position;
+        copy.rotation = source.rotation;
+        
+        copy.localScale = source.localScale;
+    }
+
+    #endregion
 
     public static void Increment<T>(Dictionary<T, int> d, T key)
     {
@@ -213,6 +226,13 @@ public static class CoreConstants
     public const string NAME_OBJECT_COLL = "_collider";
 }
 
+public class Signals : Singleton<Signals>
+{
+    // Global notification definitions
+    public Action<PCInputArgs> onPCCommand;
+    public Action<PCInputCommandEmitter> onPCCommandEmitterSpawn;
+}
+
 public static class Emitter
 {
     public static void Send(Action handler)
@@ -268,13 +288,6 @@ public class Singleton<T> where T : new()
     }
 
     protected static T _instance;
-}
-
-public class Signals : Singleton<Signals>
-{
-    // Global notification definitions
-    public Action<PCInputArgs> onPCCommand;
-    public Action<PCInputCommandEmitter> onPCCommandEmitterSpawn;
 }
 
 [Serializable]
@@ -338,3 +351,13 @@ public class BufferCircular<T>
         index = (index + 1) % size;
     }
 }
+
+[Serializable]
+public struct BindingGameObject
+{
+    public GameObject source;
+    public GameObject target;
+}
+
+
+// TODO: refactor at 500 lines

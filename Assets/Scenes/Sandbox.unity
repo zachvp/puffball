@@ -619,6 +619,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8356546528175368300, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
+      propertyPath: m_Frequency
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8356546528175368300, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
+      propertyPath: m_DampingRatio
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

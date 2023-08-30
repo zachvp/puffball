@@ -9,7 +9,7 @@ using System;
 public class AssignVisible : MonoBehaviour
 {
     [Tooltip("The limb's binding definitions. The hierarchy and components of the sources will be copied to the corresponding targets.")]
-    public LimbBinding[] bindings = new LimbBinding[1];
+    public BindingGameObject[] bindings = new BindingGameObject[1];
 
     public void GenerateAll()
     {
@@ -50,13 +50,6 @@ public class AssignVisible : MonoBehaviour
         }
 
         target.transform.localPosition = newPos;
-    }
-
-    [Serializable]
-    public struct LimbBinding
-    {
-        public GameObject source;
-        public GameObject target;
     }
 }
 

@@ -6,4 +6,5 @@ public class TestScriptableObject : ScriptableObject
 {
     public int number;
     public string text;
+    public GameObject empty;
 }
