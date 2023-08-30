@@ -141,16 +141,6 @@ public class AssignSpriteCollider : MonoBehaviour
         }
     }
 
-    public bool IsAnyColliderAttached()
-    {
-        foreach (var c in config)
-        {
-            //var implicitTarget = CoreUtilities.FindChild(config.target, CoreConstants.NAME_FILL_PREFIX)
-        }
-
-        return false;
-    }
-
     public enum ColliderType
     {
         POLYGON,
