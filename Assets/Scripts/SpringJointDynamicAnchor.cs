@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class SpringJointDynamicAnchor : MonoBehaviour
 {
-    public SpringJoint2D joint;
+    public SpringJoint2D spring;
     public Transform anchor;
 
     public Vector2 initialConnectedAnchorPos;
 
     public void Start()
     {
-        initialConnectedAnchorPos = joint.connectedAnchor;
+        initialConnectedAnchorPos = spring.connectedAnchor;
     }
 
     public void FixedUpdate()
     {
-        joint.connectedAnchor = anchor.position;
+        spring.connectedAnchor = anchor.position;
     }
 }

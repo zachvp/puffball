@@ -5,8 +5,12 @@ public class ControllerHandPC : MonoBehaviour
 {
     // links
     public PCMetadata meta;
-    public MovementFollowTransform handNeutral;
-    public MovementRadial handRadial;
+    public Rigidbody2D body;
+    public SpringJoint2D spring;
+    public GameObject neutral;
+    public MovementRadial radial;
+
+
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
 
@@ -34,16 +38,29 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > deadzone)
                 {
-                    handNeutral.type = MovementFollowTransform.FollowType.SNAP;
-                    handRadial.Move(args.vVec2);
+                    //radial.gameObject.SetActive(true);
+                    radial.Move(args.vVec2);
+                    body.drag = 8;
+                    spring.dampingRatio = 0.75f;
+                    //body.velocity = Vector2.zero;
                 }
                 else
                 {
-                    handNeutral.type = MovementFollowTransform.FollowType.LAG;
-                    handRadial.ResetPosition();
+                    radial.ResetPosition();
+                    //radial.gameObject.SetActive(false);
+                    StartCoroutine(CoreUtilities.TaskDelayed(1.2f, () =>
+                    {
+                        body.drag = 1;
+                        spring.dampingRatio = 0.25f;
+                    }));
                 }
                 
                 break;
+
+
+
+
+
             case CoreActionMap.Player.GRIP:
                 if (args.vBool && triggerGrab.isTriggered)
                 {

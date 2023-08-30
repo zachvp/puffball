@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class MovementRadial : MonoBehaviour
 {
-    public Transform root;
+    public Transform anchor;
     public Transform target;
     public float range;
 
     public Vector3 Move(Vector2 input)
     {
         var inputVector3 = new Vector3(input.x, input.y, 0);
-        var newPos = root.position + (inputVector3 * range);
+        var newPos = anchor.position + (inputVector3 * range);
 
         target.position = newPos;
 
@@ -18,8 +18,8 @@ public class MovementRadial : MonoBehaviour
 
     public Vector3 ResetPosition()
     {
-        target.position = root.position;
+        target.position = anchor.position;
 
-        return root.position;
+        return anchor.position;
     }
 }

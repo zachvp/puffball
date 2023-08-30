@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5f3b1121bc24ed5bf8cb0161ccae8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 320976656}
+  anchor: {fileID: 0}
   target: {fileID: 0}
   range: 2
 --- !u!4 &1075464378
@@ -618,6 +618,10 @@ PrefabInstance:
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5569247661924440988, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
