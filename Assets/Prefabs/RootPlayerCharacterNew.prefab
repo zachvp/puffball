@@ -322,7 +322,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: b8210e1cf800640428f558cf39cc283c, type: 2}
@@ -979,6 +979,67 @@ Transform:
   m_Father: {fileID: 9081972722529478402}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2935711009558592626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7324267189143895909}
+  - component: {fileID: 3885574607454518695}
+  - component: {fileID: 2036661919769946755}
+  m_Layer: 0
+  m_Name: movement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7324267189143895909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935711009558592626}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9081972722529478402}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3885574607454518695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935711009558592626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050724bfc08a34baf9cfd6bb1ad6ddfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5415144965076204952}
+--- !u!114 &2036661919769946755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935711009558592626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa62b9c6c95294fe88d1d271ffae9ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meta: {fileID: 2467396169662780557}
+  movementJump: {fileID: 3885574607454518695}
+  jumpStrength: 10
 --- !u!1 &3073314468740152812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,6 +1528,7 @@ GameObject:
   - component: {fileID: 8242338897931392437}
   - component: {fileID: 8919609308181518528}
   - component: {fileID: 4853883315895708621}
+  - component: {fileID: 8101339488938001909}
   m_Layer: 7
   m_Name: foot r
   m_TagString: Untagged
@@ -1504,7 +1566,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: b8210e1cf800640428f558cf39cc283c, type: 2}
@@ -1537,8 +1599,22 @@ SpringJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
   m_Distance: 0.005
-  m_DampingRatio: 0.15
-  m_Frequency: 1.2
+  m_DampingRatio: 0.2
+  m_Frequency: 3
+--- !u!114 &8101339488938001909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970988065580674370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2a12b4f6eee4d3bbc82769b723d7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5569247661924440988}
+  threshold: 0.01
 --- !u!1 &4115575939859538933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,6 +2031,7 @@ GameObject:
   - component: {fileID: 8929214906359735810}
   - component: {fileID: 6189356840787590514}
   - component: {fileID: 434901885251308597}
+  - component: {fileID: 1382067920153648576}
   m_Layer: 7
   m_Name: foot l
   m_TagString: Untagged
@@ -1992,7 +2069,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: b8210e1cf800640428f558cf39cc283c, type: 2}
@@ -2025,8 +2102,22 @@ SpringJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
   m_Distance: 0.005
-  m_DampingRatio: 0.15
-  m_Frequency: 1.2
+  m_DampingRatio: 0.2
+  m_Frequency: 3
+--- !u!114 &1382067920153648576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5218752615544211558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2a12b4f6eee4d3bbc82769b723d7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5569247661924440988}
+  threshold: 0.01
 --- !u!1 &5576757523163456854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2938,6 +3029,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1151624612372295630}
   - component: {fileID: 8480184027900939458}
+  - component: {fileID: 7993402206708821824}
   m_Layer: 0
   m_Name: movement
   m_TagString: Untagged
@@ -2975,6 +3067,20 @@ MonoBehaviour:
   spring: {fileID: 3813706488722564567}
   distance: {fileID: 0}
   anchor: {fileID: 9133852251830082364}
+--- !u!114 &7993402206708821824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851132759581154314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2a12b4f6eee4d3bbc82769b723d7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5569247661924440988}
+  threshold: 0.01
 --- !u!1 &7873374614423597968
 GameObject:
   m_ObjectHideFlags: 0
@@ -3042,6 +3148,7 @@ Transform:
   - {fileID: 6160896147907180811}
   - {fileID: 4219448618250452626}
   - {fileID: 7248225089926853086}
+  - {fileID: 7324267189143895909}
   m_Father: {fileID: 214037104567599892}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3060,7 +3167,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 6200000, guid: b8210e1cf800640428f558cf39cc283c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2

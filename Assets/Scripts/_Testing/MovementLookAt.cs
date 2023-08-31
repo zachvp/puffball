@@ -2,22 +2,22 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 
+// todo: fix
 public class MovementLookAt : MonoBehaviour
 {
     [NonSerialized]
     new public Camera camera;
-    public Transform anchor;
     public Transform root;
     public float size = 10;
     public float multiplier = 0.5f;
     public float sensitivity = 0.04f;
 
-    private GameObject focus;
+    private Vector3 initialPos;
 
     public void Start()
     {
         camera = GameObject.Find("CameraStandard").GetComponent<Camera>();
-        focus = GameObject.Find("WorldTarget");
+        initialPos = transform.position;
     }
 
     public void Update()
@@ -26,20 +26,13 @@ public class MovementLookAt : MonoBehaviour
         var target = camera.ScreenToWorldPoint(mousePos.value);
         target.z = 0;
 
-        //target = focus.transform.position;
-        //transform.position = anchor.position + target;
-        //target += anchor.position;
-
-        //var newPos = new Vector2(Mathf.Lerp(root.position.x, target.x, sensitivity * 8), Mathf.Lerp(root.position.y, target.y, sensitivity));
-        var newPos = Vector2.Lerp(root.position, target, sensitivity);
+        var newPos = Vector2.Lerp(initialPos, target, sensitivity);
         var toTarget = target - transform.position;
 
         if (toTarget.magnitude > size)
         {
-            newPos = root.position + toTarget.normalized * multiplier;
+            newPos = initialPos + toTarget.normalized * multiplier;
         }
         transform.position = newPos;
-
-        //Debug.DrawLine(anchor.position, target, Color.red, 5f);
     }
 }
