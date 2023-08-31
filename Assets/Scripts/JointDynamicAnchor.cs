@@ -3,11 +3,15 @@ using System;
 
 public class JointDynamicAnchor : MonoBehaviour
 {
+    // todo: extend coreConditional to support more args
     [CoreConditional(nameof(distance))]
     public SpringJoint2D spring;
 
     [CoreConditional(nameof(spring))]
     public DistanceJoint2D distance;
+
+    [CoreConditional(nameof(spring))]
+    public FixedJoint2D fixedJoint;
 
     public Transform anchor;
 
@@ -24,8 +28,12 @@ public class JointDynamicAnchor : MonoBehaviour
         {
             initialConnectedAnchorPos = distance.connectedAnchor;
         }
+        else if (fixedJoint)
+        {
+            initialConnectedAnchorPos = fixedJoint.connectedAnchor;
+        }
 
-        Debug.Assert(spring || distance, $"no joints are configured, this script will do nothing");
+        Debug.Assert(spring || distance || fixedJoint, $"no joints are configured, this script will do nothing");
     }
 
     public void FixedUpdate()
@@ -37,6 +45,10 @@ public class JointDynamicAnchor : MonoBehaviour
         else if (distance)
         {
             distance.connectedAnchor = anchor.position;
+        }
+        else if (fixedJoint)
+        {
+            fixedJoint.connectedAnchor = anchor.position;
         }
     }
 }

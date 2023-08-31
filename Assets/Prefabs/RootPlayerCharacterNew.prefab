@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 1281091897101342614}
   - component: {fileID: 1579272407154154004}
   - component: {fileID: 3813706488722564567}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: hand r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -989,6 +989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7324267189143895909}
   - component: {fileID: 3885574607454518695}
+  - component: {fileID: 5947851127972274785}
   - component: {fileID: 2036661919769946755}
   m_Layer: 0
   m_Name: movement
@@ -1025,6 +1026,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 5415144965076204952}
+--- !u!114 &5947851127972274785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935711009558592626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17f584a8592c4ca9ad441673e7d11d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5415144965076204952}
 --- !u!114 &2036661919769946755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,7 +1053,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meta: {fileID: 2467396169662780557}
   movementJump: {fileID: 3885574607454518695}
+  movementAxis: {fileID: 5947851127972274785}
   jumpStrength: 10
+  walkSpeed: 8
 --- !u!1 &3073314468740152812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1545,7 @@ GameObject:
   - component: {fileID: 8919609308181518528}
   - component: {fileID: 4853883315895708621}
   - component: {fileID: 8101339488938001909}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: foot r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2032,7 +2048,7 @@ GameObject:
   - component: {fileID: 6189356840787590514}
   - component: {fileID: 434901885251308597}
   - component: {fileID: 1382067920153648576}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: foot l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
