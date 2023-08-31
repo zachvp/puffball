@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class SpringJointDynamicAnchor : MonoBehaviour
 {
+    [CoreConditional(nameof(distance))]
     public SpringJoint2D spring;
+
+    [CoreConditional(nameof(spring))]
     public DistanceJoint2D distance;
+
     public Transform anchor;
 
     public Vector2 initialConnectedAnchorPos;

@@ -12,9 +12,9 @@ public class CoreConditionalAttribute : PropertyAttribute
         sourcePropertyName = sourceName;
     }
 
-    public CoreConditionalAttribute(string sourceName, object value)
+    public CoreConditionalAttribute(string sourceName, object valueToCompare)
         : this(sourceName)
     {
-        checkValue = value;
+        checkValue = valueToCompare;
     }
 }

@@ -24,6 +24,9 @@ public class CoreConditionalAttributeDrawer : PropertyDrawer
             case SerializedPropertyType.Enum:
                 display = sourceProperty.enumValueIndex == Convert.ToInt32(cast.checkValue);
                 break;
+            case SerializedPropertyType.ObjectReference:
+                display = sourceProperty.objectReferenceValue == null;
+                break;
             default:
                 Debug.LogError($"unhandled value type: {sourceProperty.propertyType}");
                 break;
