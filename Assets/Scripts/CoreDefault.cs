@@ -9,6 +9,7 @@ using UnityEditor;
 public static class CoreUtilities
 {
     #region Coroutines
+
     public static IEnumerator TaskContinuous(Action task)
     {
         while (true)
@@ -352,6 +353,27 @@ public class BufferCircular<T>
     }
 }
 
+public class BufferInterval<T> : BufferCircular<T>
+{
+    public readonly float interval;
+    public float timePrevious { get; private set; }
+
+    public BufferInterval(int inSize, float inInterval) :
+        base(inSize)
+    {
+        interval = inInterval;
+    }
+
+    public void Add(T item, float time)
+    {
+        if (time - timePrevious > interval)
+        {
+            Add(item);
+            timePrevious = time;
+        }
+    }
+}
+
 [Serializable]
 public struct BindingGameObject
 {
@@ -359,5 +381,11 @@ public struct BindingGameObject
     public GameObject target;
 }
 
+[Serializable]
+public struct Range
+{
+    public float min;
+    public float max;
+}
 
 // TODO: refactor at 500 lines

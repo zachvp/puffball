@@ -123,6 +123,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &154299731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5833178735457092227, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+  m_PrefabInstance: {fileID: 1706668921}
+  m_PrefabAsset: {fileID: 0}
+--- !u!255 &154299734
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154299731}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 6.15, y: 5.9804688}
+  m_DampingRatio: 0
+  m_Frequency: 0
+--- !u!50 &154299735
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154299731}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &321663413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -181,15 +232,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0.5801887
-      objectReference: {fileID: 0}
-    - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
-      propertyPath: m_BackGroundColor.g
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.504717
+      objectReference: {fileID: 0}
+    - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0.6889116
+      value: 0.5441979
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -204,6 +255,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 113551309393963273, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 664395418877466761, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
       propertyPath: m_Name
       value: TestLimb
@@ -252,8 +307,43 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 113551309393963273, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5833178735457092227, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 154299735}
+    - targetCorrespondingSourceObject: {fileID: 5833178735457092227, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 154299734}
+    - targetCorrespondingSourceObject: {fileID: 6188341987408753202, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1706668931}
   m_SourcePrefab: {fileID: 100100000, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+--- !u!1 &1706668923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6188341987408753202, guid: 0f221f0d36f6642dbb57eb8639596498, type: 3}
+  m_PrefabInstance: {fileID: 1706668921}
+  m_PrefabAsset: {fileID: 0}
+--- !u!257 &1706668931
+TargetJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706668923}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_Anchor: {x: 0, y: 0}
+  m_Target: {x: -1.9765625, y: 1.5839844}
+  m_AutoConfigureTarget: 0
+  m_MaxForce: 10000
+  m_DampingRatio: 1
+  m_Frequency: 5

@@ -6,10 +6,11 @@ public class ControllerHandPC : MonoBehaviour
     // links
     public PCMetadata meta;
     public Rigidbody2D body;
-    public SpringJoint2D spring;
-    public GameObject neutral;
-    public MovementRadial radial;
 
+    public Joint2D neutralJoint;
+    public GameObject neutral;
+
+    public MovementRadial radial;
 
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
@@ -21,7 +22,9 @@ public class ControllerHandPC : MonoBehaviour
     private Ball ball;
 
     // state
-    State state;
+    private State state;
+    private BufferInterval<Vector2> inputMove = new BufferInterval<Vector2>(8, 1/60f);
+    public Vector2 dbgHandMove;
 
     public void Awake()
     {
@@ -31,6 +34,30 @@ public class ControllerHandPC : MonoBehaviour
         };
     }
 
+    public void Update()
+    {
+        var value = meta.commandEmitter.playerInput.currentActionMap["Move Hand"].ReadValue<Vector2>();
+
+        inputMove.Add(value, Time.time);
+
+        var delta = Vector2.zero;
+        foreach (var i in inputMove.buffer)
+        {
+            delta += value - i; 
+        }
+
+        if (delta.sqrMagnitude < 0.1f)
+        {
+            //Debug.Log("detect no move delta");
+        }
+        else
+        {
+            //Debug.Log($"move delta too big: {delta}");
+            //body.drag = 1;
+            //spring.dampingRatio = 0.25f;
+        }
+    }
+
     public void HandleCommand(PCInputArgs args)
     {
         switch (args.type)
@@ -38,45 +65,18 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > deadzone)
                 {
-                    //radial.gameObject.SetActive(true);
+                    neutralJoint.enabled = false;
                     radial.Move(args.vVec2);
-                    body.drag = 8;
-                    spring.dampingRatio = 0.75f;
-                    //body.velocity = Vector2.zero;
                 }
                 else
                 {
                     radial.ResetPosition();
-                    //radial.gameObject.SetActive(false);
-                    StartCoroutine(CoreUtilities.TaskDelayed(1.2f, () =>
-                    {
-                        body.drag = 1;
-                        spring.dampingRatio = 0.25f;
-                    }));
+                    neutralJoint.enabled = true;
                 }
                 
                 break;
-
-
-
-
-
             case CoreActionMap.Player.GRIP:
-                if (args.vBool && triggerGrab.isTriggered)
-                {
-                    if (state == State.NONE)
-                    {
-                        var grabObject = triggerGrab.overlappingObjects[0];
-                        Debug.Log($"triggered grab on object: {grabObject}");
-                        ball = grabObject.GetComponent<Ball>();
-                        Debug.Assert(ball != null, $"unable to find {nameof(Ball)} component");
-                        ball.GrabNew(transform);
-                        var collider = grabObject.GetComponent<Collider2D>();
-
-                        Physics2D.IgnoreCollision(colliderBody, collider);
-                        state |= State.GRIP;
-                    }
-                }
+                // todo: implement
                 break;
         }
     }
