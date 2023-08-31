@@ -7,14 +7,29 @@ public class AssignTransformEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        GUILayout.BeginHorizontal();
+
         if (GUILayout.Button("Assign"))
         {
-            var component = (AssignTransform) target;
+            var choice = EditorUtility.DisplayDialog("Destructive action", "This will overwrite all target Transforms", "Continue", "Cancel");
 
-            component.Assign();
+            if (choice)
+            {
+                var component = (AssignTransform)target;
+                component.Assign();
+            }
 
             EditorUtility.DisplayDialog("Assignment complete", "Copied all transforms.", "Close");
         }
+
+        if (GUILayout.Button("Find sources"))
+        {
+            // todo: call method
+            var component = (AssignTransform)target;
+            component.FindSources();
+        }
+
+        GUILayout.EndHorizontal();
 
         base.OnInspectorGUI();
     }

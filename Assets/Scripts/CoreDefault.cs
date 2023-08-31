@@ -175,21 +175,27 @@ public static class CoreUtilities
 
     #region GameObject utils
 
-    public static GameObject FindChild(GameObject source, string prefix)
+    public static void ForeachChild(Transform root, Action<Transform> callback)
+    {
+        for (var i = 0; i < root.childCount; i++)
+        {
+            callback(root.GetChild(i));
+        }
+    }
+
+    public static GameObject FindChild(Transform source, string prefix)
     {
         GameObject result = null;
 
-        for (var i = 0; i < source.transform.childCount; i++)
+        ForeachChild(source, (child) =>
         {
-            var child = source.transform.GetChild(i);
-
             if (child.name.StartsWith(prefix))
             {
                 Debug.Assert(result == null, $"multiple children {prefix} found on {nameof(GameObject)} {source}");
 
                 result = child.gameObject;
             }
-        }
+        });
 
         return result;
     }

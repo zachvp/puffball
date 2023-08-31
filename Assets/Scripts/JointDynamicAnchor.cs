@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpringJointDynamicAnchor : MonoBehaviour
+public class JointDynamicAnchor : MonoBehaviour
 {
     [CoreConditional(nameof(distance))]
     public SpringJoint2D spring;

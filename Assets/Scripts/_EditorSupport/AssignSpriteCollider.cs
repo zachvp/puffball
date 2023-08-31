@@ -95,8 +95,8 @@ public class AssignSpriteCollider : MonoBehaviour
         T original;
 
         // find the implied child object in the target - default to 'fill'
-        var implicitSource = CoreUtilities.FindChild(config.source, CoreConstants.NAME_FILL_PREFIX);
-        var implicitTarget = CoreUtilities.FindChild(config.target, CoreConstants.NAME_OBJECT_COLL);
+        var implicitSource = CoreUtilities.FindChild(config.source.transform, CoreConstants.NAME_FILL_PREFIX);
+        var implicitTarget = CoreUtilities.FindChild(config.target.transform, CoreConstants.NAME_OBJECT_COLL);
 
         // delete the previous collider container if it exists
         if (implicitTarget)

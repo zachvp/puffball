@@ -620,29 +620,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6147755461544134754, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: spring
-      value: 
-      objectReference: {fileID: 1661658058}
-    - target: {fileID: 6796020143521107312, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: distance
-      value: 
-      objectReference: {fileID: 1661658055}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
---- !u!232 &1661658055 stripped
-DistanceJoint2D:
-  m_CorrespondingSourceObject: {fileID: 5423112099417358664, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-  m_PrefabInstance: {fileID: 1661658053}
-  m_PrefabAsset: {fileID: 0}
---- !u!231 &1661658058 stripped
-SpringJoint2D:
-  m_CorrespondingSourceObject: {fileID: 8356546528175368300, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-  m_PrefabInstance: {fileID: 1661658053}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1933580731
 PrefabInstance:
   m_ObjectHideFlags: 0

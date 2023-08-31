@@ -18,7 +18,7 @@ public class AssignVisible : MonoBehaviour
 
     public void Generate(GameObject source, GameObject target)
     {
-        var existing = CoreUtilities.FindChild(target, CoreConstants.NAME_OBJECT_VIS);
+        var existing = CoreUtilities.FindChild(target.transform, CoreConstants.NAME_OBJECT_VIS);
 
         // clean any existing hierarchy
         CoreUtilities.DestroyDependents(existing);
