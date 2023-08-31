@@ -717,6 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spring: {fileID: 8356546528175368300}
+  distance: {fileID: 0}
   anchor: {fileID: 3568813906638864072}
   initialConnectedAnchorPos: {x: 0, y: 0}
 --- !u!114 &7332870909150551616
@@ -827,6 +828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1440170132223941540}
   - component: {fileID: 1371341122118845785}
+  - component: {fileID: 6796020143521107312}
   m_Layer: 0
   m_Name: radial
   m_TagString: Untagged
@@ -865,6 +867,22 @@ MonoBehaviour:
   target: {fileID: 3568813906638864072}
   range: 1
   scale: {x: 1, y: 1}
+--- !u!114 &6796020143521107312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3220656234417202508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7148fdb792b33417b84b6e4863a178a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spring: {fileID: 0}
+  distance: {fileID: 5423112099417358664}
+  anchor: {fileID: 3568813906638864072}
+  initialConnectedAnchorPos: {x: 0, y: 0}
 --- !u!1 &3357837369979118685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1243,7 @@ GameObject:
   - component: {fileID: 3451219659084403233}
   - component: {fileID: 5569247661924440988}
   - component: {fileID: 8356546528175368300}
+  - component: {fileID: 5423112099417358664}
   m_Layer: 0
   m_Name: hand l
   m_TagString: Untagged
@@ -1296,8 +1315,28 @@ SpringJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
   m_Distance: 0.005
-  m_DampingRatio: 0.2
-  m_Frequency: 2
+  m_DampingRatio: 0.15
+  m_Frequency: 1.2
+--- !u!232 &5423112099417358664
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033470169493493832}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 0
+  m_Distance: 0.005
+  m_MaxDistanceOnly: 0
 --- !u!1 &5218752615544211558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,13 +1747,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meta: {fileID: 2467396169662780557}
   body: {fileID: 5569247661924440988}
-  spring: {fileID: 8356546528175368300}
+  neutralJoint: {fileID: 8356546528175368300}
   neutral: {fileID: 2639827434189376547}
   radial: {fileID: 1371341122118845785}
+  radialJoint: {fileID: 5423112099417358664}
   triggerGrab: {fileID: 0}
   colliderBody: {fileID: 8920531886859060632}
-  deadzone: 0.05
-  dbgHandMove: {x: 0, y: 0}
+  deadzone: 0.1
 --- !u!1 &7604188111602582254
 GameObject:
   m_ObjectHideFlags: 0

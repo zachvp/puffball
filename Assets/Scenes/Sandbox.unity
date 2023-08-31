@@ -457,7 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5f3b1121bc24ed5bf8cb0161ccae8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joint: {fileID: 0}
   anchor: {fileID: 0}
   target: {fileID: 0}
   range: 2
@@ -573,18 +572,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1371341122118845785, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: joint
-      value: 
-      objectReference: {fileID: 1661658055}
     - target: {fileID: 2263842209130745748, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_Name
       value: RootPlayerCharacterNew
       objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: neutralJoint
-      value: 
-      objectReference: {fileID: 1661658058}
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -632,41 +623,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5033470169493493832, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1661658055}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
---- !u!1 &1661658054 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5033470169493493832, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-  m_PrefabInstance: {fileID: 1661658053}
-  m_PrefabAsset: {fileID: 0}
---- !u!232 &1661658055
-DistanceJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661658054}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 0.005
-  m_MaxDistanceOnly: 0
---- !u!231 &1661658058 stripped
-SpringJoint2D:
-  m_CorrespondingSourceObject: {fileID: 8356546528175368300, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-  m_PrefabInstance: {fileID: 1661658053}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1933580731
 PrefabInstance:
   m_ObjectHideFlags: 0

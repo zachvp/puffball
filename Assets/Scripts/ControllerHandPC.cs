@@ -11,6 +11,7 @@ public class ControllerHandPC : MonoBehaviour
     public GameObject neutral;
 
     public MovementRadial radial;
+    public Joint2D radialJoint;
 
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
@@ -23,8 +24,6 @@ public class ControllerHandPC : MonoBehaviour
 
     // state
     private State state;
-    private BufferInterval<Vector2> inputMove = new BufferInterval<Vector2>(8, 1/60f);
-    public Vector2 dbgHandMove;
 
     public void Awake()
     {
@@ -34,30 +33,6 @@ public class ControllerHandPC : MonoBehaviour
         };
     }
 
-    public void Update()
-    {
-        var value = meta.commandEmitter.playerInput.currentActionMap["Move Hand"].ReadValue<Vector2>();
-
-        inputMove.Add(value, Time.time);
-
-        var delta = Vector2.zero;
-        foreach (var i in inputMove.buffer)
-        {
-            delta += value - i; 
-        }
-
-        if (delta.sqrMagnitude < 0.1f)
-        {
-            //Debug.Log("detect no move delta");
-        }
-        else
-        {
-            //Debug.Log($"move delta too big: {delta}");
-            //body.drag = 1;
-            //spring.dampingRatio = 0.25f;
-        }
-    }
-
     public void HandleCommand(PCInputArgs args)
     {
         switch (args.type)
@@ -65,13 +40,21 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > deadzone)
                 {
-                    neutralJoint.enabled = false;
-                    radial.Move(args.vVec2);
+                    StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
+                    {
+                        neutralJoint.enabled = false;
+                        radialJoint.enabled = true;
+                        radial.Move(args.vVec2);
+                    }));
                 }
                 else
                 {
-                    radial.ResetPosition();
-                    neutralJoint.enabled = true;
+                    StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
+                    {
+                        radialJoint.enabled = false;
+                        neutralJoint.enabled = true;
+                        radial.ResetState();
+                    }));
                 }
                 
                 break;
