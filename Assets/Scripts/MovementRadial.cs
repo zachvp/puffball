@@ -14,8 +14,6 @@ public class MovementRadial : MonoBehaviour
 
         target.position = newPos;
 
-        Debug.DrawLine(anchor.position, newPos, Color.red, 4);
-
         return newPos;
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class JointDynamicAnchor : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class JointDynamicAnchor : MonoBehaviour
 
     public Transform anchor;
 
+    [NonSerialized]
     public Vector2 initialConnectedAnchorPos;
 
     public void Start()
