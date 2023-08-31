@@ -6,8 +6,10 @@ public class ControllerBodyPC : MonoBehaviour
 {
     public PCMetadata meta;
     public MovementJump movementJump;
+    public MovementAxis movementAxis;
 
     public float jumpStrength = 10;
+    public float walkSpeed = 8;
 
     public void Awake()
     {
@@ -23,6 +25,9 @@ public class ControllerBodyPC : MonoBehaviour
         {
             case CoreActionMap.Player.JUMP:
                 movementJump.Jump(jumpStrength);
+                break;
+            case CoreActionMap.Player.MOVE:
+                movementAxis.MoveX(walkSpeed * args.vFloat);
                 break;
         }
     }
