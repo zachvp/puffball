@@ -5,7 +5,7 @@ using UnityEngine;
 public class ControllerBodyPC : MonoBehaviour
 {
     public PCMetadata meta;
-    public MovementJump movementJump;
+    public MovementJump movementJump; // todo: remove and only use movementAxis
     public MovementAxis movementAxis;
 
     public float jumpStrength = 10;

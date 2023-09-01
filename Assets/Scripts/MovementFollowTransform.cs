@@ -9,7 +9,7 @@ public class MovementFollowTransform : MonoBehaviour
     public bool usePhysics;
 
     [CoreConditional(nameof(usePhysics))]
-    public CoreBody body;
+    public Rigidbody2D body;
 
     [CoreConditional("type", FollowType.LAG)]
     public float time = 1f;
@@ -34,7 +34,7 @@ public class MovementFollowTransform : MonoBehaviour
     {
         var toAnchor = anchor.position - transform.position;
 
-        if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT)
+        if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_DISTANCE)
         {
             UpdatePosition(anchor.position);
             t = 0;
@@ -43,7 +43,14 @@ public class MovementFollowTransform : MonoBehaviour
         {
             var modPos = Vector3.Lerp(transform.position, anchor.position, Mathf.Min(1, t / time));
 
-            t += Time.deltaTime;
+            if (usePhysics)
+            {
+                t += Time.fixedDeltaTime;
+            }
+            else
+            {
+                t += Time.deltaTime;
+            }
 
             UpdatePosition(modPos + offset);
         }
@@ -58,7 +65,11 @@ public class MovementFollowTransform : MonoBehaviour
     {
         if (usePhysics)
         {
-            body.position = position;
+            StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
+            {
+                body.position = position;
+            }));
+
             //body.MoveKinematic(position);
         }
         else
