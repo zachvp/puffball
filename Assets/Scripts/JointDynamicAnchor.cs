@@ -3,52 +3,50 @@ using System;
 
 public class JointDynamicAnchor : MonoBehaviour
 {
-    // todo: extend coreConditional to support more args
-    [CoreConditional(nameof(distance))]
-    public SpringJoint2D spring;
-
-    [CoreConditional(nameof(spring))]
-    public DistanceJoint2D distance;
-
-    [CoreConditional(nameof(spring))]
-    public FixedJoint2D fixedJoint;
-
     public Transform anchor;
 
-    [NonSerialized]
-    public Vector2 initialConnectedAnchorPos;
+    public AnchoredJoint2D joint;
+    public TargetJoint2D relative;
 
-    public void Start()
+    public void Awake()
     {
-        if (spring)
-        {
-            initialConnectedAnchorPos = spring.connectedAnchor;
-        }
-        else if (distance)
-        {
-            initialConnectedAnchorPos = distance.connectedAnchor;
-        }
-        else if (fixedJoint)
-        {
-            initialConnectedAnchorPos = fixedJoint.connectedAnchor;
-        }
-
-        Debug.Assert(spring || distance || fixedJoint, $"no joints are configured, this script will do nothing");
+        Debug.Assert(joint || relative, "no joint linked");
     }
 
     public void FixedUpdate()
     {
-        if (spring)
+        if (joint)
         {
-            spring.connectedAnchor = anchor.position;
+            joint.connectedAnchor = anchor.position;
         }
-        else if (distance)
+        if (relative)
         {
-            distance.connectedAnchor = anchor.position;
+            relative.target = anchor.position;
         }
-        else if (fixedJoint)
+    }
+
+    public void OnDisable()
+    {
+        if (joint)
         {
-            fixedJoint.connectedAnchor = anchor.position;
+            joint.enabled = false;
+        }
+        if (relative)
+        {
+            relative.enabled = false;
+        }
+    }
+
+    public void OnEnable()
+    {
+        if (relative)
+        {
+            relative.enabled = true;
+
+        }
+        if (joint)
+        {
+            joint.enabled = true;
         }
     }
 }

@@ -232,6 +232,12 @@ public static class CoreConstants
     public const string NAME_FILL_PREFIX = "fill";
     public const string NAME_OBJECT_VIS = "_visible";
     public const string NAME_OBJECT_COLL = "_collider";
+
+    public const int LAYER_PLAYER = 3;
+    public const int LAYER_OBSTACLE = 6;
+    public const int LAYER_ACTOR = 7;
+    public const int LAYER_TRIGGER = 8;
+    public const int LAYER_PICKUP = 9;
 }
 
 public class Signals : Singleton<Signals>

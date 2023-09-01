@@ -26,6 +26,8 @@ public class ControllerHandPC : MonoBehaviour
         {
             meta.commandEmitter.onPCCommand += HandleCommand;
         };
+
+        triggerGrab.onTraitFound += HandleTraitFound;
     }
 
     public void HandleCommand(PCInputArgs args)
@@ -57,7 +59,20 @@ public class ControllerHandPC : MonoBehaviour
                 break;
             case CoreActionMap.Player.GRIP:
                 // todo: implement
+                if (ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
+                {
+                    ball.GrabNew(radial.target);
+                }
+
                 break;
+        }
+    }
+
+    public void HandleTraitFound(ContainerTrait trait)
+    {
+        if (trait.value.HasFlag(Trait.BALL))
+        {
+            ball = trait.GetComponentInChildren<Ball>();
         }
     }
 

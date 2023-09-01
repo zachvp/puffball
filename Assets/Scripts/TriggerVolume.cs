@@ -5,7 +5,9 @@ public class TriggerVolume : MonoBehaviour
 {
     public bool isTriggered;
     public LayerMask mask;
-    public Collider2D[] overlappingObjects = new Collider2D[1];
+    public Collider2D[] triggeredObjects = new Collider2D[1];
+    public Action<ContainerTrait> onTraitFound;
+    public Trait triggeredTraits;
 
     [NonSerialized]
     new public Collider2D collider;
@@ -15,7 +17,7 @@ public class TriggerVolume : MonoBehaviour
         collider = GetComponent<Collider2D>();
 
         Debug.AssertFormat(collider != null, $"Script:{nameof(TriggerVolume)} requires collider attached to the same game object");
-        Debug.AssertFormat(overlappingObjects.Length > 0, "non-zero length required for trigger");
+        Debug.AssertFormat(triggeredObjects.Length > 0, "non-zero length required for trigger");
         Debug.AssertFormat(collider.isTrigger, "attached collider required to be trigger");
     }
 
@@ -44,14 +46,32 @@ public class TriggerVolume : MonoBehaviour
         filter.useLayerMask = true;
         filter.layerMask = mask;
 
-        isTriggered = collider.OverlapCollider(filter, overlappingObjects) > 0;
+        isTriggered = collider.OverlapCollider(filter, triggeredObjects) > 0;
+
+        if (isTriggered)
+        {
+            // search for trait in each object hierarchy
+            foreach (var o in triggeredObjects)
+            {
+                var trait = o.GetComponentInParent<ContainerTrait>();
+
+                if (trait)
+                {
+                    triggeredTraits |= trait.value;
+
+                    Emitter.Send(onTraitFound, trait);
+                }
+            }
+        }
     }
 
     private void ClearState()
     {
-        for (var i = 0; i < overlappingObjects.Length; i++)
+        triggeredTraits = Trait.NONE;
+
+        for (var i = 0; i < triggeredObjects.Length; i++)
         {
-            overlappingObjects[i] = null;
+            triggeredObjects[i] = null;
         }
     }
 }

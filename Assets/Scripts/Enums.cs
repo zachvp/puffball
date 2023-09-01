@@ -15,7 +15,8 @@ public enum Direction2D
 public enum Trait
 {
     NONE = 0,
-    PICKUP = 1 << 0
+    PICKUP = 1 << 0,
+    BALL = 1 << 1
 }
 
 public static class CoreActionMap

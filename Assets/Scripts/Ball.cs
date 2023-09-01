@@ -8,22 +8,21 @@ public class Ball : MonoBehaviour
     public GameObject pickup;
     public GameObject held;
     public GameObject released;
-    public MovementFollowTransform follow;
+
+    public JointDynamicAnchor joint;
 
     public Vector2 assistThrow = new Vector2(50, 50);
 
     public void GrabNew(Transform parent)
     {
-        body.StopVertical();
-        body.ToggleRotationFreeze(true);
-        //body.body.simulated = false;
+        // todo: impl
+        joint.anchor = parent;
+        joint.enabled = true;
+        gameObject.layer = CoreConstants.LAYER_PICKUP;
 
-        //transform.SetParent(parent);
-        follow.anchor = parent;
-        follow.enabled = true;
-        //transform.localPosition = Vector3.zero;
-        //body.position = transform.position;
-        Debug.Log($"grab ball");
+        //Debug.Log($"ball layer index: {gameObject.layer}");
+        //var mask = LayerMask.GetMask(new string[1] { "Actor" } );
+        //Debug.Log($"actor layer mask: {mask}");
     }
 
     public void ReleaseNew()

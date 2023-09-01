@@ -343,15 +343,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0.6839622
-      objectReference: {fileID: 0}
-    - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
-      propertyPath: m_BackGroundColor.g
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.68235296
+      objectReference: {fileID: 0}
+    - target: {fileID: 6569705326062720051, guid: 0d0a6a73d3fe34b6fa511e9e246ff77a, type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0.7262607
+      value: 0.88408375
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -413,14 +413,6 @@ PrefabInstance:
     - target: {fileID: 2363132099507221997, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
       propertyPath: m_Name
       value: BallMain
-      objectReference: {fileID: 0}
-    - target: {fileID: 6258169124059478688, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
-      propertyPath: offset.x
-      value: -0.5859375
-      objectReference: {fileID: 0}
-    - target: {fileID: 6258169124059478688, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
-      propertyPath: offset.y
-      value: 1.359375
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
