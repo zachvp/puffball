@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Ball : MonoBehaviour
 {
@@ -10,24 +11,46 @@ public class Ball : MonoBehaviour
     public GameObject released;
 
     public JointDynamicAnchor joint;
+    public TriggerVolume trigger;
 
     public Vector2 assistThrow = new Vector2(50, 50);
 
+    private int initLayer;
+
+    public void Awake()
+    {
+        initLayer = gameObject.layer;
+    }
+
     public void GrabNew(Transform parent)
     {
-        // todo: impl
         joint.anchor = parent;
         joint.enabled = true;
-        gameObject.layer = CoreConstants.LAYER_PICKUP;
+        gameObject.layer = CoreConstants.LAYER_PROP;
 
         //Debug.Log($"ball layer index: {gameObject.layer}");
         //var mask = LayerMask.GetMask(new string[1] { "Actor" } );
         //Debug.Log($"actor layer mask: {mask}");
     }
 
-    public void ReleaseNew()
+    public void Drop()
     {
         Debug.Log($"release ball");
+        joint.enabled = false;
+        joint.anchor = null;
+
+        StartCoroutine(CheckOverlap());
+    }
+
+    public IEnumerator CheckOverlap()
+    {
+        // if triggered layers actor
+        // todo: comparison is candidate for utility method
+        while ((trigger.triggeredLayers.value & (1 << CoreConstants.LAYER_PLAYER)) > 0)
+        {
+            yield return null;
+        }
+        gameObject.layer = initLayer;
     }
 
     // Activate the held object, deactivate the pickup object.

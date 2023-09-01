@@ -19,6 +19,15 @@ public static class CoreUtilities
         }
     }
 
+    public static IEnumerator TaskContinuous(Action task, Func<bool> isActive)
+    {
+        while (isActive())
+        {
+            task();
+            yield return null;
+        }
+    }
+
     public static IEnumerator TaskRepeat(float interval, Action task)
     {
         while (true)
@@ -238,6 +247,7 @@ public static class CoreConstants
     public const int LAYER_ACTOR = 7;
     public const int LAYER_TRIGGER = 8;
     public const int LAYER_PICKUP = 9;
+    public const int LAYER_PROP = 10;
 }
 
 public class Signals : Singleton<Signals>

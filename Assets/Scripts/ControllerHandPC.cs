@@ -59,9 +59,18 @@ public class ControllerHandPC : MonoBehaviour
                 break;
             case CoreActionMap.Player.GRIP:
                 // todo: implement
-                if (ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
+                if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    ball.GrabNew(radial.target);
+                    if (state == State.NONE)
+                    {
+                        ball.GrabNew(radial.target);
+                        state = State.GRIP;
+                    }
+                    else
+                    {
+                        ball.Drop();
+                        state = State.NONE;
+                    }
                 }
 
                 break;
@@ -77,11 +86,9 @@ public class ControllerHandPC : MonoBehaviour
     }
 
     // -- Class definitions
-    [Flags]
     public enum State
     {
         NONE = 0,
         GRIP = 1 << 0,
-        BLOCKED = 1 << 1
     }
 }

@@ -16,7 +16,8 @@ public enum Trait
 {
     NONE = 0,
     PICKUP = 1 << 0,
-    BALL = 1 << 1
+    BALL = 1 << 1,
+    PLAYER = 1 << 2
 }
 
 public static class CoreActionMap

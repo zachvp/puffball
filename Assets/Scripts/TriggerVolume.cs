@@ -8,6 +8,7 @@ public class TriggerVolume : MonoBehaviour
     public Collider2D[] triggeredObjects = new Collider2D[1];
     public Action<ContainerTrait> onTraitFound;
     public Trait triggeredTraits;
+    public LayerMask triggeredLayers;
 
     [NonSerialized]
     new public Collider2D collider;
@@ -61,6 +62,9 @@ public class TriggerVolume : MonoBehaviour
 
                     Emitter.Send(onTraitFound, trait);
                 }
+
+                // Update triggered layers
+                triggeredLayers |= 1 << o.gameObject.layer;
             }
         }
     }
@@ -68,6 +72,7 @@ public class TriggerVolume : MonoBehaviour
     private void ClearState()
     {
         triggeredTraits = Trait.NONE;
+        triggeredLayers = 0;
 
         for (var i = 0; i < triggeredObjects.Length; i++)
         {
