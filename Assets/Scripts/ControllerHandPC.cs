@@ -5,10 +5,7 @@ public class ControllerHandPC : MonoBehaviour
 {
     // links
     public PCMetadata meta;
-    public Rigidbody2D body;
-    public Rigidbody2D rootBody;
 
-    public SpringJoint2D neutralJoint;
     public GameObject neutral;
 
     public MovementRadial radial;
@@ -16,12 +13,6 @@ public class ControllerHandPC : MonoBehaviour
 
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
-
-    public FixedJoint2D fixedJoint;
-
-    // config
-    public float deadzone = 0.05f;
-    public float velocityLimit = 10;
 
     // dynamic links
     private Ball ball;
@@ -37,32 +28,17 @@ public class ControllerHandPC : MonoBehaviour
         };
     }
 
-    // todo: simply stop the rigid bodies in their current relative position when distance over a limit
-    //public void FixedUpdate()
-    //{
-    //    //if (rootBody.velocity.sqrMagnitude > velocityLimit * velocityLimit)
-    //    if ((rootBody.position - body.position).sqrMagnitude > velocityLimit * velocityLimit)
-    //    {
-    //        radialJoint.distance = (rootBody.position - body.position).magnitude;
-    //        Debug.Log($"sqr mag: {(rootBody.position - body.position).sqrMagnitude}");
-    //    }
-    //    else
-    //    {
-    //        radialJoint.distance = 1.5f;
-    //    }
-    //}
-
     public void HandleCommand(PCInputArgs args)
     {
         switch (args.type)
         {
             case CoreActionMap.Player.MOVE_HAND:
-                if (Mathf.Abs(args.vVec2.sqrMagnitude) > deadzone)
+                if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_2)
                 {
                     StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
                     {
-                        //neutralJoint.enabled = false;
                         neutral.SetActive(false);
+
                         radialJoint.enabled = true;
                         radial.Move(args.vVec2);
                     }));
@@ -72,9 +48,9 @@ public class ControllerHandPC : MonoBehaviour
                     StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
                     {
                         radialJoint.enabled = false;
-                        neutral.SetActive(true);
-                        //neutralJoint.enabled = true;
                         radial.ResetState();
+
+                        neutral.SetActive(true);
                     }));
                 }
                 

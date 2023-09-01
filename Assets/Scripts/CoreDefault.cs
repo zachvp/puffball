@@ -73,7 +73,7 @@ public static class CoreUtilities
 
     public static bool Compare(float lhs, float rhs)
     {
-        return Mathf.Abs(lhs - rhs) < CoreConstants.DEADZONE_FLOAT;
+        return Mathf.Abs(lhs - rhs) < CoreConstants.DEADZONE_FLOAT_0;
     }
 
     #region Unity Object content duplication
@@ -218,9 +218,9 @@ public static class CoreUtilities
 
 public static class CoreConstants
 {
-    public const float DEADZONE_FLOAT = 0.01f;
-    public const float DEADZONE_FLOAT_INPUT = 0.05f;
-    public const float DEADZONE_FLOAT_DISTANCE = 0.1f;
+    public const float DEADZONE_FLOAT_0 = 0.01f;
+    public const float DEADZONE_FLOAT_1 = 0.05f;
+    public const float DEADZONE_FLOAT_2 = 0.1f;
     public const float DEADZONE_VELOCITY = 2;
     public const float UNIT_ROUND_POSITION = 1f / 32f;
     public const float THRESHOLD_DOT_INPUT = 0.84f;

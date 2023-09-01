@@ -34,7 +34,7 @@ public class MovementFollowTransform : MonoBehaviour
     {
         var toAnchor = anchor.position - transform.position;
 
-        if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_DISTANCE)
+        if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_1)
         {
             UpdatePosition(anchor.position);
             t = 0;

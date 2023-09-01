@@ -5,11 +5,23 @@ public class DebugDraw : MonoBehaviour
 {
     public Color color = Color.magenta;
     public float length = 1;
+    public Style style;
 
     public void Update()
     {
-        DrawHorizontal();
-        DrawVertical();
+        switch (style)
+        {
+            case Style.CROSS:
+                DrawHorizontal();
+                DrawVertical();
+                break;
+            case Style.CIRCLE:
+                
+                break;
+            default:
+                Debug.LogError($"unhandled style: {style}");
+                break;
+        }
     }
 
     public void DrawHorizontal()
@@ -32,5 +44,11 @@ public class DebugDraw : MonoBehaviour
         end.y += length;
 
         Debug.DrawLine(start, end, color);
+    }
+
+    public enum Style
+    {
+        CROSS,
+        CIRCLE
     }
 }
