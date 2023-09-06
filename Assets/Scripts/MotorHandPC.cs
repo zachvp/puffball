@@ -30,7 +30,7 @@ public class MotorHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.MOVE_HAND:
                 movementHeldPickup.Move(args.vVec2);
                 break;
-            case CoreActionMap.Player.Action.THROW:
+            case CoreActionMap.Player.Action.HAND_ACTION:
                 if (state == State.GRIP)
                 {
                     ApplyThrow(args.vVec2);

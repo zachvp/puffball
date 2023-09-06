@@ -30,12 +30,12 @@ public static class CoreActionMap
 
     public static class Player
     {
-        public const string START     = "Start";
-        public const string JUMP      = "Jump";
-        public const string MOVE      = "Move";
-        public const string MOVE_HAND = "Move Hand";
-        public const string GRIP      = "Grip";
-        public const string THROW     = "Throw";
+        public const string START           = "Start";
+        public const string JUMP            = "Jump";
+        public const string MOVE            = "Move";
+        public const string MOVE_HAND       = "Move Hand";
+        public const string GRIP            = "Grip";
+        public const string HAND_ACTION     = "Hand Action";
 
         public enum Action : Int32
         {
@@ -46,7 +46,7 @@ public static class CoreActionMap
             MOVE,
             MOVE_HAND,
             GRIP,
-            THROW // todo: rename to be more generic (e.g. HAND_ACTION); also rename the action map asset
+            HAND_ACTION
         }
     }
 
@@ -60,7 +60,7 @@ public static class CoreActionMap
             { Player.MOVE,      Player.Action.MOVE },
             { Player.MOVE_HAND, Player.Action.MOVE_HAND },
             { Player.GRIP,      Player.Action.GRIP },
-            { Player.THROW,     Player.Action.THROW },
+            { Player.HAND_ACTION,     Player.Action.HAND_ACTION },
         };
 
         if (map.ContainsKey(name))
