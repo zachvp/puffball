@@ -1080,7 +1080,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7324267189143895909}
-  - component: {fileID: 3885574607454518695}
   - component: {fileID: 5947851127972274785}
   - component: {fileID: 2036661919769946755}
   m_Layer: 3
@@ -1105,19 +1104,6 @@ Transform:
   m_Father: {fileID: 9081972722529478402}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3885574607454518695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2935711009558592626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050724bfc08a34baf9cfd6bb1ad6ddfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 5415144965076204952}
 --- !u!114 &5947851127972274785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,8 +1130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meta: {fileID: 2467396169662780557}
-  movementJump: {fileID: 3885574607454518695}
-  movementAxis: {fileID: 5947851127972274785}
+  movement: {fileID: 5947851127972274785}
   jumpStrength: 10
   walkSpeed: 8
 --- !u!1 &3073314468740152812

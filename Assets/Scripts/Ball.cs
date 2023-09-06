@@ -27,10 +27,6 @@ public class Ball : MonoBehaviour
         joint.anchor = parent;
         joint.enabled = true;
         gameObject.layer = CoreConstants.LAYER_PROP;
-
-        //Debug.Log($"ball layer index: {gameObject.layer}");
-        //var mask = LayerMask.GetMask(new string[1] { "Actor" } );
-        //Debug.Log($"actor layer mask: {mask}");
     }
 
     public void Drop()
@@ -44,9 +40,8 @@ public class Ball : MonoBehaviour
 
     public IEnumerator CheckOverlap()
     {
-        // if triggered layers actor
-        // todo: comparison is candidate for utility method
-        while ((trigger.triggeredLayers.value & (1 << CoreConstants.LAYER_PLAYER)) > 0)
+        // while the ball is overlapping some player...
+        while (CoreUtilities.LayerExistsInMask(CoreConstants.LAYER_PLAYER, trigger.triggeredLayers))
         {
             yield return null;
         }

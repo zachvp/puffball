@@ -58,7 +58,6 @@ public class ControllerHandPC : MonoBehaviour
                 
                 break;
             case CoreActionMap.Player.GRIP:
-                // todo: implement
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
                     if (state == State.NONE)

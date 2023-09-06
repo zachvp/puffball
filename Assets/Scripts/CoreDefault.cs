@@ -8,7 +8,7 @@ using UnityEditor;
 // todo: use ZCore namespace
 public static class CoreUtilities
 {
-    #region Coroutines
+    #region Coroutines & Collection Utils
 
     public static IEnumerator TaskContinuous(Action task)
     {
@@ -67,6 +67,38 @@ public static class CoreUtilities
         yield return new WaitForSeconds(delay);
         task(arg0, arg1);
     }
+
+    public static void Increment<T>(Dictionary<T, int> d, T key)
+    {
+        if (d.ContainsKey(key))
+        {
+            d[key] += 1;
+        }
+        else
+        {
+            d.Add(key, 1);
+        }
+    }
+
+    public static bool Decrement<T>(Dictionary<T, int> d, T key)
+    {
+        if (d.ContainsKey(key))
+        {
+            d[key] -= 1;
+            if (d[key] == 0)
+            {
+                d.Remove(key);
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
     #endregion
 
     // rounds given number to closest multiple of unit
@@ -80,9 +112,25 @@ public static class CoreUtilities
         return new Vector2(RoundTo(value.x, unit), RoundTo(value.y, unit));
     }
 
-    public static bool Compare(float lhs, float rhs)
+    public static bool LayerExistsInMask(int layerIndex, LayerMask mask)
     {
-        return Mathf.Abs(lhs - rhs) < CoreConstants.DEADZONE_FLOAT_0;
+        return (mask.value & (1 << layerIndex)) > 0;
+    }
+
+    public static Vector2 SetX(Vector2 source, float value)
+    {
+        var result = source;
+        result.x = value;
+
+        return result;
+    }
+
+    public static Vector2 SetY(Vector2 source, float value)
+    {
+        var result = source;
+        result.y = value;
+
+        return result;
     }
 
     #region Unity Object content duplication
@@ -150,37 +198,6 @@ public static class CoreUtilities
     }
 
     #endregion
-
-    public static void Increment<T>(Dictionary<T, int> d, T key)
-    {
-        if (d.ContainsKey(key))
-        {
-            d[key] += 1;
-        }
-        else
-        {
-            d.Add(key, 1);
-        }
-    }
-
-    public static bool Decrement<T>(Dictionary<T, int> d, T key)
-    {
-        if (d.ContainsKey(key))
-        {
-            d[key] -= 1;
-            if (d[key] == 0)
-            {
-                d.Remove(key);
-            }
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
 
     #region GameObject utils
 

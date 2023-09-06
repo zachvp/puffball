@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-// todo: migrate to scriptable object that spawns at runtime
 [Serializable]
 public class ActorStatePlatform : MonoBehaviour
 {

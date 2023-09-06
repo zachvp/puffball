@@ -22,10 +22,9 @@ public class CoreBody : MonoBehaviour
     {
         originalGravity = body.gravityScale;
 
-        // todo: simply add the component
         signals = GetComponent<CoreSignalsCollision>();
 
-        if (signals = null)
+        if (signals == null)
         {
             signals = gameObject.AddComponent<CoreSignalsCollision>();
         }

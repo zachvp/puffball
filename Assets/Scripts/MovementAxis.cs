@@ -5,14 +5,14 @@ public class MovementAxis : MonoBehaviour
 {
     public Rigidbody2D body;
 
-    public void MoveX(float velocity)
+    public void VelocityX(float velocity)
     {
         var v = body.velocity;
         v.x = velocity;
         body.velocity = v;
     }
 
-    public void MoveY(float velocity)
+    public void VelocityY(float velocity)
     {
         var v = body.velocity;
         v.y = velocity;

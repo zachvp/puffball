@@ -24,7 +24,6 @@ public class AssignTransformEditor : Editor
 
         if (GUILayout.Button("Find sources"))
         {
-            // todo: call method
             var component = (AssignTransform)target;
             component.FindSources();
         }

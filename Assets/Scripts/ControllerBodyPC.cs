@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementJump))]
+[RequireComponent(typeof(MovementAxis))]
 public class ControllerBodyPC : MonoBehaviour
 {
     public PCMetadata meta;
-    public MovementJump movementJump; // todo: remove and only use movementAxis
-    public MovementAxis movementAxis;
+    public Rigidbody2D body;
+    public MovementAxis movement;
 
     public float jumpStrength = 10;
     public float walkSpeed = 8;
@@ -24,10 +24,13 @@ public class ControllerBodyPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.JUMP:
-                movementJump.Jump(jumpStrength);
+                if (args.vBool)
+                {
+                    body.velocity = CoreUtilities.SetY(body.velocity, jumpStrength);
+                }
                 break;
             case CoreActionMap.Player.MOVE:
-                movementAxis.MoveX(walkSpeed * args.vFloat);
+                body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * args.vFloat);
                 break;
         }
     }
