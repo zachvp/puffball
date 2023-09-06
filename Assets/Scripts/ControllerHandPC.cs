@@ -34,7 +34,7 @@ public class ControllerHandPC : MonoBehaviour
     {
         switch (args.type)
         {
-            case CoreActionMap.Player.MOVE_HAND:
+            case CoreActionMap.Player.Action.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_2)
                 {
                     StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
@@ -57,7 +57,7 @@ public class ControllerHandPC : MonoBehaviour
                 }
                 
                 break;
-            case CoreActionMap.Player.GRIP:
+            case CoreActionMap.Player.Action.GRIP:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
                     if (state == State.NONE)

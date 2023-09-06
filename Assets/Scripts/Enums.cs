@@ -28,19 +28,7 @@ public static class CoreActionMap
         PLAYER
     }
 
-    public enum Player : Int32
-    {
-        NONE,
-
-        START,
-        JUMP,
-        MOVE,
-        MOVE_HAND,
-        GRIP,
-        THROW // todo: rename to be more generic (e.g. HAND_ACTION); also rename the action map asset
-    }
-
-    public static class PlayerActions
+    public static class Player
     {
         public const string START     = "Start";
         public const string JUMP      = "Jump";
@@ -48,9 +36,56 @@ public static class CoreActionMap
         public const string MOVE_HAND = "Move Hand";
         public const string GRIP      = "Grip";
         public const string THROW     = "Throw";
+
+        public enum Action : Int32
+        {
+            NONE,
+
+            START,
+            JUMP,
+            MOVE,
+            MOVE_HAND,
+            GRIP,
+            THROW // todo: rename to be more generic (e.g. HAND_ACTION); also rename the action map asset
+        }
     }
 
-    //public const string Player
+    public static Player.Action GetPlayerAction(string name)
+    {
+        var result = Player.Action.NONE;
+        var map = new Dictionary<string, Player.Action>
+        {
+            { Player.START,     Player.Action.START },
+            { Player.JUMP,      Player.Action.JUMP },
+            { Player.MOVE,      Player.Action.MOVE },
+            { Player.MOVE_HAND, Player.Action.MOVE_HAND },
+            { Player.GRIP,      Player.Action.GRIP },
+            { Player.THROW,     Player.Action.THROW },
+        };
+
+        if (map.ContainsKey(name))
+        {
+            result = map[name];
+        }
+
+        return result;
+    }
+
+    public static Type GetActionMap(string name)
+    {
+        var result = Type.NONE;
+        var map = new Dictionary<string, Type>
+        {
+            { "player", Type.PLAYER },
+        };
+
+        if (map.ContainsKey(name.ToLower()))
+        {
+            result = map[name.ToLower()];
+        }
+
+        return result;
+    }
 }
 
 public static class EnumHelper
@@ -68,43 +103,6 @@ public static class EnumHelper
         result |= right ? Direction2D.RIGHT : Direction2D.NONE;
         result |= down ? Direction2D.DOWN : Direction2D.NONE;
         result |= up ? Direction2D.UP : Direction2D.NONE;
-
-        return result;
-    }
-
-    public static CoreActionMap.Player GetPlayerAction(string name)
-    {
-        var result = CoreActionMap.Player.NONE;
-        var map = new Dictionary<string, CoreActionMap.Player>
-        {
-            { CoreActionMap.PlayerActions.START,     CoreActionMap.Player.START },
-            { CoreActionMap.PlayerActions.JUMP,      CoreActionMap.Player.JUMP },
-            { CoreActionMap.PlayerActions.MOVE,      CoreActionMap.Player.MOVE },
-            { CoreActionMap.PlayerActions.MOVE_HAND, CoreActionMap.Player.MOVE_HAND },
-            { CoreActionMap.PlayerActions.GRIP,      CoreActionMap.Player.GRIP },
-            { CoreActionMap.PlayerActions.THROW,     CoreActionMap.Player.THROW },
-        };
-
-        if (map.ContainsKey(name))
-        {
-            result = map[name];
-        }
-
-        return result;
-    }
-
-    public static CoreActionMap.Type GetActionMap(string name)
-    {
-        var result = CoreActionMap.Type.NONE;
-        var map = new Dictionary<string, CoreActionMap.Type>
-        {
-            { "player", CoreActionMap.Type.PLAYER },
-        };
-
-        if (map.ContainsKey(name.ToLower()))
-        {
-            result = map[name.ToLower()];
-        }
 
         return result;
     }

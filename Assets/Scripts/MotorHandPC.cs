@@ -27,10 +27,10 @@ public class MotorHandPC : MonoBehaviour
 
         switch (args.type)
         {
-            case CoreActionMap.Player.MOVE_HAND:
+            case CoreActionMap.Player.Action.MOVE_HAND:
                 movementHeldPickup.Move(args.vVec2);
                 break;
-            case CoreActionMap.Player.THROW:
+            case CoreActionMap.Player.Action.THROW:
                 if (state == State.GRIP)
                 {
                     ApplyThrow(args.vVec2);
@@ -45,7 +45,7 @@ public class MotorHandPC : MonoBehaviour
                     }));
                 }
                 break;
-            case CoreActionMap.Player.GRIP:
+            case CoreActionMap.Player.Action.GRIP:
                 if (grabTrigger.isTriggered)
                 {
                     if (ball != null && state == State.NONE)

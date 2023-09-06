@@ -36,9 +36,9 @@ public class PCInputCommandEmitter : MonoBehaviour
         // Check if player input is active. The input system triggers an event when it's disabled
         // (e.g. when scene is unloaded), which means some downstream objects may be accessed
         // after they've been deallocated.
-        if (playerInput.isActiveAndEnabled && EnumHelper.GetActionMap(context.action.actionMap.name) == actionMapType)
+        if (playerInput.isActiveAndEnabled && CoreActionMap.GetActionMap(context.action.actionMap.name) == actionMapType)
         {
-            var actionType = EnumHelper.GetPlayerAction(context.action.name);
+            var actionType = CoreActionMap.GetPlayerAction(context.action.name);
 
             UpdateData(actionType, context);
 
@@ -47,22 +47,22 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
     }
 
-    public void UpdateData(CoreActionMap.Player actionType, InputAction.CallbackContext context)
+    public void UpdateData(CoreActionMap.Player.Action actionType, InputAction.CallbackContext context)
     {
         data.type = actionType;
 
         switch (actionType)
         {
-            case CoreActionMap.Player.JUMP:
-            case CoreActionMap.Player.GRIP:
-            case CoreActionMap.Player.START:
-            case CoreActionMap.Player.THROW:
+            case CoreActionMap.Player.Action.JUMP:
+            case CoreActionMap.Player.Action.GRIP:
+            case CoreActionMap.Player.Action.START:
+            case CoreActionMap.Player.Action.THROW:
                 data.vBool = context.phase == InputActionPhase.Performed;
                 break;
-            case CoreActionMap.Player.MOVE:
+            case CoreActionMap.Player.Action.MOVE:
                 data.vFloat = context.ReadValue<float>();
                 break;
-            case CoreActionMap.Player.MOVE_HAND:
+            case CoreActionMap.Player.Action.MOVE_HAND:
                 data.vVec2 = context.ReadValue<Vector2>();
                 break;
             default:

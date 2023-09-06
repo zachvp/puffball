@@ -32,7 +32,7 @@ public class PCPlatformMotor : MonoBehaviour
         // update state according to input.
         switch (args.type)
         {
-            case CoreActionMap.Player.JUMP:
+            case CoreActionMap.Player.Action.JUMP:
                 // ground jump
                 if (state.trigger.down.isTriggered)
                 {
@@ -49,7 +49,7 @@ public class PCPlatformMotor : MonoBehaviour
                 }
                 break;
 
-            case CoreActionMap.Player.MOVE:
+            case CoreActionMap.Player.Action.MOVE:
                 state.inputMove = args.vFloat;
 
                 if (Mathf.Abs(state.inputMove) > CoreConstants.DEADZONE_FLOAT_0)

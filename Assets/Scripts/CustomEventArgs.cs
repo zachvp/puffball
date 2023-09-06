@@ -6,14 +6,14 @@ public struct InputButtonArgs
 {
     public int playerID;
     public InputActionPhase phase;
-    public CoreActionMap.Player action;
+    public CoreActionMap.Player.Action action;
 }
 
 [Serializable]
 public struct InputAxis1DArgs
 {
     public int playerID;
-    public CoreActionMap.Player action;
+    public CoreActionMap.Player.Action action;
     public int axis;
 }
 
@@ -21,14 +21,14 @@ public struct InputAxis1DArgs
 public struct InputAxis2DArgs
 {
     public int playerID;
-    public CoreActionMap.Player action;
+    public CoreActionMap.Player.Action action;
     public Vector2 axis;
 }
 
 [Serializable]
 public struct PCInputArgs
 {
-    public CoreActionMap.Player type;
+    public CoreActionMap.Player.Action type;
     public int playerIndex;
     public Vector2 vVec2;
     public float vFloat;
