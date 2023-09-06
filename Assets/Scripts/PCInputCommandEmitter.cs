@@ -5,7 +5,7 @@ using System;
 public class PCInputCommandEmitter : MonoBehaviour
 {
     public PlayerInput playerInput;
-    public CoreActionMap.Type actionMapType; // todo: this may not make sense since UpdateData assumes player action map
+    public CoreActionMap.Type actionMapType;
     public Action<PCInputArgs> onPCCommand;
 
     // Contains the combination of the most recent input data.

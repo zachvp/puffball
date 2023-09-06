@@ -39,6 +39,18 @@ public static class CoreActionMap
         GRIP,
         THROW // todo: rename to be more generic (e.g. HAND_ACTION); also rename the action map asset
     }
+
+    public static class PlayerActions
+    {
+        public const string START     = "Start";
+        public const string JUMP      = "Jump";
+        public const string MOVE      = "Move";
+        public const string MOVE_HAND = "Move Hand";
+        public const string GRIP      = "Grip";
+        public const string THROW     = "Throw";
+    }
+
+    //public const string Player
 }
 
 public static class EnumHelper
@@ -65,17 +77,17 @@ public static class EnumHelper
         var result = CoreActionMap.Player.NONE;
         var map = new Dictionary<string, CoreActionMap.Player>
         {
-            { "start", CoreActionMap.Player.START },
-            { "jump", CoreActionMap.Player.JUMP },
-            { "move", CoreActionMap.Player.MOVE },
-            { "move hand", CoreActionMap.Player.MOVE_HAND },
-            { "grip", CoreActionMap.Player.GRIP },
-            { "throw", CoreActionMap.Player.THROW },
+            { CoreActionMap.PlayerActions.START,     CoreActionMap.Player.START },
+            { CoreActionMap.PlayerActions.JUMP,      CoreActionMap.Player.JUMP },
+            { CoreActionMap.PlayerActions.MOVE,      CoreActionMap.Player.MOVE },
+            { CoreActionMap.PlayerActions.MOVE_HAND, CoreActionMap.Player.MOVE_HAND },
+            { CoreActionMap.PlayerActions.GRIP,      CoreActionMap.Player.GRIP },
+            { CoreActionMap.PlayerActions.THROW,     CoreActionMap.Player.THROW },
         };
 
-        if (map.ContainsKey(name.ToLower()))
+        if (map.ContainsKey(name))
         {
-            result = map[name.ToLower()];
+            result = map[name];
         }
 
         return result;

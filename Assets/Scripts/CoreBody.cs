@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 
+// todo: remove
 public class CoreBody : MonoBehaviour
 {
     // Links
@@ -41,7 +42,6 @@ public class CoreBody : MonoBehaviour
         }));
     }
 
-    // todo: remove this and VelocityY; callers should use utility method instead to update Vector components.
     public void VelocityX(float value)
     {
         StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>

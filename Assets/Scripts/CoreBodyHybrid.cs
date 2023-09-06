@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// todo: remove
 public class CoreBodyHybrid : MonoBehaviour
 {
     // -- links
@@ -14,10 +15,10 @@ public class CoreBodyHybrid : MonoBehaviour
     public float rotation { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { body.position = value; } }
 
-    // -- config
+    // -- config // todo: move to scriptable object
     public float stepCoefficient = 0.5f;
-    public float gravity = 1; // todo: move to scriptable object
-    public float originalGravity; // todo: move to scriptable object
+    public float gravity = 1; 
+    public float originalGravity;
 
     public void Awake()
     {
@@ -47,7 +48,6 @@ public class CoreBodyHybrid : MonoBehaviour
         Move(newPos);
     }
 
-    // todo: remove to enforce only velocity used?
     public void Move(Vector2 position)
     {
         body.MovePosition(position);
