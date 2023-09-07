@@ -1130,6 +1130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meta: {fileID: 2467396169662780557}
+  body: {fileID: 5415144965076204952}
   movement: {fileID: 5947851127972274785}
   jumpStrength: 10
   walkSpeed: 8

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEngine.InputSystem;
 
 // todo: use ZCore namespace
 public static class CoreUtilities
@@ -131,6 +132,19 @@ public static class CoreUtilities
         result.y = value;
 
         return result;
+    }
+
+    public static Vector2 ScreenToWorld(Camera camera, Vector2 source)
+    {
+        return (Vector2) camera.ScreenToWorldPoint(source);
+    }
+
+    public static void DrawScreenLine(Camera camera, Vector2 screenPosStart, Vector2 screenPosEnd)
+    {
+        Debug.DrawLine(ScreenToWorld(camera, screenPosStart),
+                       ScreenToWorld(camera, screenPosEnd),
+                       Color.blue,
+                       0.2f);
     }
 
     #region Unity Object content duplication

@@ -1,7 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
 public class PCInputCommandEmitter : MonoBehaviour
 {
@@ -13,10 +12,9 @@ public class PCInputCommandEmitter : MonoBehaviour
     public PCInputArgs data;
 
     // Mouse-specific data
-    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(30, CoreConstants.UNIT_TIME_SLICE);
+    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(8, CoreConstants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
-    public Camera currentCamera; // todo: for debug only
     public Vector2 currentMouse;
 
     public void Awake()
@@ -47,16 +45,17 @@ public class PCInputCommandEmitter : MonoBehaviour
 
         if (CoreConstants.CONTROL_SCHEME_KEYBOARD_MOUSE.Equals(playerInput.currentControlScheme))
         {
-            ProcessMouse(Mouse.current);
+            UpdateRelativeOrigin(Mouse.current);
         }
     }
 
-    public void ProcessMouse(Mouse mouse)
+    public void UpdateRelativeOrigin(Mouse mouse)
     {
         var diff = Vector2.zero;
 
         bufferMouse.Add(mouse.position.ReadValue(), Time.time);
 
+        // accumulate each difference between all buffered distances
         for (var i = 0; i < bufferMouse.buffer.Length; i++)
         {
             for (var j = 1; j < bufferMouse.buffer.Length; j++)
@@ -68,8 +67,10 @@ public class PCInputCommandEmitter : MonoBehaviour
             }
         }
 
+        // reset the relative cursor origin if there's no meaningful difference
         if (diff.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_0)
         {
+            // offset the origin by the current input value
             relativeOrigin = mouse.position.ReadValue() - (data.vVec2 * mouseLength);
         }
     }
@@ -102,27 +103,21 @@ public class PCInputCommandEmitter : MonoBehaviour
             case CoreActionMap.Player.Action.HAND_ACTION:
                 data.vBool = context.phase == InputActionPhase.Performed;
                 break;
+
             case CoreActionMap.Player.Action.MOVE:
                 data.vFloat = context.ReadValue<float>();
                 break;
+
             case CoreActionMap.Player.Action.MOVE_HAND:
                 if (context.control.device is Mouse)
                 {
                     var mouse = Mouse.current;
-                    var controlVec = mouse.position.ReadValue() - relativeOrigin;
 
-                    if (controlVec.magnitude > CoreConstants.DEADZONE_FLOAT_2)
-                    {
-                        var normalized = controlVec.normalized * (controlVec.magnitude / mouseLength);
+                    data.vVec2 = mouse.position.ReadValue() - relativeOrigin;
+                    data.vVec2 = data.vVec2.normalized * (data.vVec2.magnitude / mouseLength);
+                    data.vVec2 = Vector2.ClampMagnitude(data.vVec2, 1);
 
-                        data.vVec2 = Vector2.ClampMagnitude(normalized, 1);
-
-                        Debug.DrawLine((Vector2)currentCamera.ScreenToWorldPoint(relativeOrigin), (Vector2)currentCamera.ScreenToWorldPoint(mouse.position.ReadValue()), Color.blue, 0.2f);
-                    }
-                    else
-                    {
-                        data.vVec2 = controlVec;
-                    }
+                    //CoreUtilities.DrawScreenLine(SceneRefs.instance.camera, relativeOrigin, mouse.position.ReadValue());
                 }
                 else
                 {
@@ -130,6 +125,7 @@ public class PCInputCommandEmitter : MonoBehaviour
                 }
 
                 break;
+
             default:
                 Debug.LogError($"Unhandled case: {actionType}");
                 break;

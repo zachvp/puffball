@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 
@@ -9,6 +10,8 @@ public class SceneRefs : Singleton<SceneRefs>
         { get { return registry[ID.BALL] as Ball; } }
     public TextMeshProUGUI scoreUI
         { get { return registry[ID.UI_SCORE] as TextMeshProUGUI; } }
+    public Camera camera
+        { get { return registry[ID.CAMERA] as Camera; } }
 
     public readonly Dictionary<ID, object> registry;
 
@@ -21,6 +24,7 @@ public class SceneRefs : Singleton<SceneRefs>
     {
         TARGET_GOAL,
         BALL,
-        UI_SCORE
+        UI_SCORE,
+        CAMERA
     }
 }
