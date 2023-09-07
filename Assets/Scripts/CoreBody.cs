@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 
 // todo: remove
+[RequireComponent(typeof(CoreSignalsCollision))]
 public class CoreBody : MonoBehaviour
 {
     // Links
@@ -24,11 +25,6 @@ public class CoreBody : MonoBehaviour
         originalGravity = body.gravityScale;
 
         signals = GetComponent<CoreSignalsCollision>();
-
-        if (signals == null)
-        {
-            signals = gameObject.AddComponent<CoreSignalsCollision>();
-        }
     }
 
     #region Primary interface
@@ -46,10 +42,7 @@ public class CoreBody : MonoBehaviour
     {
         StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
-            var result = body.velocity;
-            result.x = value;
-
-            body.velocity = result;
+            body.velocity = CoreUtilities.SetX(body.velocity, value);
         }));
     }
 
@@ -57,16 +50,12 @@ public class CoreBody : MonoBehaviour
     {
         StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
-            var result = body.velocity;
-            result.y = value;
-
-            body.velocity = result;
+            body.velocity = CoreUtilities.SetY(body.velocity, value);
         }));
     }
 
     public void Move(Vector2 position)
     {
-
         StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
         {
             body.position = position;
@@ -76,16 +65,6 @@ public class CoreBody : MonoBehaviour
     public void MoveKinematic(Vector2 position)
     {
         body.MovePosition(position);
-    }
-
-    public void MoveBasedOnVelocity()
-    {
-        var newPos = body.position;
-        newPos += velocity * (Time.fixedDeltaTime * 0.5f); // todo: make constant
-
-        newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
-
-        Move(newPos);
     }
 
     public void StopVertical()

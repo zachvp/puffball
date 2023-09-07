@@ -5,11 +5,13 @@ using System;
 
 public class TestKinematicBody : MonoBehaviour
 {
-    public CoreBodyHybrid body;
+    public Rigidbody2D body;
     public ActorStateTrigger trigger;
     public Command command;
     public Command commandPrev;
+    public Vector2 velocity;
 
+    public float gravity = 1;
     public float speed = 5;
     public float stepCoefficient = 0.5f;
     public float jumpStrength = 10;
@@ -58,41 +60,41 @@ public class TestKinematicBody : MonoBehaviour
 
         if (command.HasFlag(Command.JUMP))
         {
-            body.velocity.y = jumpStrength;
+            velocity.y = jumpStrength;
             command &= ~Command.JUMP;
         }
         else if (command.HasFlag(Command.FALL))
         {
-            body.velocity.y -= body.gravity;
+            velocity.y -= gravity;
             command &= ~Command.FALL;
         }
         else if (trigger.down.isTriggered)
         {
-            body.velocity.y = 0;
+            velocity.y = 0;
         }
 
         if (command.HasFlag(Command.MOVE_RIGHT) && !command.HasFlag(Command.MOVE_NONE))
         {
-            body.velocity.x = speed;
+            velocity.x = speed;
             command &= ~Command.MOVE_RIGHT;
         }
         if (command.HasFlag(Command.MOVE_LEFT) && !command.HasFlag(Command.MOVE_NONE))
         {
-            body.velocity.x = -speed;
+            velocity.x = -speed;
             command &= ~Command.MOVE_LEFT;
         }
 
         if (command.HasFlag(Command.MOVE_NONE))
         {
-            body.velocity.x = 0;
+            velocity.x = 0;
             command &= ~Command.MOVE_NONE;
         }
 
-        newPos += body.velocity * (Time.fixedDeltaTime * stepCoefficient);
+        newPos += velocity * (Time.fixedDeltaTime * stepCoefficient);
 
         newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
 
-        body.Move(newPos);
+        body.MovePosition(newPos);
 
     }
 
