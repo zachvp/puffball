@@ -11,6 +11,12 @@ public class PCInputCommandEmitter : MonoBehaviour
     // Contains the combination of the most recent input data.
     public PCInputArgs data;
 
+    // Mouse-specific data
+    private BufferCircular<Vector2> bufferMouse = new BufferCircular<Vector2>(60);
+    public Vector2 relativeOrigin;
+    public float mouseLength = 4;
+    public Camera currentCamera;
+
     public void Awake()
     {
         data.playerIndex = playerInput.playerIndex;
@@ -29,6 +35,37 @@ public class PCInputCommandEmitter : MonoBehaviour
     public void Start()
     {
         Emitter.Send(Signals.instance.onPCCommandEmitterSpawn, this);
+
+        relativeOrigin = Mouse.current.position.ReadValue();
+    }
+
+    public void Update()
+    {
+        var mouse = Mouse.current;
+        var diff = Vector2.zero;
+
+        // todo:
+        bufferMouse.Add(mouse.position.ReadValue());
+
+        for (var i = 0; i < bufferMouse.buffer.Length; i++)
+        {
+            for (var j = 1; j < bufferMouse.buffer.Length; j++)
+            {
+                if (i != j)
+                {
+                    diff += bufferMouse.buffer[j] - bufferMouse.buffer[i];
+                }
+            }
+        }
+
+        if (diff.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_0)
+        {
+            relativeOrigin = mouse.position.ReadValue();
+
+            data.vVec2 = Vector2.zero;
+            data.type = CoreActionMap.Player.Action.MOVE_HAND;
+            Emitter.Send(onPCCommand, data);
+        }
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)
@@ -63,7 +100,23 @@ public class PCInputCommandEmitter : MonoBehaviour
                 data.vFloat = context.ReadValue<float>();
                 break;
             case CoreActionMap.Player.Action.MOVE_HAND:
-                data.vVec2 = context.ReadValue<Vector2>();
+                if (context.control.device is Mouse)
+                {
+                    var mouse = Mouse.current;
+                    var controlVec = (mouse.position.ReadValue() - relativeOrigin);
+                    var normalized = controlVec.normalized * (controlVec.magnitude / mouseLength);
+                    var cam = currentCamera;
+
+                    //Debug.Log($"move hand; mouse pos: {mouse.position.ReadValue()}");
+                    data.vVec2 = Vector2.ClampMagnitude(normalized, 1);
+                    
+                    Debug.DrawLine((Vector2) cam.ScreenToWorldPoint(relativeOrigin), (Vector2) cam.ScreenToWorldPoint(relativeOrigin + normalized), Color.red, 0.2f);
+                }
+                else
+                {
+                    data.vVec2 = context.ReadValue<Vector2>();
+                }
+
                 break;
             default:
                 Debug.LogError($"Unhandled case: {actionType}");

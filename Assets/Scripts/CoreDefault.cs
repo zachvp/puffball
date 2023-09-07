@@ -247,11 +247,15 @@ public static class CoreConstants
     public const float DEADZONE_FLOAT_0 = 0.01f;
     public const float DEADZONE_FLOAT_1 = 0.05f;
     public const float DEADZONE_FLOAT_2 = 0.1f;
+
     public const float DEADZONE_VELOCITY = 2;
-    public const float UNIT_ROUND_POSITION = 1f / 32f;
+
     public const float THRESHOLD_DOT_INPUT = 0.84f;
     public const float THRESHOLD_DOT_PRECISE = 0.99f;
     public const float THRESHOLD_DOT_LOOSE = 0.7f;
+
+    public const float UNIT_ROUND_POSITION = 1 / 32f;
+    public const float UNIT_TIME_SLICE = 1 / 60f;
 
     public const string DEFAULT_MENU = "Custom/";
 
@@ -376,20 +380,18 @@ public struct RandomInstant
 public class BufferCircular<T>
 {
     public readonly T[] buffer;
-    public readonly int size;
 
     private int index;
 
     public BufferCircular(int inSize)
     {
         buffer = new T[inSize];
-        size = inSize;
     }
 
     public void Add(T item)
     {
         buffer[index] = item;
-        index = (index + 1) % size;
+        index = (index + 1) % buffer.Length;
     }
 }
 
