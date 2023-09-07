@@ -13,7 +13,7 @@ public class PCInputCommandEmitter : MonoBehaviour
     public PCInputArgs data;
 
     // Mouse-specific data
-    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(60, CoreConstants.UNIT_TIME_SLICE);
+    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(30, CoreConstants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
     public Camera currentCamera; // todo: for debug only
@@ -55,7 +55,6 @@ public class PCInputCommandEmitter : MonoBehaviour
     {
         var diff = Vector2.zero;
 
-        // todo:
         bufferMouse.Add(mouse.position.ReadValue(), Time.time);
 
         for (var i = 0; i < bufferMouse.buffer.Length; i++)
@@ -71,11 +70,7 @@ public class PCInputCommandEmitter : MonoBehaviour
 
         if (diff.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_0)
         {
-            relativeOrigin = mouse.position.ReadValue();
-
-            //data.vVec2 = Vector2.zero;
-            //data.type = CoreActionMap.Player.Action.MOVE_HAND;
-            //Emitter.Send(onPCCommand, data);
+            relativeOrigin = mouse.position.ReadValue() - (data.vVec2 * mouseLength);
         }
     }
 
@@ -114,15 +109,15 @@ public class PCInputCommandEmitter : MonoBehaviour
                 if (context.control.device is Mouse)
                 {
                     var mouse = Mouse.current;
-                    var controlVec = (mouse.position.ReadValue() - relativeOrigin);
+                    var controlVec = mouse.position.ReadValue() - relativeOrigin;
 
-                    if (controlVec.sqrMagnitude > 1)
+                    if (controlVec.magnitude > CoreConstants.DEADZONE_FLOAT_2)
                     {
                         var normalized = controlVec.normalized * (controlVec.magnitude / mouseLength);
 
                         data.vVec2 = Vector2.ClampMagnitude(normalized, 1);
 
-                        Debug.DrawLine((Vector2)currentCamera.ScreenToWorldPoint(relativeOrigin), (Vector2)currentCamera.ScreenToWorldPoint(relativeOrigin + data.vVec2), Color.blue, 0.2f);
+                        Debug.DrawLine((Vector2)currentCamera.ScreenToWorldPoint(relativeOrigin), (Vector2)currentCamera.ScreenToWorldPoint(mouse.position.ReadValue()), Color.blue, 0.2f);
                     }
                     else
                     {
