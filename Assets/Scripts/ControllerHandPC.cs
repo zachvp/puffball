@@ -35,7 +35,7 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_2)
+                if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_1)
                 {
                     StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
                     {

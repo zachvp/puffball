@@ -250,6 +250,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4a4d07cc-a551-445b-b587-851c8bd48a0a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ab8ed1a3-6e37-4532-8503-53cf1b385f7a",
                     "path": "<Keyboard>/e",
                     "interactions": "",

@@ -1648,7 +1648,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 267057634948512274, guid: 77135510b1ec34263a222dee56c8d007, type: 3}
       propertyPath: mouseLength
-      value: 256
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 267057634948512274, guid: 77135510b1ec34263a222dee56c8d007, type: 3}
       propertyPath: currentCamera

@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class PCInputCommandEmitter : MonoBehaviour
 {
@@ -12,10 +13,11 @@ public class PCInputCommandEmitter : MonoBehaviour
     public PCInputArgs data;
 
     // Mouse-specific data
-    private BufferCircular<Vector2> bufferMouse = new BufferCircular<Vector2>(60);
+    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(60, CoreConstants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
-    public Camera currentCamera;
+    public Camera currentCamera; // todo: for debug only
+    public Vector2 currentMouse;
 
     public void Awake()
     {
@@ -41,11 +43,20 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     public void Update()
     {
-        var mouse = Mouse.current;
+        currentMouse = Mouse.current.position.ReadValue();
+
+        if (CoreConstants.CONTROL_SCHEME_KEYBOARD_MOUSE.Equals(playerInput.currentControlScheme))
+        {
+            ProcessMouse(Mouse.current);
+        }
+    }
+
+    public void ProcessMouse(Mouse mouse)
+    {
         var diff = Vector2.zero;
 
         // todo:
-        bufferMouse.Add(mouse.position.ReadValue());
+        bufferMouse.Add(mouse.position.ReadValue(), Time.time);
 
         for (var i = 0; i < bufferMouse.buffer.Length; i++)
         {
@@ -62,9 +73,9 @@ public class PCInputCommandEmitter : MonoBehaviour
         {
             relativeOrigin = mouse.position.ReadValue();
 
-            data.vVec2 = Vector2.zero;
-            data.type = CoreActionMap.Player.Action.MOVE_HAND;
-            Emitter.Send(onPCCommand, data);
+            //data.vVec2 = Vector2.zero;
+            //data.type = CoreActionMap.Player.Action.MOVE_HAND;
+            //Emitter.Send(onPCCommand, data);
         }
     }
 
@@ -104,13 +115,19 @@ public class PCInputCommandEmitter : MonoBehaviour
                 {
                     var mouse = Mouse.current;
                     var controlVec = (mouse.position.ReadValue() - relativeOrigin);
-                    var normalized = controlVec.normalized * (controlVec.magnitude / mouseLength);
-                    var cam = currentCamera;
 
-                    //Debug.Log($"move hand; mouse pos: {mouse.position.ReadValue()}");
-                    data.vVec2 = Vector2.ClampMagnitude(normalized, 1);
-                    
-                    Debug.DrawLine((Vector2) cam.ScreenToWorldPoint(relativeOrigin), (Vector2) cam.ScreenToWorldPoint(relativeOrigin + normalized), Color.red, 0.2f);
+                    if (controlVec.sqrMagnitude > 1)
+                    {
+                        var normalized = controlVec.normalized * (controlVec.magnitude / mouseLength);
+
+                        data.vVec2 = Vector2.ClampMagnitude(normalized, 1);
+
+                        Debug.DrawLine((Vector2)currentCamera.ScreenToWorldPoint(relativeOrigin), (Vector2)currentCamera.ScreenToWorldPoint(relativeOrigin + data.vVec2), Color.blue, 0.2f);
+                    }
+                    else
+                    {
+                        data.vVec2 = controlVec;
+                    }
                 }
                 else
                 {

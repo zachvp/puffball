@@ -263,6 +263,9 @@ public static class CoreConstants
     public const string NAME_OBJECT_VIS = "_visible";
     public const string NAME_OBJECT_COLL = "_collider";
 
+    public const string CONTROL_SCHEME_KEYBOARD_MOUSE = "Keyboard&Mouse";
+    public const string CONTROL_SCHEME_GAMEPAD = "Gamepad";
+
     public const int LAYER_PLAYER = 3;
     public const int LAYER_OBSTACLE = 6;
     public const int LAYER_ACTOR = 7;
