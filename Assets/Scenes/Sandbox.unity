@@ -207,10 +207,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5770903003457931662, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
-      propertyPath: m_AllowJoining
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7157281034299352284, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
       propertyPath: m_Name
       value: DefaultSceneDependencies
@@ -443,11 +439,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &1224067580 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5252665002922732481, guid: 7f1df5202d2d24363b358a1b489073c5, type: 3}
-  m_PrefabInstance: {fileID: 2043632833}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1273365184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,21 +1554,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8276728148841412074, guid: 7f1df5202d2d24363b358a1b489073c5, type: 3}
-      propertyPath: others.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618987007254293198, guid: 7f1df5202d2d24363b358a1b489073c5, type: 3}
-      propertyPath: others.Array.data[0]
-      value: 
-      objectReference: {fileID: 1224067580}
     - target: {fileID: 9039405513902238794, guid: 7f1df5202d2d24363b358a1b489073c5, type: 3}
       propertyPath: m_Name
       value: RootPlayerCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 9039405513902238794, guid: 7f1df5202d2d24363b358a1b489073c5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

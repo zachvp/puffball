@@ -17,7 +17,7 @@ public class CoreBody : MonoBehaviour
 
     // Properties
     public Vector2 velocity { get { return body.velocity; } set { Velocity(value); } }
-    public float rotation { get { return body.rotation; } set { body.rotation = value; } }
+    public float rotation   { get { return body.rotation; } set { body.rotation = value; } }
     public Vector2 position { get { return body.position; } set { Move(value); } }
 
     public void Awake()
@@ -64,7 +64,10 @@ public class CoreBody : MonoBehaviour
 
     public void MoveKinematic(Vector2 position)
     {
-        body.MovePosition(position);
+        StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
+        {
+            body.MovePosition(position);
+        }));
     }
 
     public void StopVertical()

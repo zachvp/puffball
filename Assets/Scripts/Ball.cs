@@ -31,7 +31,6 @@ public class Ball : MonoBehaviour
 
     public void Drop()
     {
-        Debug.Log($"release ball");
         joint.enabled = false;
         joint.anchor = null;
 
