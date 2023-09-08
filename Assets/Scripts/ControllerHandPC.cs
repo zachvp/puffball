@@ -37,23 +37,17 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_1)
                 {
-                    StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
-                    {
-                        neutral.SetActive(false);
+                    neutral.SetActive(false);
 
-                        radialJoint.enabled = true;
-                        radial.Move(args.vVec2);
-                    }));
+                    radialJoint.enabled = true;
+                    radial.Move(args.vVec2);
                 }
                 else
                 {
-                    StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
-                    {
-                        radialJoint.enabled = false;
-                        radial.ResetState();
+                    radialJoint.enabled = false;
+                    radial.ResetState();
 
-                        neutral.SetActive(true);
-                    }));
+                    neutral.SetActive(true);
                 }
                 
                 break;

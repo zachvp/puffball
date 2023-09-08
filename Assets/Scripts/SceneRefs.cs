@@ -6,12 +6,18 @@ public class SceneRefs : Singleton<SceneRefs>
 {
     public TargetGoal targetGoal
         { get { return registry[ID.TARGET_GOAL] as TargetGoal; } }
+
     public Ball ball
         { get { return registry[ID.BALL] as Ball; } }
+
     public TextMeshProUGUI scoreUI
         { get { return registry[ID.UI_SCORE] as TextMeshProUGUI; } }
+
     public Camera camera
         { get { return registry[ID.CAMERA] as Camera; } }
+
+    public TextMeshProUGUI uiDebug
+        { get { return registry[ID.UI_DEBUG] as TextMeshProUGUI; } }
 
     public readonly Dictionary<ID, object> registry;
 
@@ -25,6 +31,7 @@ public class SceneRefs : Singleton<SceneRefs>
         TARGET_GOAL,
         BALL,
         UI_SCORE,
-        CAMERA
+        CAMERA,
+        UI_DEBUG
     }
 }
