@@ -36,20 +36,39 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_1)
                 {
-                    neutral.SetActive(false);
+                    var neutralComponents = neutral.GetComponents<Behaviour>();
+                    foreach (var c in neutralComponents)
+                    {
+                        c.enabled = false;
+                    }
 
-                    radial.enabled = true;
+                    var radialComponents = radial.GetComponents<Behaviour>();
+                    foreach (var c in radialComponents)
+                    {
+                        c.enabled = true;
+                    }
+
                     radial.Move(args.vVec2);
                 }
                 else
                 {
-                    radial.enabled = false;
-                    radial.ResetState();
+                    // todo: clean up
+                    var neutralComponents = neutral.GetComponents<Behaviour>();
+                    foreach (var c in neutralComponents)
+                    {
+                        c.enabled = true;
+                    }
 
-                    neutral.SetActive(true);
+                    var radialComponents = radial.GetComponents<Behaviour>();
+                    foreach (var c in radialComponents)
+                    {
+                        c.enabled = false;
+                    }
+
+                    radial.ResetState();
                 }
-                
                 break;
+
             case CoreActionMap.Player.Action.GRIP:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
@@ -64,7 +83,6 @@ public class ControllerHandPC : MonoBehaviour
                         state = State.NONE;
                     }
                 }
-
                 break;
         }
     }

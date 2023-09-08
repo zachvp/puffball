@@ -9,11 +9,6 @@ public class JointDynamicAnchor : MonoBehaviour
     public TargetJoint2D target;
     public RelativeJoint2D relative;
 
-    public void Awake()
-    {
-        Debug.Assert(joint || target || relative, "no joint linked");
-    }
-
     public void FixedUpdate()
     {
         if (joint)
