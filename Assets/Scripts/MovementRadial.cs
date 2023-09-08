@@ -11,21 +11,31 @@ public class MovementRadial : MonoBehaviour
 
     public Vector3 Move(Vector2 input)
     {
-        SceneRefs.instance.uiDebug.text = Vector2.Dot(input, Vector2.right).ToString();
-        var dot = Vector2.Dot(input, Vector2.right);
-        float scale;
-        if (dot > 0.2f)
-        {
-            scale = 1.5f;
-        }
-        else
-        {
-            scale = 0.5f;
-        }
+        //SceneRefs.instance.uiDebug.text = Vector2.Dot(input, Vector2.right).ToString();
+        //var dot = Vector2.Dot(input, Vector2.right);
+        //float scale = Mathf.Lerp(0.5f, 2f, dot);
+        var scale = 1f;
+
+        //if (dot > 0.2f)
+        //{
+        //    scale = 1.5f;
+        //}
+        //else
+        //{
+        //    scale = 0.5f;
+        //}
             
         var newPos = (Vector2) anchor.position + (input * range * scale);
 
-        target.position = newPos;
+        var body = target.GetComponent<Rigidbody2D>();
+        if (body)
+        {
+            body.position = newPos;
+        }
+        else
+        {
+            target.position = newPos;
+        }
 
         return newPos;
     }

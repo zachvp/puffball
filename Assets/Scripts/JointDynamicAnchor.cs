@@ -6,11 +6,12 @@ public class JointDynamicAnchor : MonoBehaviour
     public Transform anchor;
 
     public AnchoredJoint2D joint;
-    public TargetJoint2D relative;
+    public TargetJoint2D target;
+    public RelativeJoint2D relative;
 
     public void Awake()
     {
-        Debug.Assert(joint || relative, "no joint linked");
+        Debug.Assert(joint || target || relative, "no joint linked");
     }
 
     public void FixedUpdate()
@@ -19,9 +20,9 @@ public class JointDynamicAnchor : MonoBehaviour
         {
             joint.connectedAnchor = anchor.position;
         }
-        if (relative)
+        if (target)
         {
-            relative.target = anchor.position;
+            target.target = anchor.position;
         }
     }
 
@@ -31,6 +32,10 @@ public class JointDynamicAnchor : MonoBehaviour
         {
             joint.enabled = false;
         }
+        if (target)
+        {
+            target.enabled = false;
+        }
         if (relative)
         {
             relative.enabled = false;
@@ -39,14 +44,18 @@ public class JointDynamicAnchor : MonoBehaviour
 
     public void OnEnable()
     {
-        if (relative)
+        if (target)
         {
-            relative.enabled = true;
+            target.enabled = true;
 
         }
         if (joint)
         {
             joint.enabled = true;
+        }
+        if (relative)
+        {
+            relative.enabled = true;
         }
     }
 }

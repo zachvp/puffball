@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4396922529644703164}
   - component: {fileID: 231582312426679282}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: foot l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3568813906638864072}
   - component: {fileID: 6940693589606226889}
-  m_Layer: 3
+  - component: {fileID: 3055779129061249142}
+  m_Layer: 0
   m_Name: hand l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +428,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498335622211844197}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -472,6 +473,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &3055779129061249142
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498335622211844197}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: b8210e1cf800640428f558cf39cc283c, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1501506346636975379
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4048064676586865506}
   - component: {fileID: 9058864041344467878}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: foot r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1299,7 +1327,8 @@ MonoBehaviour:
   anchor: {fileID: 550365673985696156}
   target: {fileID: 3568813906638864072}
   range: 1
-  scale: {x: 1, y: 1}
+  scaleXMinMax: {x: 1, y: 1}
+  scaleYMinMax: {x: 1, y: 1}
 --- !u!114 &6796020143521107312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1313,8 +1342,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 3568813906638864072}
-  joint: {fileID: 5423112099417358664}
-  relative: {fileID: 0}
+  joint: {fileID: 0}
+  target: {fileID: 0}
+  relative: {fileID: 5790084906224320758}
 --- !u!1 &3357837369979118685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,7 +1355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2681855775827187638}
   - component: {fileID: 419702848153530667}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: anchors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2073,6 +2103,8 @@ GameObject:
   - component: {fileID: 3451219659084403233}
   - component: {fileID: 5569247661924440988}
   - component: {fileID: 5423112099417358664}
+  - component: {fileID: 2124427873460065849}
+  - component: {fileID: 5790084906224320758}
   m_Layer: 0
   m_Name: hand l
   m_TagString: Untagged
@@ -2146,6 +2178,46 @@ DistanceJoint2D:
   m_AutoConfigureDistance: 0
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
+--- !u!257 &2124427873460065849
+TargetJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033470169493493832}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_Anchor: {x: 0, y: 0}
+  m_Target: {x: 0, y: 0}
+  m_AutoConfigureTarget: 0
+  m_MaxForce: 10000
+  m_DampingRatio: 0.01
+  m_Frequency: 5
+--- !u!254 &5790084906224320758
+RelativeJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033470169493493832}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 3055779129061249142}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_MaxForce: 10000
+  m_MaxTorque: 10000
+  m_CorrectionScale: 0.3
+  m_AutoConfigureOffset: 0
+  m_LinearOffset: {x: 0, y: 0}
+  m_AngularOffset: 0
 --- !u!1 &5218752615544211558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,7 +2574,6 @@ MonoBehaviour:
   meta: {fileID: 2467396169662780557}
   neutral: {fileID: 2639827434189376547}
   radial: {fileID: 1371341122118845785}
-  radialJoint: {fileID: 5423112099417358664}
   triggerGrab: {fileID: 6053326687293841967}
   colliderBody: {fileID: 8920531886859060632}
 --- !u!1 &6578001105099732479
@@ -2950,7 +3021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9133852251830082364}
   - component: {fileID: 7364198573203847933}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: hand r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3034,7 +3105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6160896147907180811}
   - component: {fileID: 1632544336319602439}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: joints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3600,7 +3671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 550365673985696156}
   - component: {fileID: 1010670292786014820}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: hand l
   m_TagString: Untagged
   m_Icon: {fileID: 0}

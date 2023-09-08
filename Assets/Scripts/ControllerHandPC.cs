@@ -9,7 +9,6 @@ public class ControllerHandPC : MonoBehaviour
     public GameObject neutral;
 
     public MovementRadial radial;
-    public DistanceJoint2D radialJoint;
 
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
@@ -39,12 +38,12 @@ public class ControllerHandPC : MonoBehaviour
                 {
                     neutral.SetActive(false);
 
-                    radialJoint.enabled = true;
+                    radial.enabled = true;
                     radial.Move(args.vVec2);
                 }
                 else
                 {
-                    radialJoint.enabled = false;
+                    radial.enabled = false;
                     radial.ResetState();
 
                     neutral.SetActive(true);

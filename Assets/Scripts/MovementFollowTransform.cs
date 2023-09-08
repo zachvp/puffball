@@ -30,6 +30,18 @@ public class MovementFollowTransform : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        enabled = true;
+        Debug.Log($"enabled: {enabled}");
+    }
+
+    public void OnDisable()
+    {
+        enabled = false;
+        Debug.Log($"enabled: {enabled}");
+    }
+
     public void LagUpdate()
     {
         var toAnchor = anchor.position - transform.position;
