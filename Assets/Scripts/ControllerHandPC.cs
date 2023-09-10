@@ -34,7 +34,7 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_1)
+                if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_0)
                 {
                     //var neutralComponents = neutral.GetComponents<Behaviour>();
                     //foreach (var c in neutralComponents)
@@ -69,6 +69,8 @@ public class ControllerHandPC : MonoBehaviour
                     //}
                     radial.gameObject.SetActive(false);
                     radial.ResetState();
+                    Debug.Log("reset");
+                    // todo 0: only reset if there has been 0 movement input for X frames
                 }
                 break;
 

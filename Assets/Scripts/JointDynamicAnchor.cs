@@ -9,7 +9,7 @@ public class JointDynamicAnchor : MonoBehaviour
     public TargetJoint2D target;
     public RelativeJoint2D relative;
 
-    public void FixedUpdate()
+    public void Update()
     {
         if (joint)
         {
