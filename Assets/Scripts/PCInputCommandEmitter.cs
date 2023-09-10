@@ -10,7 +10,10 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // Contains the combination of the most recent input data.
     public PCInputArgs data;
-    public BufferInterval<PCInputArgs> dataBuffer = new BufferInterval<PCInputArgs>(16, CoreConstants.UNIT_TIME_SLICE);
+
+    // This buffer can and will diverge from the 'data' property;
+    // i.e. the most recent buffer entry does not necessarily equal the current data value.
+    public BufferInterval<PCInputArgs> liveInputBuffer = new BufferInterval<PCInputArgs>(16, CoreConstants.UNIT_TIME_SLICE);
 
     // Mouse-specific data
     // todo: separate into new class
@@ -76,10 +79,10 @@ public class PCInputCommandEmitter : MonoBehaviour
             UpdateRelativeOrigin(Mouse.current);
         }
 
+        // Update buffer with live information.
         PCInputArgs args = data;
-
         args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
-        dataBuffer.Add(args, Time.time);
+        liveInputBuffer.Add(args, Time.time);
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)

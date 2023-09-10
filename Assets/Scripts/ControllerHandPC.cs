@@ -45,9 +45,6 @@ public class ControllerHandPC : MonoBehaviour
                 else
                 {
                     StartCoroutine(CheckNeutralMovement(threshold));
-                    
-                    
-                    // todo 0: only reset if there has been 0 movement input for X frames
                 }
                 break;
 
@@ -74,14 +71,14 @@ public class ControllerHandPC : MonoBehaviour
         var delta = 0f;
         while (true)
         {
-            foreach (var d in meta.commandEmitter.dataBuffer.buffer)
+            foreach (var d in meta.commandEmitter.liveInputBuffer.buffer)
             {
                 delta += d.handMove.sqrMagnitude;
             }
 
             if (delta < threshold)
             {
-                yield return new WaitForSeconds(meta.commandEmitter.dataBuffer.interval);
+                yield return new WaitForSeconds(meta.commandEmitter.liveInputBuffer.interval);
             }
             else
             {
