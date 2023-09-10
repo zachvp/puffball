@@ -72,17 +72,28 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     public void Update()
     {
-        currentMouse = Mouse.current.position.ReadValue();
+        PCInputArgs args = data;
 
         if (CoreConstants.CONTROL_SCHEME_KEYBOARD_MOUSE.Equals(playerInput.currentControlScheme))
         {
             UpdateRelativeOrigin(Mouse.current);
+
+            args.handMove = ComputeHandMove(Mouse.current);
+            
+
+            currentMouse = Mouse.current.position.ReadValue();
+        }
+        else
+        {
+            args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
         }
 
-        // Update buffer with live information.
-        PCInputArgs args = data;
-        args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
         liveBuffer.Add(args, Time.time);
+
+        // Update buffer with live information.
+
+        //args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
+
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)
@@ -121,11 +132,11 @@ public class PCInputCommandEmitter : MonoBehaviour
             case CoreActionMap.Player.Action.MOVE_HAND:
                 if (context.control.device is Mouse)
                 {
-                    var mouse = Mouse.current;
+                    data.handMove = ComputeHandMove(Mouse.current);
 
-                    data.handMove = mouse.position.ReadValue() - relativeOrigin;
-                    data.handMove = data.handMove.normalized * (data.handMove.magnitude / mouseLength);
-                    data.handMove = Vector2.ClampMagnitude(data.handMove, 1);
+                    //data.handMove = mouse.position.ReadValue() - relativeOrigin;
+                    //data.handMove = data.handMove.normalized * (data.handMove.magnitude / mouseLength);
+                    //data.handMove = Vector2.ClampMagnitude(data.handMove, 1);
 
                     //CoreUtilities.DrawScreenLine(SceneRefs.instance.camera, relativeOrigin, mouse.position.ReadValue());
                 }
@@ -140,5 +151,14 @@ public class PCInputCommandEmitter : MonoBehaviour
                 Debug.LogError($"Unhandled case: {actionType}");
                 break;
         }
+    }
+
+    public Vector2 ComputeHandMove(Mouse mouse)
+    {
+        var result = mouse.position.ReadValue() - relativeOrigin;
+        result = result.normalized * (result.magnitude / mouseLength);
+        result = Vector2.ClampMagnitude(result, 1);
+
+        return result;
     }
 }

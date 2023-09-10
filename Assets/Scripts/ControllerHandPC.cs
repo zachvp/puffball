@@ -5,11 +5,8 @@ public class ControllerHandPC : MonoBehaviour
 {
     // fixed links
     public PCMetadata meta;
-
     public GameObject neutral;
-
     public MovementRadial radial;
-
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
 
@@ -70,18 +67,26 @@ public class ControllerHandPC : MonoBehaviour
                     // todo: examine buffer and determine input velocity
                     var handVelocity = Vector2.zero;
                     var buffer = meta.commandEmitter.liveBuffer.buffer;
+                    var ui = SceneRefs.instance.uiDebug;
+                    ui.text = "";
                     for (var i = 1; i < buffer.Length; i++)
                     {
                         handVelocity += CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove);
+                        //handVelocity += Vector2.Dot(buffer[i].handMove, buffer[i - 1].handMove);
+                        //handVelocity += (buffer[i].handMove - buffer[i - 1].handMove);
+
+                        //ui.text += $"{buffer[i].handMove}\n";
+                        //ui.text += $"{CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove)}\n";
 
                         //handVelocity.x += d.handMove.x;
                         //handVelocity.y += d.handMove.y;
                     }
 
-                    SceneRefs.instance.uiDebug.text = handVelocity.ToString();
-                    Debug.Log($"hand vel: {handVelocity}");
+                    ui.text = $"{handVelocity}";
 
-                    ball.Throw(handVelocity.magnitude);
+                    //Debug.Log($"hand vel: {handVelocity}");
+
+                    ball.Throw(handVelocity);
                 }
                 break;
         }
@@ -90,11 +95,13 @@ public class ControllerHandPC : MonoBehaviour
     public IEnumerator CheckNeutralMovement(float threshold)
     {
         var delta = 0f;
+        var buffer = meta.commandEmitter.liveBuffer.buffer;
         while (true)
         {
-            foreach (var d in meta.commandEmitter.liveBuffer.buffer)
+            //foreach (var d in meta.commandEmitter.liveBuffer.buffer)
+            for (var i = 0; i < 16; i++)
             {
-                delta += d.handMove.sqrMagnitude;
+                delta += buffer[i].handMove.sqrMagnitude;
             }
 
             if (delta < threshold)

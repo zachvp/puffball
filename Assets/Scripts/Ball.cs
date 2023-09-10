@@ -10,7 +10,7 @@ public class Ball : MonoBehaviour
     public JointDynamicAnchor joint;
     public TriggerVolume trigger;
 
-    public Vector2 assistThrow = new Vector2(50, 50);
+    public Vector2 assistThrow = new Vector2(4, 4);
 
     private int initLayer;
 
@@ -34,10 +34,14 @@ public class Ball : MonoBehaviour
         StartCoroutine(CheckOverlap());
     }
 
-    public void Throw(float strength)
+    public void Throw(Vector2 v)
     {
         Drop();
-        body.velocity = assistThrow * strength;
+        var newVel = new Vector2(assistThrow.x * v.x, assistThrow.y * v.y);
+
+        body.velocity = newVel;
+        //body.velocity = CoreUtilities.SetX(body.velocity, );
+        //body.velocity = CoreUtilities.SetY(body.velocity, );
     }
 
     public IEnumerator CheckOverlap()
