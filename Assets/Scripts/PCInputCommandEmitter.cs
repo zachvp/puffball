@@ -13,7 +13,7 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // This buffer can and will diverge from the 'data' property;
     // i.e. the most recent buffer entry does not necessarily equal the current data value.
-    public BufferInterval<PCInputArgs> liveInputBuffer = new BufferInterval<PCInputArgs>(16, CoreConstants.UNIT_TIME_SLICE);
+    public BufferInterval<PCInputArgs> liveBuffer = new BufferInterval<PCInputArgs>(16, CoreConstants.UNIT_TIME_SLICE);
 
     // Mouse-specific data
     // todo: separate into new class
@@ -82,7 +82,7 @@ public class PCInputCommandEmitter : MonoBehaviour
         // Update buffer with live information.
         PCInputArgs args = data;
         args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
-        liveInputBuffer.Add(args, Time.time);
+        liveBuffer.Add(args, Time.time);
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)

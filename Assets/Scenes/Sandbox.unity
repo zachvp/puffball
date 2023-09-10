@@ -441,7 +441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1319548884117839497, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.71
+      value: -4.71
       objectReference: {fileID: 0}
     - target: {fileID: 1319548884117839497, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -482,6 +482,14 @@ PrefabInstance:
     - target: {fileID: 2363132099507221997, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
       propertyPath: m_Name
       value: BallMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887556751336192788, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
+      propertyPath: assistThrow.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887556751336192788, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
+      propertyPath: assistThrow.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -825,7 +833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -6.75
       objectReference: {fileID: 0}
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_LocalPosition.y

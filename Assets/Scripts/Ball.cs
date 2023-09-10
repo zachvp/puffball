@@ -19,7 +19,7 @@ public class Ball : MonoBehaviour
         initLayer = gameObject.layer;
     }
 
-    public void GrabNew(Transform parent)
+    public void Grab(Transform parent)
     {
         joint.anchor = parent;
         joint.enabled = true;
@@ -32,6 +32,12 @@ public class Ball : MonoBehaviour
         joint.anchor = null;
 
         StartCoroutine(CheckOverlap());
+    }
+
+    public void Throw(float strength)
+    {
+        Drop();
+        body.velocity = assistThrow * strength;
     }
 
     public IEnumerator CheckOverlap()

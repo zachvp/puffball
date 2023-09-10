@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ControllerHandPC : MonoBehaviour
 {
-    // links
+    // fixed links
     public PCMetadata meta;
 
     public GameObject neutral;
@@ -53,7 +53,7 @@ public class ControllerHandPC : MonoBehaviour
                 {
                     if (state == State.NONE)
                     {
-                        ball.GrabNew(radial.target);
+                        ball.Grab(radial.target);
                         state = State.GRIP;
                     }
                     else
@@ -61,6 +61,27 @@ public class ControllerHandPC : MonoBehaviour
                         ball.Drop();
                         state = State.NONE;
                     }
+                }
+                break;
+
+            case CoreActionMap.Player.Action.HAND_ACTION:
+                if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
+                {
+                    // todo: examine buffer and determine input velocity
+                    var handVelocity = Vector2.zero;
+                    var buffer = meta.commandEmitter.liveBuffer.buffer;
+                    for (var i = 1; i < buffer.Length; i++)
+                    {
+                        handVelocity += CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove);
+
+                        //handVelocity.x += d.handMove.x;
+                        //handVelocity.y += d.handMove.y;
+                    }
+
+                    SceneRefs.instance.uiDebug.text = handVelocity.ToString();
+                    Debug.Log($"hand vel: {handVelocity}");
+
+                    ball.Throw(handVelocity.magnitude);
                 }
                 break;
         }
@@ -71,14 +92,14 @@ public class ControllerHandPC : MonoBehaviour
         var delta = 0f;
         while (true)
         {
-            foreach (var d in meta.commandEmitter.liveInputBuffer.buffer)
+            foreach (var d in meta.commandEmitter.liveBuffer.buffer)
             {
                 delta += d.handMove.sqrMagnitude;
             }
 
             if (delta < threshold)
             {
-                yield return new WaitForSeconds(meta.commandEmitter.liveInputBuffer.interval);
+                yield return new WaitForSeconds(meta.commandEmitter.liveBuffer.interval);
             }
             else
             {

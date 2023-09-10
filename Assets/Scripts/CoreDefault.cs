@@ -134,6 +134,16 @@ public static class CoreUtilities
         return result;
     }
 
+    public static Vector2 Abs(Vector2 source)
+    {
+        var result = source;
+
+        result.x = Mathf.Abs(result.x);
+        result.y = Math.Abs(result.y);
+
+        return result;
+    }
+
     public static Vector2 ScreenToWorld(Camera camera, Vector2 source)
     {
         return (Vector2) camera.ScreenToWorldPoint(source);
