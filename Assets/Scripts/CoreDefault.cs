@@ -423,13 +423,15 @@ public class BufferInterval<T> : BufferCircular<T>
         interval = inInterval;
     }
 
-    public void Add(T item, float time)
+    public bool Add(T item, float time)
     {
         if (time - timePrevious > interval)
         {
             Add(item);
             timePrevious = time;
+            return true;
         }
+        return false;
     }
 }
 

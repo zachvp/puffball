@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class ControllerHandPC : MonoBehaviour
@@ -34,42 +34,19 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_0)
+                var threshold = 0.01f;
+                if (Mathf.Abs(args.handMove.sqrMagnitude) > threshold)
                 {
-                    //var neutralComponents = neutral.GetComponents<Behaviour>();
-                    //foreach (var c in neutralComponents)
-                    //{
-                    //    c.enabled = false;
-                    //}
                     neutral.SetActive(false);
 
-                    //var radialComponents = radial.GetComponents<Behaviour>();
-                    //foreach (var c in radialComponents)
-                    //{
-                    //    c.enabled = true;
-                    //}
-
                     radial.gameObject.SetActive(true);
-                    radial.Move(args.vVec2);
+                    radial.Move(args.handMove);
                 }
                 else
                 {
-                    // todo: clean up
-                    //var neutralComponents = neutral.GetComponents<Behaviour>();
-                    //foreach (var c in neutralComponents)
-                    //{
-                    //    c.enabled = true;
-                    //}
-                    neutral.SetActive(true);
-
-                    //var radialComponents = radial.GetComponents<Behaviour>();
-                    //foreach (var c in radialComponents)
-                    //{
-                    //    c.enabled = false;
-                    //}
-                    radial.gameObject.SetActive(false);
-                    radial.ResetState();
-                    Debug.Log("reset");
+                    StartCoroutine(CheckNeutralMovement(threshold));
+                    
+                    
                     // todo 0: only reset if there has been 0 movement input for X frames
                 }
                 break;
@@ -90,6 +67,33 @@ public class ControllerHandPC : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public IEnumerator CheckNeutralMovement(float threshold)
+    {
+        var delta = 0f;
+        while (true)
+        {
+            foreach (var d in meta.commandEmitter.dataBuffer.buffer)
+            {
+                delta += d.handMove.sqrMagnitude;
+            }
+
+            if (delta < threshold)
+            {
+                yield return new WaitForSeconds(meta.commandEmitter.dataBuffer.interval);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        neutral.SetActive(true);
+
+        radial.gameObject.SetActive(false);
+        //radial.ResetState();
+        Debug.Log("reset");
     }
 
     public void HandleTraitFound(ContainerTrait trait)

@@ -28,12 +28,12 @@ public class MotorHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                movementHeldPickup.Move(args.vVec2);
+                movementHeldPickup.Move(args.handMove);
                 break;
             case CoreActionMap.Player.Action.HAND_ACTION:
                 if (state == State.GRIP)
                 {
-                    ApplyThrow(args.vVec2);
+                    ApplyThrow(args.handMove);
 
                     state &= ~State.GRIP;
                     state |= State.BLOCKED;

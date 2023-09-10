@@ -10,12 +10,40 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // Contains the combination of the most recent input data.
     public PCInputArgs data;
+    public BufferInterval<PCInputArgs> dataBuffer = new BufferInterval<PCInputArgs>(16, CoreConstants.UNIT_TIME_SLICE);
 
     // Mouse-specific data
+    // todo: separate into new class
     private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(8, CoreConstants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
     public Vector2 currentMouse;
+
+    public void UpdateRelativeOrigin(Mouse mouse)
+    {
+        var diff = Vector2.zero;
+
+        bufferMouse.Add(mouse.position.ReadValue(), Time.time);
+
+        // accumulate each difference between all buffered distances
+        for (var i = 0; i < bufferMouse.buffer.Length; i++)
+        {
+            for (var j = 1; j < bufferMouse.buffer.Length; j++)
+            {
+                if (i != j)
+                {
+                    diff += bufferMouse.buffer[j] - bufferMouse.buffer[i];
+                }
+            }
+        }
+
+        // reset the relative cursor origin if there's no meaningful difference
+        if (diff.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_0)
+        {
+            // offset the origin by the current input value
+            relativeOrigin = mouse.position.ReadValue() - (data.handMove * mouseLength);
+        }
+    }
 
     public void Awake()
     {
@@ -47,32 +75,11 @@ public class PCInputCommandEmitter : MonoBehaviour
         {
             UpdateRelativeOrigin(Mouse.current);
         }
-    }
 
-    public void UpdateRelativeOrigin(Mouse mouse)
-    {
-        var diff = Vector2.zero;
+        PCInputArgs args = data;
 
-        bufferMouse.Add(mouse.position.ReadValue(), Time.time);
-
-        // accumulate each difference between all buffered distances
-        for (var i = 0; i < bufferMouse.buffer.Length; i++)
-        {
-            for (var j = 1; j < bufferMouse.buffer.Length; j++)
-            {
-                if (i != j)
-                {
-                    diff += bufferMouse.buffer[j] - bufferMouse.buffer[i];
-                }
-            }
-        }
-
-        // reset the relative cursor origin if there's no meaningful difference
-        if (diff.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_0)
-        {
-            // offset the origin by the current input value
-            relativeOrigin = mouse.position.ReadValue() - (data.vVec2 * mouseLength);
-        }
+        args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
+        dataBuffer.Add(args, Time.time);
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)
@@ -113,15 +120,15 @@ public class PCInputCommandEmitter : MonoBehaviour
                 {
                     var mouse = Mouse.current;
 
-                    data.vVec2 = mouse.position.ReadValue() - relativeOrigin;
-                    data.vVec2 = data.vVec2.normalized * (data.vVec2.magnitude / mouseLength);
-                    data.vVec2 = Vector2.ClampMagnitude(data.vVec2, 1);
+                    data.handMove = mouse.position.ReadValue() - relativeOrigin;
+                    data.handMove = data.handMove.normalized * (data.handMove.magnitude / mouseLength);
+                    data.handMove = Vector2.ClampMagnitude(data.handMove, 1);
 
                     //CoreUtilities.DrawScreenLine(SceneRefs.instance.camera, relativeOrigin, mouse.position.ReadValue());
                 }
                 else
                 {
-                    data.vVec2 = context.ReadValue<Vector2>();
+                    data.handMove = context.ReadValue<Vector2>();
                 }
 
                 break;

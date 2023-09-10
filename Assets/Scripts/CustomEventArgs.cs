@@ -30,13 +30,16 @@ public struct PCInputArgs
 {
     public CoreActionMap.Player.Action type;
     public int playerIndex;
-    public Vector2 vVec2;
+
+    public Vector2 handMove;
+    // todo: define others and refactor
     public float vFloat;
     public bool vBool;
+
+    
 
     public override string ToString()
     {
         return JsonUtility.ToJson(this);
-        //return $"{nameof(type)}: {type} | {nameof(vVec2)}: {vVec2} | {nameof(vFloat)}: {vFloat} | {nameof(vBool)}: {vBool}";
     }
 }
