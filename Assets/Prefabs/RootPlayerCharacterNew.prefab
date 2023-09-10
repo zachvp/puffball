@@ -1342,7 +1342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 3568813906638864072}
-  joint: {fileID: 5423112099417358664}
+  joint: {fileID: 563990327739195885}
   target: {fileID: 0}
   relative: {fileID: 0}
 --- !u!1 &3357837369979118685
@@ -1646,7 +1646,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
 --- !u!1 &3829212421929572559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,6 +2105,7 @@ GameObject:
   - component: {fileID: 5423112099417358664}
   - component: {fileID: 2124427873460065849}
   - component: {fileID: 5790084906224320758}
+  - component: {fileID: 563990327739195885}
   m_Layer: 0
   m_Name: hand l
   m_TagString: Untagged
@@ -2218,6 +2219,25 @@ RelativeJoint2D:
   m_AutoConfigureOffset: 0
   m_LinearOffset: {x: 0, y: 0}
   m_AngularOffset: 0
+--- !u!255 &563990327739195885
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033470169493493832}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_DampingRatio: 0
+  m_Frequency: 0
 --- !u!1 &5218752615544211558
 GameObject:
   m_ObjectHideFlags: 0

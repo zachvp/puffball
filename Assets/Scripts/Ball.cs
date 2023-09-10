@@ -37,11 +37,8 @@ public class Ball : MonoBehaviour
     public void Throw(Vector2 v)
     {
         Drop();
-        var newVel = new Vector2(assistThrow.x * v.x, assistThrow.y * v.y);
 
-        body.velocity = newVel;
-        //body.velocity = CoreUtilities.SetX(body.velocity, );
-        //body.velocity = CoreUtilities.SetY(body.velocity, );
+        body.velocity = new Vector2(assistThrow.x * v.x, assistThrow.y * v.y);
     }
 
     public IEnumerator CheckOverlap()
