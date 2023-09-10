@@ -36,35 +36,38 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.MOVE_HAND:
                 if (Mathf.Abs(args.vVec2.sqrMagnitude) > CoreConstants.DEADZONE_FLOAT_1)
                 {
-                    var neutralComponents = neutral.GetComponents<Behaviour>();
-                    foreach (var c in neutralComponents)
-                    {
-                        c.enabled = false;
-                    }
+                    //var neutralComponents = neutral.GetComponents<Behaviour>();
+                    //foreach (var c in neutralComponents)
+                    //{
+                    //    c.enabled = false;
+                    //}
+                    neutral.SetActive(false);
 
-                    var radialComponents = radial.GetComponents<Behaviour>();
-                    foreach (var c in radialComponents)
-                    {
-                        c.enabled = true;
-                    }
+                    //var radialComponents = radial.GetComponents<Behaviour>();
+                    //foreach (var c in radialComponents)
+                    //{
+                    //    c.enabled = true;
+                    //}
 
+                    radial.gameObject.SetActive(true);
                     radial.Move(args.vVec2);
                 }
                 else
                 {
                     // todo: clean up
-                    var neutralComponents = neutral.GetComponents<Behaviour>();
-                    foreach (var c in neutralComponents)
-                    {
-                        c.enabled = true;
-                    }
+                    //var neutralComponents = neutral.GetComponents<Behaviour>();
+                    //foreach (var c in neutralComponents)
+                    //{
+                    //    c.enabled = true;
+                    //}
+                    neutral.SetActive(true);
 
-                    var radialComponents = radial.GetComponents<Behaviour>();
-                    foreach (var c in radialComponents)
-                    {
-                        c.enabled = false;
-                    }
-
+                    //var radialComponents = radial.GetComponents<Behaviour>();
+                    //foreach (var c in radialComponents)
+                    //{
+                    //    c.enabled = false;
+                    //}
+                    radial.gameObject.SetActive(false);
                     radial.ResetState();
                 }
                 break;

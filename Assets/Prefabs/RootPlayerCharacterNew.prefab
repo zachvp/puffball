@@ -1326,9 +1326,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anchor: {fileID: 550365673985696156}
   target: {fileID: 3568813906638864072}
-  range: 1
-  scaleXMinMax: {x: 1, y: 1}
-  scaleYMinMax: {x: 1, y: 1}
+  range: 1.25
+  offset: {x: 1, y: 0.7, z: 0}
+  usePhysics: 0
 --- !u!114 &6796020143521107312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1342,9 +1342,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 3568813906638864072}
-  joint: {fileID: 0}
+  joint: {fileID: 5423112099417358664}
   target: {fileID: 0}
-  relative: {fileID: 5790084906224320758}
+  relative: {fileID: 0}
 --- !u!1 &3357837369979118685
 GameObject:
   m_ObjectHideFlags: 0
