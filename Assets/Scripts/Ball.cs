@@ -21,13 +21,21 @@ public class Ball : MonoBehaviour
 
     public void Grab(Transform parent)
     {
+        //transform.parent = parent;
+        //transform.localPosition = Vector3.zero;
+        //body.StopVertical();
+
         joint.anchor = parent;
         joint.enabled = true;
+
         gameObject.layer = CoreConstants.LAYER_PROP;
     }
 
     public void Drop()
     {
+        //transform.parent = null;
+        //body.ResetVertical();
+
         joint.enabled = false;
         joint.anchor = null;
 
