@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ControllerHandPC : MonoBehaviour
 {
@@ -26,22 +27,34 @@ public class ControllerHandPC : MonoBehaviour
         triggerGrab.onTraitFound += HandleTraitFound;
     }
 
+    public void Update()
+    {
+        //var args = buffer.buffer[buffer.index];
+        var args = meta.commandEmitter.playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
+        SceneRefs.instance.uiDebug.text = args.sqrMagnitude.ToString();
+        if (args.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
+        {
+            Debug.Log("check reset");
+            neutral.SetActive(true);
+
+            radial.gameObject.SetActive(false);
+            radial.ResetState();
+            Debug.Log("reset");
+        }
+    }
+
     public void HandleCommand(PCInputArgs args)
     {
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                var threshold = 0.01f;
-                if (Mathf.Abs(args.handMove.sqrMagnitude) > threshold)
+                
+                if (args.handMove.sqrMagnitude > CoreConstants.DEADZONE_FLOAT_2)
                 {
                     neutral.SetActive(false);
 
                     radial.gameObject.SetActive(true);
                     radial.Move(args.handMove);
-                }
-                else
-                {
-                    StartCoroutine(CheckNeutralMovement(threshold));
                 }
                 break;
 
@@ -99,7 +112,7 @@ public class ControllerHandPC : MonoBehaviour
         while (true)
         {
             //foreach (var d in meta.commandEmitter.liveBuffer.buffer)
-            for (var i = 0; i < 16; i++)
+            for (var i = 0; i < 8; i++)
             {
                 delta += buffer[i].handMove.sqrMagnitude;
             }
@@ -117,7 +130,7 @@ public class ControllerHandPC : MonoBehaviour
         neutral.SetActive(true);
 
         radial.gameObject.SetActive(false);
-        //radial.ResetState();
+        radial.ResetState();
         Debug.Log("reset");
     }
 

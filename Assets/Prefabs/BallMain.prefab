@@ -71,7 +71,7 @@ MonoBehaviour:
   mainCollider: {fileID: 5818987036019033004}
   joint: {fileID: 5604426209902957817}
   trigger: {fileID: 4552815359500242801}
-  assistThrow: {x: 50, y: 50}
+  assistThrow: {x: 7, y: 7}
 --- !u!50 &717018575442313123
 Rigidbody2D:
   serializedVersion: 4

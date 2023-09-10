@@ -11,16 +11,16 @@ public class MovementRadial : MonoBehaviour
 
     public bool usePhysics;
     [NonSerialized]
-    public Rigidbody2D body;
+    public Rigidbody2D targetBody;
 
     public void Awake()
     {
         if (usePhysics)
         {
-            body = target.GetComponent<Rigidbody2D>();
+            targetBody = target.GetComponent<Rigidbody2D>();
         }
 
-        Debug.Assert(body == usePhysics, $"mismatch between body reference and configuration");
+        Debug.Assert(targetBody == usePhysics, $"mismatch between body reference and configuration");
     }
 
     public Vector3 Move(Vector2 input)
@@ -30,7 +30,7 @@ public class MovementRadial : MonoBehaviour
 
         if (usePhysics)
         {
-            body.position = newPos;
+            targetBody.position = newPos;
         }
         else
         {
@@ -44,7 +44,7 @@ public class MovementRadial : MonoBehaviour
     {
         if (usePhysics)
         {
-            body.position = anchor.position;
+            targetBody.position = anchor.position;
         }
         else
         {

@@ -269,8 +269,9 @@ public static class CoreUtilities
 public static class CoreConstants
 {
     public const float DEADZONE_FLOAT_0 = 0.01f;
-    public const float DEADZONE_FLOAT_1 = 0.05f;
-    public const float DEADZONE_FLOAT_2 = 0.1f;
+    public const float DEADZONE_FLOAT_1 = 0.02f;
+    public const float DEADZONE_FLOAT_2 = 0.05f;
+    public const float DEADZONE_FLOAT_3 = 0.1f;
 
     public const float DEADZONE_VELOCITY = 2;
 
@@ -408,7 +409,7 @@ public class BufferCircular<T>
 {
     public readonly T[] buffer;
 
-    private int index;
+    public int index { get; private set; }
 
     public BufferCircular(int inSize)
     {
