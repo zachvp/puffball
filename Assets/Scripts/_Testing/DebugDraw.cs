@@ -4,7 +4,7 @@ using UnityEngine;
 public class DebugDraw : MonoBehaviour
 {
     public Color color = Color.magenta;
-    public float length = 1;
+    public float size = 1;
     public Style style;
 
     public void Update()
@@ -15,22 +15,26 @@ public class DebugDraw : MonoBehaviour
                 DrawHorizontal();
                 DrawVertical();
                 break;
-            case Style.CIRCLE:
-                
-                break;
-            default:
-                Debug.LogError($"unhandled style: {style}");
-                break;
+        }
+    }
+
+    public void OnDrawGizmos()
+    {
+        if (enabled && style == Style.FILL)
+        {
+            Gizmos.color = color;
+            Gizmos.DrawWireSphere(transform.position, size);
+            
         }
     }
 
     public void DrawHorizontal()
     {
         var start = transform.position;
-        start.x -= length;
+        start.x -= size;
 
         var end = transform.position;
-        end.x += length;
+        end.x += size;
 
         Debug.DrawLine(start, end, color);
     }
@@ -38,10 +42,10 @@ public class DebugDraw : MonoBehaviour
     public void DrawVertical()
     {
         var start = transform.position;
-        start.y -= length;
+        start.y -= size;
 
         var end = transform.position;
-        end.y += length;
+        end.y += size;
 
         Debug.DrawLine(start, end, color);
     }
@@ -49,6 +53,6 @@ public class DebugDraw : MonoBehaviour
     public enum Style
     {
         CROSS,
-        CIRCLE
+        FILL
     }
 }

@@ -225,6 +225,18 @@ public static class CoreUtilities
 
     #region GameObject utils
 
+    public static GameObject FindRoot(GameObject source)
+    {
+        var root = source;
+
+        while (root.transform.parent)
+        {
+            root = root.transform.parent.gameObject;
+        }
+
+        return root;
+    }
+
     public static void ForeachChild(Transform root, Action<Transform> callback)
     {
         for (var i = 0; i < root.childCount; i++)
@@ -261,6 +273,23 @@ public static class CoreUtilities
 
             UnityEngine.Object.DestroyImmediate(target);
         }
+    }
+
+    public static string NameSpecific(GameObject source)
+    {
+        if (source.transform.parent)
+        {
+            return $"{source.transform.parent.name}.{source.name}";
+        }
+        else
+        {
+            return $"{source.name}";
+        }
+    }
+
+    public static string NameSpecific(Component source)
+    {
+        return NameSpecific(source.gameObject);
     }
 
     #endregion

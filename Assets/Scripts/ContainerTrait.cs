@@ -7,13 +7,14 @@ public class ContainerTrait : MonoBehaviour
 #if DEBUG
     public void Start()
     {
-        Debug.Assert(Validate(), $"more than one instance of {nameof(ContainerTrait)} exists in hierchy on GameObject {name}");
+        Debug.Assert(Validate(), $"invalid hierarchy configuration for {name}");
     }
 
     public bool Validate()
     {
         var ancestor = GetComponentInParent<ContainerTrait>();
         var descendent = GetComponentInChildren<ContainerTrait>();
+        var root = CoreUtilities.FindRoot(gameObject);
         var result = true;
 
         if (ancestor)
@@ -24,6 +25,11 @@ public class ContainerTrait : MonoBehaviour
         {
             result &= descendent.Equals(this);
         }
+        Debug.Assert(result, $"more than one instance of {nameof(ContainerTrait)} exists in hierchy on GameObject {name}");
+
+        // check that this component is attached to hierarchy root
+        result &= gameObject.Equals(root);
+        Debug.Assert(result, $"container trait is not at the root of the hierarchy");
 
         return result;
     }

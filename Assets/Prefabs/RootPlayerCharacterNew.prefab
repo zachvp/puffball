@@ -1574,16 +1574,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb1bf7fe0ce64ec490b83b7926e411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTriggered: 0
   mask:
     serializedVersion: 2
     m_Bits: 1664
+  ignoreEventsInHierarchy: 0
+  isTriggered: 0
   triggeredObjects:
   - {fileID: 0}
   triggeredTraits: 0
   triggeredLayers:
     serializedVersion: 2
     m_Bits: 0
+  debugDraw: {fileID: 0}
 --- !u!58 &5253069456886120303
 CircleCollider2D:
   m_ObjectHideFlags: 0

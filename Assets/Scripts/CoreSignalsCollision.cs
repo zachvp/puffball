@@ -11,14 +11,11 @@ public class CoreSignalsCollision : MonoBehaviour
     // -- collision events
     public void OnCollisionStay2D(Collision2D c)
     {
-        //Debug.Log($"stay collision:  {c.gameObject.name}");
         Emitter.Send(onCollisionBodyStay, c);
     }
 
     public void OnCollisionEnter2D(Collision2D c)
     {
-        //Debug.Log("core body: on collision");
-
         Emitter.Send(onAnyColliderEnter, c.collider);
         Emitter.Send(onCollisionBodyEnter, c);
     }

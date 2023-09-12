@@ -34,12 +34,10 @@ public class ControllerHandPC : MonoBehaviour
         SceneRefs.instance.uiDebug.text = args.ToString();
         if (args.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
         {
-            Debug.Log("check reset");
             neutral.SetActive(true);
 
             radial.gameObject.SetActive(false);
             radial.ResetState();
-            Debug.Log("reset");
         }
     }
 
