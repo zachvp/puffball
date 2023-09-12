@@ -53,6 +53,7 @@ public class TriggerVolume : MonoBehaviour
         }
     }
 
+#if DEBUG
     public void Update()
     {
         if (debugDraw)
@@ -60,6 +61,7 @@ public class TriggerVolume : MonoBehaviour
             debugDraw.enabled = isTriggered;
         }
     }
+#endif
 
     public void OnTriggerEnter2D(Collider2D other)
     {

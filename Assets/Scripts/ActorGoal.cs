@@ -12,6 +12,9 @@ public class ActorGoal : MonoBehaviour
     // state
     public State state;
 
+    // testing
+    public int score;
+
     public void Awake()
     {
         triggerTop.onTraitFound += HandleTraitFoundTop;
@@ -54,6 +57,7 @@ public class ActorGoal : MonoBehaviour
             {
                 Debug.Log("score!");
                 state = State.NONE;
+                SceneRefs.instance.scoreUI.text = $"SCORE: {++score}";
             }
         }
     }

@@ -25,7 +25,7 @@ public class ContainerTrait : MonoBehaviour
         {
             result &= descendent.Equals(this);
         }
-        Debug.Assert(result, $"more than one instance of {nameof(ContainerTrait)} exists in hierchy on GameObject {name}");
+        Debug.Assert(result, $"more than one instance of {nameof(ContainerTrait)} exists in hierarchy on GameObject {name}");
 
         // check that this component is attached to hierarchy root
         result &= gameObject.Equals(root);

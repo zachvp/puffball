@@ -24,7 +24,6 @@ public class DebugDraw : MonoBehaviour
         {
             Gizmos.color = color;
             Gizmos.DrawWireSphere(transform.position, size);
-            
         }
     }
 
