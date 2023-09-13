@@ -100,6 +100,8 @@ public static class CoreUtilities
 
     #endregion
 
+
+    #region Mathy
     // rounds given number to closest multiple of unit
     public static float RoundTo(float value, float unit)
     {
@@ -154,6 +156,8 @@ public static class CoreUtilities
                        Color.blue,
                        0.2f);
     }
+
+    #endregion
 
     #region Unity Object content duplication
     public static void CopyCollider(CircleCollider2D source, CircleCollider2D copy)

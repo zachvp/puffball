@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using UnityEngine;
 
@@ -21,3 +23,5 @@ public class SkeletonBackend : MonoBehaviour
         configCollider.GenerateAndAssignCollider();
     }
 }
+
+#endif

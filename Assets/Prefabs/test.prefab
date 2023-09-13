@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger:
     value: 0
+  isDebug: 1
 --- !u!1001 &1609017358918776988
 PrefabInstance:
   m_ObjectHideFlags: 0
