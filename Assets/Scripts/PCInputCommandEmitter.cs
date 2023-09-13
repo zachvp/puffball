@@ -8,8 +8,10 @@ public class PCInputCommandEmitter : MonoBehaviour
     public CoreActionMap.Type actionMapType;
     public Action<PCInputArgs> onPCCommand;
 
+    // state data
     // Contains the combination of the most recent input data.
     public PCInputArgs data;
+    public bool isCursor;
 
     // This buffer can and will diverge from the 'data' property;
     // i.e. the most recent buffer entry does not necessarily equal the current data value.
@@ -17,7 +19,7 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // Mouse-specific data
     // todo: separate into new class
-    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(8, CoreConstants.UNIT_TIME_SLICE);
+    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(4, CoreConstants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
     public Vector2 currentMouse;
@@ -48,6 +50,8 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
     }
 
+    // main script
+
     public void Awake()
     {
         data.playerIndex = playerInput.playerIndex;
@@ -73,8 +77,9 @@ public class PCInputCommandEmitter : MonoBehaviour
     public void Update()
     {
         PCInputArgs args = data;
+        isCursor = CoreConstants.CONTROL_SCHEME_KEYBOARD_MOUSE.Equals(playerInput.currentControlScheme);
 
-        if (CoreConstants.CONTROL_SCHEME_KEYBOARD_MOUSE.Equals(playerInput.currentControlScheme))
+        if (isCursor)
         {
             UpdateRelativeOrigin(Mouse.current);
 

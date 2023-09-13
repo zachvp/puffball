@@ -29,10 +29,9 @@ public class ControllerHandPC : MonoBehaviour
 
     public void Update()
     {
-        //var args = buffer.buffer[buffer.index];
         var args = meta.commandEmitter.playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
         SceneRefs.instance.uiDebug.text = args.ToString();
-        if (args.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
+        if (!meta.commandEmitter.isCursor && args.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
         {
             neutral.SetActive(true);
 

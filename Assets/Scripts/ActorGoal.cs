@@ -27,7 +27,6 @@ public class ActorGoal : MonoBehaviour
         if (!triggerGoalAreal.isTriggered)
         {
             state = State.NONE;
-            Debug.Log("nothing in goal area, reset state");
         }
     }
 
@@ -37,7 +36,6 @@ public class ActorGoal : MonoBehaviour
         {
             if (state.HasFlag(State.TRIGGER_BOTTOM))
             {
-                Debug.LogWarning($"invalid score attempt");
                 state = State.NONE;
             }
             else
