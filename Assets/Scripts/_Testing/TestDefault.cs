@@ -2,9 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class TestDefault : MonoBehaviour
+public class TestDefault : CoreSingletonBehavior<TestDefault>
 {
     public VarWatch<bool> trigger;
+    public bool isDebug;
 
     public void Update()
     {

@@ -78,7 +78,6 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.HAND_ACTION:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    // todo: examine buffer and determine input velocity
                     var handVelocity = Vector2.zero;
                     var buffer = meta.commandEmitter.liveBuffer.buffer;
                     SceneRefs.instance.uiDebug.text = "";
@@ -87,14 +86,17 @@ public class ControllerHandPC : MonoBehaviour
                         handVelocity += CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove);
                     }
 
-                    tracker.Update(handVelocity.magnitude);
-                    var text = $"{handVelocity}\n" +
-                        $"cur: {tracker.current}\n" +
-                        $"min: {tracker.min}\n" +
-                        $"max: {tracker.max}\n";
+                    // todo: debug
+                    if (TestDefault.Instance.isDebug)
+                    {
+                        tracker.Update(handVelocity.magnitude);
+                        var text = $"{handVelocity}\n" +
+                            $"cur: {tracker.current}\n" +
+                            $"min: {tracker.min}\n" +
+                            $"max: {tracker.max}\n";
 
-                    // todo:
-                    SceneRefs.instance.uiDebug.text = text;
+                        SceneRefs.instance.uiDebug.text = text;
+                    }
 
                     ball.Throw(handVelocity);
                 }
