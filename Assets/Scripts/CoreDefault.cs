@@ -416,6 +416,26 @@ public struct VarWatch<T>
     }
 }
 
+public class TrackMinMax
+{
+    public float current { get; private set; }
+    public float min { get; private set; }
+    public float max { get; private set; }
+
+    public TrackMinMax()
+    {
+        min = float.MaxValue;
+        max = float.MinValue;
+    }
+
+    public void Update(float value)
+    {
+        current = value;
+        min = Mathf.Min(min, value);
+        max = Mathf.Max(max, value);
+    }
+}
+
 // Used for cases in which the random call will be called repeatedly in a single frame/within a short time
 public struct RandomInstant
 {

@@ -15,10 +15,15 @@ public class ControllerHandPC : MonoBehaviour
     private Ball ball;
 
     // state
-    private State state;
+    public State state;
+
+    // debug
+    public TrackMinMax tracker;
 
     public void Awake()
     {
+        tracker = new TrackMinMax();
+
         meta.onInitialized += () =>
         {
             meta.commandEmitter.onPCCommand += HandleCommand;
@@ -30,7 +35,6 @@ public class ControllerHandPC : MonoBehaviour
     public void Update()
     {
         var args = meta.commandEmitter.playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
-        SceneRefs.instance.uiDebug.text = args.ToString();
         if (!meta.commandEmitter.isCursor && args.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
         {
             neutral.SetActive(true);
@@ -77,24 +81,20 @@ public class ControllerHandPC : MonoBehaviour
                     // todo: examine buffer and determine input velocity
                     var handVelocity = Vector2.zero;
                     var buffer = meta.commandEmitter.liveBuffer.buffer;
-                    var ui = SceneRefs.instance.uiDebug;
-                    ui.text = "";
+                    SceneRefs.instance.uiDebug.text = "";
                     for (var i = 1; i < buffer.Length; i++)
                     {
                         handVelocity += CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove);
-                        //handVelocity += Vector2.Dot(buffer[i].handMove, buffer[i - 1].handMove);
-                        //handVelocity += (buffer[i].handMove - buffer[i - 1].handMove);
-
-                        //ui.text += $"{buffer[i].handMove}\n";
-                        //ui.text += $"{CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove)}\n";
-
-                        //handVelocity.x += d.handMove.x;
-                        //handVelocity.y += d.handMove.y;
                     }
 
-                    ui.text = $"{handVelocity}";
+                    tracker.Update(handVelocity.magnitude);
+                    var text = $"{handVelocity}\n" +
+                        $"cur: {tracker.current}\n" +
+                        $"min: {tracker.min}\n" +
+                        $"max: {tracker.max}\n";
 
-                    //Debug.Log($"hand vel: {handVelocity}");
+                    // todo:
+                    SceneRefs.instance.uiDebug.text = text;
 
                     ball.Throw(handVelocity);
                 }

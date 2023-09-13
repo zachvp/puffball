@@ -77,7 +77,6 @@ public class PCInputCommandEmitter : MonoBehaviour
     public void Update()
     {
         PCInputArgs args = data;
-        isCursor = CoreConstants.CONTROL_SCHEME_KEYBOARD_MOUSE.Equals(playerInput.currentControlScheme);
 
         if (isCursor)
         {
@@ -135,13 +134,10 @@ public class PCInputCommandEmitter : MonoBehaviour
                 break;
 
             case CoreActionMap.Player.Action.MOVE_HAND:
-                if (context.control.device is Mouse)
+                isCursor = context.control.device is Mouse;
+                if (isCursor)
                 {
                     data.handMove = ComputeHandMove(Mouse.current);
-
-                    //data.handMove = mouse.position.ReadValue() - relativeOrigin;
-                    //data.handMove = data.handMove.normalized * (data.handMove.magnitude / mouseLength);
-                    //data.handMove = Vector2.ClampMagnitude(data.handMove, 1);
 
                     //CoreUtilities.DrawScreenLine(SceneRefs.instance.camera, relativeOrigin, mouse.position.ReadValue());
                 }
@@ -149,7 +145,6 @@ public class PCInputCommandEmitter : MonoBehaviour
                 {
                     data.handMove = context.ReadValue<Vector2>();
                 }
-
                 break;
 
             default:
