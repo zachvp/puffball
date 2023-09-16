@@ -1,9 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ControllerHandPC : MonoBehaviour
 {
+    // config
+    public int interval = 1;
+    public Vector2 throwBoost = Vector2.one;
+
     // fixed links
     public PCMetadata meta;
     public GameObject neutral;
@@ -16,6 +19,7 @@ public class ControllerHandPC : MonoBehaviour
 
     // state
     public State state;
+    public int indexHandSwingStart = -1;
 
     // debug
     public TrackMinMax tracker;
@@ -34,13 +38,18 @@ public class ControllerHandPC : MonoBehaviour
 
     public void Update()
     {
-        var args = meta.commandEmitter.playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
-        if (!meta.commandEmitter.isCursor && args.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
+        var moveHand = meta.commandEmitter.playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
+        if (!meta.commandEmitter.isCursor && moveHand.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
         {
             neutral.SetActive(true);
 
             radial.gameObject.SetActive(false);
             radial.ResetState();
+
+            StartCoroutine(CoreUtilities.TaskDelayed(0.5f, () =>
+            {
+                indexHandSwingStart = -1;
+            }));
         }
     }
 
@@ -56,6 +65,12 @@ public class ControllerHandPC : MonoBehaviour
 
                     radial.gameObject.SetActive(true);
                     radial.Move(args.handMove);
+
+                    if (indexHandSwingStart < 0)
+                    {
+                        indexHandSwingStart = meta.commandEmitter.liveBuffer.index;
+                        Debug.Log("start hand swing");
+                    }
                 }
                 break;
 
@@ -78,24 +93,47 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.HAND_ACTION:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    var handVelocity = Vector2.zero;
-                    var buffer = meta.commandEmitter.liveBuffer.buffer;
-                    SceneRefs.instance.uiDebug.text = "";
-                    for (var i = 1; i < buffer.Length; i++)
+                    if (indexHandSwingStart < 0)
                     {
-                        handVelocity += CoreUtilities.Abs(buffer[i].handMove - buffer[i - 1].handMove);
+                        Debug.LogWarning("start index is invalid value");
+                        break;
                     }
+
+                    var handVelocity = args.handMove * throwBoost;
+                    var buffer = meta.commandEmitter.liveBuffer;
+                    SceneRefs.instance.uiDebug.text = "";
+
+                    var i = indexHandSwingStart;
+                    var diff = 0;
+                    var strength = 0f;
+                    SceneRefs.instance.uiDebug.text = "";
+                    while (i != buffer.index)
+                    {
+                        //handVelocity += CoreUtilities.Abs(buffer.data[i].handMove - buffer.data[buffer.Previous(i)].handMove);
+                        //strength += CoreUtilities.Abs(buffer.data[i].handMove);
+                        //handVelocity += buffer.data[i].handMove - buffer.data[buffer.Previous(i)].handMove;
+                        SceneRefs.instance.uiDebug.text += $"{buffer.data[i].handMove}\n";
+                        i = buffer.Next(i);
+                        diff++;
+                        
+                        //handVelocity += buffer[i].handMove + buffer[i - interval].handMove;
+                    }
+
+                    ////handVelocity *= 1 + (buffer.data.Length - diff) / buffer.data.Length;
+                    handVelocity *= strength;
+
 
                     // todo: debug
                     if (TestDefault.Instance.isDebug)
                     {
                         tracker.Update(handVelocity.magnitude);
-                        var text = $"{handVelocity}\n" +
+                        var text =
+                            $"{handVelocity}\n" +
                             $"cur: {tracker.current}\n" +
                             $"min: {tracker.min}\n" +
                             $"max: {tracker.max}\n";
 
-                        SceneRefs.instance.uiDebug.text = text;
+                        //SceneRefs.instance.uiDebug.text = text;
                     }
 
                     ball.Throw(handVelocity);
@@ -107,7 +145,8 @@ public class ControllerHandPC : MonoBehaviour
     public IEnumerator CheckNeutralMovement(float threshold)
     {
         var delta = 0f;
-        var buffer = meta.commandEmitter.liveBuffer.buffer;
+        var buffer = new PCInputArgs[meta.commandEmitter.liveBuffer.data.Length];
+        meta.commandEmitter.liveBuffer.data.CopyTo(buffer, 0);
         while (true)
         {
             //foreach (var d in meta.commandEmitter.liveBuffer.buffer)
@@ -130,7 +169,7 @@ public class ControllerHandPC : MonoBehaviour
 
         radial.gameObject.SetActive(false);
         radial.ResetState();
-        Debug.Log("reset");
+        Debug.Log("reset hand to neutral");
     }
 
     public void HandleTraitFound(ContainerTrait trait)

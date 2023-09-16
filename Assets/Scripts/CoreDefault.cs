@@ -144,6 +144,16 @@ public static class CoreUtilities
         return result;
     }
 
+    public static Vector2 AbsDiff(Vector2 lhs, Vector2 rhs)
+    {
+        var result = lhs;
+
+        result.x = Mathf.Abs(lhs.x - rhs.x);
+        result.y = Mathf.Abs(lhs.y - rhs.y);
+
+        return result;
+    }
+
     public static Vector2 ScreenToWorld(Camera camera, Vector2 source)
     {
         return (Vector2) camera.ScreenToWorldPoint(source);
@@ -458,19 +468,29 @@ public struct RandomInstant
 
 public class BufferCircular<T>
 {
-    public readonly T[] buffer;
+    public readonly T[] data;
 
     public int index { get; private set; }
 
     public BufferCircular(int inSize)
     {
-        buffer = new T[inSize];
+        data = new T[inSize];
     }
 
     public void Add(T item)
     {
-        buffer[index] = item;
-        index = (index + 1) % buffer.Length;
+        data[index] = item;
+        index = Next(index);
+    }
+
+    public int Next(int current)
+    {
+        return (current + 1) % data.Length;
+    }
+
+    public int Previous(int current)
+    {
+        return Mathf.Abs((current - 1) % data.Length);
     }
 }
 

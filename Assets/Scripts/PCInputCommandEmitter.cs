@@ -31,13 +31,13 @@ public class PCInputCommandEmitter : MonoBehaviour
         bufferMouse.Add(mouse.position.ReadValue(), Time.time);
 
         // accumulate each difference between all buffered distances
-        for (var i = 0; i < bufferMouse.buffer.Length; i++)
+        for (var i = 0; i < bufferMouse.data.Length; i++)
         {
-            for (var j = 1; j < bufferMouse.buffer.Length; j++)
+            for (var j = 1; j < bufferMouse.data.Length; j++)
             {
                 if (i != j)
                 {
-                    diff += bufferMouse.buffer[j] - bufferMouse.buffer[i];
+                    diff += bufferMouse.data[j] - bufferMouse.data[i];
                 }
             }
         }

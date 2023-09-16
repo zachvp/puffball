@@ -11,8 +11,6 @@ public class Ball : MonoBehaviour
     public JointDynamicAnchor joint;
     public TriggerVolume trigger;
 
-    public Vector2 assistThrow = new Vector2(4, 4);
-
     private int initLayer;
 
     public void Awake()
@@ -40,7 +38,7 @@ public class Ball : MonoBehaviour
     {
         Drop();
 
-        body.velocity = new Vector2(assistThrow.x * v.x, assistThrow.y * v.y);
+        body.velocity = v;
     }
 
     public IEnumerator CheckOverlap()
