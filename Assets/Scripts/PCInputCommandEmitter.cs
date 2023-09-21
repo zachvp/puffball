@@ -151,6 +151,8 @@ public class PCInputCommandEmitter : MonoBehaviour
                 Debug.LogError($"Unhandled case: {actionType}");
                 break;
         }
+
+        liveBuffer.Add(data, Time.time);
     }
 
     public Vector2 ComputeHandMove(Mouse mouse)

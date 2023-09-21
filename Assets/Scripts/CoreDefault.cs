@@ -345,6 +345,7 @@ public class Signals : Singleton<Signals>
     // Global notification definitions
     public Action<PCInputArgs> onPCCommand;
     public Action<PCInputCommandEmitter> onPCCommandEmitterSpawn;
+    public Action onScore;
 }
 
 public static class Emitter

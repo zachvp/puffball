@@ -25,8 +25,7 @@ public class MovementRadial : MonoBehaviour
 
     public Vector3 Move(Vector2 input)
     {
-        var finalAnchorPos = anchor.position + offset;
-        var newPos = (Vector2) finalAnchorPos + (input * range);
+        var newPos = ComputePosition(input);
 
         if (usePhysics)
         {
@@ -38,6 +37,11 @@ public class MovementRadial : MonoBehaviour
         }
 
         return newPos;
+    }
+
+    public Vector3 ComputePosition(Vector2 input)
+    {
+        return anchor.position + offset + (Vector3)(input * range);
     }
 
     public Vector3 ResetState()

@@ -56,8 +56,10 @@ public class ActorGoal : MonoBehaviour
                 Debug.Log("score!");
                 state = State.NONE;
 
-                // todo: signal score event, which UI text responds to
                 SceneRefs.instance.scoreUI.text = $"SCORE: {++score}";
+
+                // todo: handle this event
+                Emitter.Send(Signals.instance.onScore);
             }
         }
     }

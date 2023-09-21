@@ -7,8 +7,8 @@ public class SceneRefs : Singleton<SceneRefs>
     public TargetGoal targetGoal
         { get { return registry[ID.TARGET_GOAL] as TargetGoal; } }
 
-    public Ball ball
-        { get { return registry[ID.BALL] as Ball; } }
+    public ActorBall ball
+        { get { return registry[ID.BALL] as ActorBall; } }
 
     public TextMeshProUGUI scoreUI
         { get { return registry[ID.UI_SCORE] as TextMeshProUGUI; } }

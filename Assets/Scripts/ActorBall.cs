@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-// todo: rename to 'ActorBall'
-public class Ball : MonoBehaviour
+public class ActorBall : MonoBehaviour
 {
     // links
     public CoreBody body;
