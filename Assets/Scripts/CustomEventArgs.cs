@@ -36,8 +36,6 @@ public struct PCInputArgs
     public float vFloat;
     public bool vBool;
 
-    
-
     public override string ToString()
     {
         return JsonUtility.ToJson(this);

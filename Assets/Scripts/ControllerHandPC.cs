@@ -5,7 +5,8 @@ public class ControllerHandPC : MonoBehaviour
 {
     // config
     public int interval = 1;
-    public Vector2 throwBoost = Vector2.one;
+    public Vector2 throwBoost = new Vector2(5, 10);
+    public float throwStrength = 16;
 
     // fixed links
     public PCMetadata meta;
@@ -15,7 +16,7 @@ public class ControllerHandPC : MonoBehaviour
     public Collider2D colliderBody;
 
     // dynamic links
-    private Ball ball;
+    private ActorBall ball;
 
     // state
     public State state;
@@ -58,7 +59,14 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                
+                var dot = Vector2.Dot(args.handMove.normalized, Vector2.up);
+
+                SceneRefs.instance.uiDebug.text =
+                    $"handMove.nrml: {args.handMove.normalized}\n" +
+                    $"dot: {dot}\n" +
+                    $"angle: {Mathf.Acos(dot) * Mathf.Rad2Deg}º";
+
+
                 if (args.handMove.sqrMagnitude > CoreConstants.DEADZONE_FLOAT_2)
                 {
                     neutral.SetActive(false);
@@ -87,41 +95,43 @@ public class ControllerHandPC : MonoBehaviour
                         ball.Drop();
                         state = State.NONE;
                     }
+
+                    indexHandSwingStart = -1;
                 }
                 break;
 
             case CoreActionMap.Player.Action.HAND_ACTION:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    if (indexHandSwingStart < 0)
-                    {
-                        Debug.LogWarning("start index is invalid value");
-                        break;
-                    }
+                    //if (indexHandSwingStart < 0)
+                    //{
+                    //    Debug.LogWarning("start index is invalid value");
+                    //    break;
+                    //}
 
-                    var handVelocity = args.handMove * throwBoost;
+                    // todo: determine start and end point of hand gesture
+
+
                     var buffer = meta.commandEmitter.liveBuffer;
-                    SceneRefs.instance.uiDebug.text = "";
+                    var handVelocity = args.handMove;
+                    handVelocity.x *= Mathf.Lerp(1, throwBoost.x, handVelocity.x / 1);
+                    handVelocity.y *= Mathf.Lerp(1, throwBoost.y, handVelocity.y / 1);
+                    
 
-                    var i = indexHandSwingStart;
-                    var diff = 0;
-                    var strength = 0f;
-                    SceneRefs.instance.uiDebug.text = "";
-                    while (i != buffer.index)
-                    {
-                        //handVelocity += CoreUtilities.Abs(buffer.data[i].handMove - buffer.data[buffer.Previous(i)].handMove);
-                        //strength += CoreUtilities.Abs(buffer.data[i].handMove);
-                        //handVelocity += buffer.data[i].handMove - buffer.data[buffer.Previous(i)].handMove;
-                        SceneRefs.instance.uiDebug.text += $"{buffer.data[i].handMove}\n";
-                        i = buffer.Next(i);
-                        diff++;
-                        
-                        //handVelocity += buffer[i].handMove + buffer[i - interval].handMove;
-                    }
+                    // dot references in relation to clock:
+                    // 12 noon: >0.9f
+                    // 1 : < 0.9, > .71
 
-                    ////handVelocity *= 1 + (buffer.data.Length - diff) / buffer.data.Length;
-                    handVelocity *= strength;
 
+                    /*
+                     * float angleRad = Mathf.Acos(dotProduct);
+                     * cos(angleRad) = dotProduct
+                     * angleRad = arccos(lhs.x*rhs.x + lhs.y*rhs.y)
+                     * cos(angleRad) = lhs.x*rhs.x + lhs.y*rhs.y
+                     * 
+                    */
+
+                    ball.Throw(handVelocity);
 
                     // todo: debug
                     if (TestDefault.Instance.isDebug)
@@ -136,7 +146,7 @@ public class ControllerHandPC : MonoBehaviour
                         //SceneRefs.instance.uiDebug.text = text;
                     }
 
-                    ball.Throw(handVelocity);
+                    indexHandSwingStart = -1;
                 }
                 break;
         }
@@ -176,7 +186,7 @@ public class ControllerHandPC : MonoBehaviour
     {
         if (trait.value.HasFlag(Trait.BALL))
         {
-            ball = trait.GetComponentInChildren<Ball>();
+            ball = trait.GetComponentInChildren<ActorBall>();
         }
     }
 

@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 
-// todo: remove
 [RequireComponent(typeof(CoreSignalsCollision))]
 public class CoreBody : MonoBehaviour
 {

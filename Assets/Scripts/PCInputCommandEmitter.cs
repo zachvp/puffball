@@ -22,7 +22,6 @@ public class PCInputCommandEmitter : MonoBehaviour
     private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(4, CoreConstants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
-    public Vector2 currentMouse;
 
     public void UpdateRelativeOrigin(Mouse mouse)
     {
@@ -83,9 +82,6 @@ public class PCInputCommandEmitter : MonoBehaviour
             UpdateRelativeOrigin(Mouse.current);
 
             args.handMove = ComputeHandMove(Mouse.current);
-            
-
-            currentMouse = Mouse.current.position.ReadValue();
         }
         else
         {
@@ -93,11 +89,6 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
 
         liveBuffer.Add(args, Time.time);
-
-        // Update buffer with live information.
-
-        //args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
-
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)

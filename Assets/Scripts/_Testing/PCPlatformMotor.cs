@@ -68,7 +68,6 @@ public class PCPlatformMotor : MonoBehaviour
 
     public void Update()
     {
-        // todo: implement air movement
         if (state.platformState.HasFlag(PlatformState.MOVE))
         {
             if (state.trigger.down.isTriggered)
