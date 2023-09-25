@@ -29,7 +29,6 @@ public struct InputAxis2DArgs
 public struct PCInputArgs
 {
     public CoreActionMap.Player.Action type;
-    public int playerIndex;
 
     public Vector2 handMove;
     // todo: define others and refactor

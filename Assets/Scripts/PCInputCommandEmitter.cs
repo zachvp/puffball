@@ -15,7 +15,7 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // This buffer can and will diverge from the 'data' property;
     // i.e. the most recent buffer entry does not necessarily equal the current data value.
-    public BufferInterval<PCInputArgs> liveBuffer = new BufferInterval<PCInputArgs>(16, CoreConstants.UNIT_TIME_SLICE);
+    public BufferInterval<PCInputArgs> liveBuffer = new BufferInterval<PCInputArgs>(128, CoreConstants.UNIT_TIME_SLICE);
 
     // Mouse-specific data
     // todo: separate into new class
@@ -49,12 +49,16 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
     }
 
-    // main script
-
-    public void Awake()
+    public Vector2 ComputeHandMove(Mouse mouse)
     {
-        data.playerIndex = playerInput.playerIndex;
+        var result = mouse.position.ReadValue() - relativeOrigin;
+        result = result.normalized * (result.magnitude / mouseLength);
+        result = Vector2.ClampMagnitude(result, 1);
+
+        return result;
     }
+
+    // main script
 
     public void OnEnable()
     {
@@ -88,6 +92,7 @@ public class PCInputCommandEmitter : MonoBehaviour
             args.handMove = playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
         }
 
+        data = args;
         liveBuffer.Add(args, Time.time);
     }
 
@@ -144,14 +149,5 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
 
         liveBuffer.Add(data, Time.time);
-    }
-
-    public Vector2 ComputeHandMove(Mouse mouse)
-    {
-        var result = mouse.position.ReadValue() - relativeOrigin;
-        result = result.normalized * (result.magnitude / mouseLength);
-        result = Vector2.ClampMagnitude(result, 1);
-
-        return result;
     }
 }

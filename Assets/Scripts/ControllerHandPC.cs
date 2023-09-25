@@ -6,7 +6,7 @@ public class ControllerHandPC : MonoBehaviour
     // config
     public int interval = 1;
     public Vector2 throwBoost = new Vector2(5, 10);
-    public float throwStrength = 16;
+    public float throwDirectionCoefficient = 10;
 
     // fixed links
     public PCMetadata meta;
@@ -39,19 +39,18 @@ public class ControllerHandPC : MonoBehaviour
 
     public void Update()
     {
-        var moveHand = meta.commandEmitter.playerInput.actions[CoreActionMap.Player.MOVE_HAND].ReadValue<Vector2>();
-        if (!meta.commandEmitter.isCursor && moveHand.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
+        if (!meta.commandEmitter.isCursor && meta.commandEmitter.data.handMove.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
         {
             neutral.SetActive(true);
 
             radial.gameObject.SetActive(false);
             radial.ResetState();
-
-            StartCoroutine(CoreUtilities.TaskDelayed(0.5f, () =>
-            {
-                indexHandSwingStart = -1;
-            }));
+            indexHandSwingStart = -1;
         }
+
+        //SceneRefs.instance.uiDebug.text =
+        //    $"handMove: {meta.commandEmitter.data.handMove}\n" +
+        //    $"handMove sqMag: {meta.commandEmitter.data.handMove.sqrMagnitude}";
     }
 
     public void HandleCommand(PCInputArgs args)
@@ -59,14 +58,6 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                var dot = Vector2.Dot(args.handMove.normalized, Vector2.up);
-
-                SceneRefs.instance.uiDebug.text =
-                    $"handMove.nrml: {args.handMove.normalized}\n" +
-                    $"dot: {dot}\n" +
-                    $"angle: {Mathf.Acos(dot) * Mathf.Rad2Deg}º";
-
-
                 if (args.handMove.sqrMagnitude > CoreConstants.DEADZONE_FLOAT_2)
                 {
                     neutral.SetActive(false);
@@ -74,10 +65,13 @@ public class ControllerHandPC : MonoBehaviour
                     radial.gameObject.SetActive(true);
                     radial.Move(args.handMove);
 
-                    if (indexHandSwingStart < 0)
+                    // todo: determine start and end point of hand gesture
+                    if (indexHandSwingStart < 0 && meta.commandEmitter.data.handMove.magnitude > 0.9f
+                        && state == State.GRIP)
                     {
+                        Debug.DrawRay(transform.position, meta.commandEmitter.data.handMove * 2, Color.red, 3);
+                        Debug.Log($"start swing");
                         indexHandSwingStart = meta.commandEmitter.liveBuffer.index;
-                        Debug.Log("start hand swing");
                     }
                 }
                 break;
@@ -109,77 +103,42 @@ public class ControllerHandPC : MonoBehaviour
                     //    break;
                     //}
 
-                    // todo: determine start and end point of hand gesture
-
-
                     var buffer = meta.commandEmitter.liveBuffer;
-                    var handVelocity = args.handMove;
-                    handVelocity.x *= Mathf.Lerp(1, throwBoost.x, handVelocity.x / 1);
-                    handVelocity.y *= Mathf.Lerp(1, throwBoost.y, handVelocity.y / 1);
-                    
+                    var handVelocity = args.handMove * throwDirectionCoefficient;
+                    var speed = Vector2.zero;
+                    var frames = 0;
 
-                    // dot references in relation to clock:
-                    // 12 noon: >0.9f
-                    // 1 : < 0.9, > .71
+                    //for (var i = indexHandSwingStart; i != buffer.Next(buffer.index); i = buffer.Next(i))
+                    //{
+                    //    //var b = buffer.data[i];
+                    //    //var prev = buffer.data[buffer.Previous(i)];
+                    //    //speed += b.handMove - prev.handMove;
+                    //    //speed += CoreUtilities.Abs(b.handMove);
+                    //    frames++;
+                    //}
 
-
-                    /*
-                     * float angleRad = Mathf.Acos(dotProduct);
-                     * cos(angleRad) = dotProduct
-                     * angleRad = arccos(lhs.x*rhs.x + lhs.y*rhs.y)
-                     * cos(angleRad) = lhs.x*rhs.x + lhs.y*rhs.y
-                     * 
-                    */
-
-                    ball.Throw(handVelocity);
+                    //var speed = (buffer.data[buffer.index].handMove - buffer.data[indexHandSwingStart].handMove) / (frames*buffer.interval);
+                    var total = handVelocity * throwBoost;
+                    ball.Throw(total);
 
                     // todo: debug
                     if (TestDefault.Instance.isDebug)
                     {
                         tracker.Update(handVelocity.magnitude);
                         var text =
-                            $"{handVelocity}\n" +
-                            $"cur: {tracker.current}\n" +
-                            $"min: {tracker.min}\n" +
-                            $"max: {tracker.max}\n";
+                            $"vel: {handVelocity}\n" +
+                            $"speed: {speed}\n" +
+                            $"total: {total}\n" +
+                            $"start idx: {indexHandSwingStart}\n" +
+                            $"curr idx: {buffer.index}";
 
-                        //SceneRefs.instance.uiDebug.text = text;
+                        SceneRefs.instance.uiDebug.text = text;
                     }
 
                     indexHandSwingStart = -1;
                 }
                 break;
         }
-    }
-
-    public IEnumerator CheckNeutralMovement(float threshold)
-    {
-        var delta = 0f;
-        var buffer = new PCInputArgs[meta.commandEmitter.liveBuffer.data.Length];
-        meta.commandEmitter.liveBuffer.data.CopyTo(buffer, 0);
-        while (true)
-        {
-            //foreach (var d in meta.commandEmitter.liveBuffer.buffer)
-            for (var i = 0; i < 8; i++)
-            {
-                delta += buffer[i].handMove.sqrMagnitude;
-            }
-
-            if (delta < threshold)
-            {
-                yield return new WaitForSeconds(meta.commandEmitter.liveBuffer.interval);
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        neutral.SetActive(true);
-
-        radial.gameObject.SetActive(false);
-        radial.ResetState();
-        Debug.Log("reset hand to neutral");
     }
 
     public void HandleTraitFound(ContainerTrait trait)
@@ -194,6 +153,6 @@ public class ControllerHandPC : MonoBehaviour
     public enum State
     {
         NONE = 0,
-        GRIP = 1 << 0,
+        GRIP = 1,
     }
 }
