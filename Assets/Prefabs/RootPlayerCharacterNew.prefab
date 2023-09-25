@@ -2766,12 +2766,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfcc205909284f56a25e971e44f23f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interval: 1
+  throwBoost: {x: 1.5, y: 3}
+  throwDirectionCoefficient: 10
   meta: {fileID: 2467396169662780557}
   neutral: {fileID: 2639827434189376547}
   radial: {fileID: 1371341122118845785}
   triggerGrab: {fileID: 6053326687293841967}
   colliderBody: {fileID: 8920531886859060632}
   state: 0
+  indexHandSwingStart: -1
 --- !u!1 &6578001105099732479
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ MonoBehaviour:
   mainCollider: {fileID: 5818987036019033004}
   joint: {fileID: 5604426209902957817}
   trigger: {fileID: 4552815359500242801}
-  assistThrow: {x: 7, y: 7}
+  state: 0
 --- !u!50 &717018575442313123
 Rigidbody2D:
   serializedVersion: 4
@@ -87,7 +87,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDrag: 1
   m_AngularDrag: 0
-  m_GravityScale: 3
+  m_GravityScale: 2.5
   m_Material: {fileID: 6200000, guid: 3406b7b2e6dbc4850863fafa386485fd, type: 2}
   m_IncludeLayers:
     serializedVersion: 2

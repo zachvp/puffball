@@ -646,10 +646,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 717018575442313123, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
-      propertyPath: m_GravityScale
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1319548884117839497, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -697,14 +693,6 @@ PrefabInstance:
     - target: {fileID: 2363132099507221997, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
       propertyPath: m_Name
       value: BallMain
-      objectReference: {fileID: 0}
-    - target: {fileID: 5887556751336192788, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
-      propertyPath: assistThrow.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5887556751336192788, guid: fa9439df41d0a4df684210884375a8f7, type: 3}
-      propertyPath: assistThrow.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1042,26 +1030,6 @@ PrefabInstance:
     - target: {fileID: 2263842209130745748, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_Name
       value: RootPlayerCharacterNew
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: interval
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: clampThrow
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: throwBoost.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: throwBoost.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: throwDirectionCoefficient
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_RootOrder
