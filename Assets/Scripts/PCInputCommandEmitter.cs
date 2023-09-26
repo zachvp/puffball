@@ -42,7 +42,7 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
 
         // reset the relative cursor origin if there's no meaningful difference
-        if (diff.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_0)
+        if (diff.sqrMagnitude < Mathf.Epsilon)
         {
             // offset the origin by the current input value
             relativeOrigin = mouse.position.ReadValue() - (data.handMove * mouseLength);
