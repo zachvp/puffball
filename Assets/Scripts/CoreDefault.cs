@@ -178,7 +178,14 @@ public class BufferCircular<T>
 
     public int Previous(int current)
     {
-        return Mathf.Abs((current - 1) % data.Length);
+        var result = current - 1;
+
+        if (result < 0)
+        {
+            result = data.Length - 1;
+        }
+
+        return result;
     }
 }
 
