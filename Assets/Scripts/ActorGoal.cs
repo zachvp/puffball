@@ -53,7 +53,6 @@ public class ActorGoal : MonoBehaviour
 
             if (state.HasFlag(State.TRIGGER_TOP))
             {
-                Debug.Log("score!");
                 state = State.NONE;
 
                 SceneRefs.instance.scoreUI.text = $"SCORE: {++score}";
