@@ -1031,18 +1031,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RootPlayerCharacterNew
       objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: throwBoost.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: throwBoost.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: throwDirectionCoefficient
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_RootOrder
       value: 7

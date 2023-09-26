@@ -97,28 +97,10 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.HAND_ACTION:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    //if (indexHandSwingStart < 0)
-                    //{
-                    //    Debug.LogWarning("start index is invalid value");
-                    //    break;
-                    //}
-
                     var buffer = meta.commandEmitter.liveBuffer;
                     var handVelocity = args.handMove * throwDirectionCoefficient;
-                    var speed = Vector2.zero;
-                    var frames = 0;
-
-                    //for (var i = indexHandSwingStart; i != buffer.Next(buffer.index); i = buffer.Next(i))
-                    //{
-                    //    //var b = buffer.data[i];
-                    //    //var prev = buffer.data[buffer.Previous(i)];
-                    //    //speed += b.handMove - prev.handMove;
-                    //    //speed += CoreUtilities.Abs(b.handMove);
-                    //    frames++;
-                    //}
-
-                    //var speed = (buffer.data[buffer.index].handMove - buffer.data[indexHandSwingStart].handMove) / (frames*buffer.interval);
                     var total = handVelocity * throwBoost;
+
                     ball.Throw(total);
 
                     // todo: debug
@@ -127,7 +109,6 @@ public class ControllerHandPC : MonoBehaviour
                         tracker.Update(handVelocity.magnitude);
                         var text =
                             $"vel: {handVelocity}\n" +
-                            $"speed: {speed}\n" +
                             $"total: {total}\n" +
                             $"start idx: {indexHandSwingStart}\n" +
                             $"curr idx: {buffer.index}";
