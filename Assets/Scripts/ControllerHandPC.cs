@@ -32,6 +32,9 @@ public class ControllerHandPC : MonoBehaviour
         meta.onInitialized += () =>
         {
             meta.commandEmitter.onPCCommand += HandleCommand;
+
+            UIDebug.Instance.Register("handMove", () => { return meta.commandEmitter.data.handMove; });
+            UIDebug.Instance.Register("handMoveSqrMag", () => { return meta.commandEmitter.data.handMove.sqrMagnitude; });
         };
 
         triggerGrab.onTraitFound += HandleTraitFound;
@@ -47,10 +50,6 @@ public class ControllerHandPC : MonoBehaviour
             radial.ResetState();
             indexHandSwingStart = -1;
         }
-
-        SceneRefs.instance.uiDebug.text =
-            $"handMove: {meta.commandEmitter.data.handMove}\n" +
-            $"handMove sqrMag: {meta.commandEmitter.data.handMove.sqrMagnitude}";
     }
 
     public void HandleCommand(PCInputArgs args)
