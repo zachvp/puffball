@@ -5,7 +5,7 @@ using TMPro;
 public class UIDebug : CoreSingletonBehavior<UIDebug>
 {
     public TextMeshProUGUI ui;
-    public List<Entry<object>> entriesNew = new List<Entry<object>>();
+    public List<Entry> entriesNew = new List<Entry>();
 
     public void Update()
     {
@@ -19,7 +19,7 @@ public class UIDebug : CoreSingletonBehavior<UIDebug>
 
     public void Register(string inName, Func<object> getLatestValue)
     {
-        var entry = new Entry<object>()
+        var entry = new Entry()
         {
             name = inName,
             value = getLatestValue
@@ -38,9 +38,9 @@ public class UIDebug : CoreSingletonBehavior<UIDebug>
         ui.text = text;
     }
 
-    public class Entry<T>
+    public class Entry
     {
         public string name;
-        public Func<T> value;
+        public Func<object> value;
     }
 }
