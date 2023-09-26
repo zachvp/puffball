@@ -20,7 +20,6 @@ public class ControllerHandPC : MonoBehaviour
 
     // state
     public State state;
-    public int indexHandSwingStart = -1;
 
     // debug
     public TrackMinMax tracker;
@@ -48,7 +47,6 @@ public class ControllerHandPC : MonoBehaviour
 
             radial.gameObject.SetActive(false);
             radial.ResetState();
-            indexHandSwingStart = -1;
         }
     }
 
@@ -63,15 +61,6 @@ public class ControllerHandPC : MonoBehaviour
 
                     radial.gameObject.SetActive(true);
                     radial.Move(args.handMove);
-
-                    // todo: determine start and end point of hand gesture
-                    if (indexHandSwingStart < 0
-                        && state == State.GRIP)
-                    {
-                        Debug.DrawRay(transform.position, meta.commandEmitter.data.handMove * 2, Color.red, 3);
-                        Debug.Log($"start swing");
-                        indexHandSwingStart = meta.commandEmitter.liveBuffer.index;
-                    }
                 }
                 break;
 
@@ -88,8 +77,6 @@ public class ControllerHandPC : MonoBehaviour
                         ball.Drop();
                         state = State.NONE;
                     }
-
-                    indexHandSwingStart = -1;
                 }
                 break;
 
@@ -113,8 +100,6 @@ public class ControllerHandPC : MonoBehaviour
 
                         //SceneRefs.instance.uiDebug.text = text;
                     }
-
-                    indexHandSwingStart = -1;
                 }
                 break;
         }
