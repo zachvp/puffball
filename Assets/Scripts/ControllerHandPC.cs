@@ -39,7 +39,7 @@ public class ControllerHandPC : MonoBehaviour
 
     public void Update()
     {
-        if (!meta.commandEmitter.isCursor && meta.commandEmitter.data.handMove.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_2)
+        if (!meta.commandEmitter.isCursor && meta.commandEmitter.data.handMove.sqrMagnitude < Mathf.Epsilon)
         {
             neutral.SetActive(true);
 
@@ -48,9 +48,9 @@ public class ControllerHandPC : MonoBehaviour
             indexHandSwingStart = -1;
         }
 
-        //SceneRefs.instance.uiDebug.text =
-        //    $"handMove: {meta.commandEmitter.data.handMove}\n" +
-        //    $"handMove sqMag: {meta.commandEmitter.data.handMove.sqrMagnitude}";
+        SceneRefs.instance.uiDebug.text =
+            $"handMove: {meta.commandEmitter.data.handMove}\n" +
+            $"handMove sqrMag: {meta.commandEmitter.data.handMove.sqrMagnitude}";
     }
 
     public void HandleCommand(PCInputArgs args)
@@ -58,7 +58,7 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                if (args.handMove.sqrMagnitude > CoreConstants.DEADZONE_FLOAT_2)
+                if (args.handMove.sqrMagnitude > 0)
                 {
                     neutral.SetActive(false);
 
@@ -66,7 +66,7 @@ public class ControllerHandPC : MonoBehaviour
                     radial.Move(args.handMove);
 
                     // todo: determine start and end point of hand gesture
-                    if (indexHandSwingStart < 0 && meta.commandEmitter.data.handMove.magnitude > 0.9f
+                    if (indexHandSwingStart < 0
                         && state == State.GRIP)
                     {
                         Debug.DrawRay(transform.position, meta.commandEmitter.data.handMove * 2, Color.red, 3);
@@ -97,7 +97,6 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.HAND_ACTION:
                 if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    var buffer = meta.commandEmitter.liveBuffer;
                     var handVelocity = args.handMove * throwDirectionCoefficient;
                     var total = handVelocity * throwBoost;
 
@@ -107,13 +106,13 @@ public class ControllerHandPC : MonoBehaviour
                     if (TestDefault.Instance.isDebug)
                     {
                         tracker.Update(handVelocity.magnitude);
-                        var text =
-                            $"vel: {handVelocity}\n" +
-                            $"total: {total}\n" +
-                            $"start idx: {indexHandSwingStart}\n" +
-                            $"curr idx: {buffer.index}";
+                        //var text =
+                        //    $"vel: {handVelocity}\n" +
+                        //    $"total: {total}\n" +
+                        //    $"start idx: {indexHandSwingStart}\n" +
+                        //    $"curr idx: {buffer.index}";
 
-                        SceneRefs.instance.uiDebug.text = text;
+                        //SceneRefs.instance.uiDebug.text = text;
                     }
 
                     indexHandSwingStart = -1;
