@@ -108,14 +108,15 @@ public class ControllerHandPC : MonoBehaviour
             {
                 // check if input happened in the past
                 var buffer = meta.commandEmitter.buffer;
-                var window = 32;
+                var window = 8;
+                var isFired = false;
                 for (var i = buffer.Index(buffer.index, -window);
                     i <= buffer.index;
                     i = buffer.Next(i))
                 {
                     Debug.Log($"check buffered grab: curr: {buffer.index} start: {buffer.Index(buffer.index, -window)} itr: {i}");
 
-                    if (buffer.data[i].grip)
+                    if (!isFired && buffer.data[i].grip)
                     {
                         ball.Grab(radial.target);
                         state = State.GRIP;
