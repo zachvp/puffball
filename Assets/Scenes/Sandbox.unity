@@ -1026,6 +1026,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2036661919769946755, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
+      propertyPath: walkSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036661919769946755, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
+      propertyPath: jumpStrength
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2263842209130745748, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_Name
       value: RootPlayerCharacterNew

@@ -6,7 +6,6 @@ public class ControllerHandPC : MonoBehaviour
     public int interval = 1;
     public Vector2 throwBoost = new Vector2(5, 10);
     public float throwDirectionCoefficient = 10;
-    public int inputBufferWindow = 8;
 
     // fixed links
     public PCMetadata meta;
@@ -78,7 +77,10 @@ public class ControllerHandPC : MonoBehaviour
                 break;
 
             case CoreActionMap.Player.Action.HAND_ACTION:
-                if (args.handAction && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
+                if (args.handAction
+                    && ball
+                    && triggerGrab.triggeredTraits.HasFlag(Trait.BALL)
+                    && state == State.GRIP)
                 {
                     var handVelocity = args.handMove * throwDirectionCoefficient * throwBoost;
 
@@ -94,24 +96,6 @@ public class ControllerHandPC : MonoBehaviour
         if (trait.value.HasFlag(Trait.BALL))
         {
             ball = trait.GetComponentInChildren<ActorBall>();
-
-            if (ball != null && state == State.NONE)
-            {
-                // check if input happened in the past
-                var buffer = meta.commandEmitter.buffer;
-                var isFired = false;
-                for (var i = buffer.Index(buffer.index, -inputBufferWindow);
-                    i <= buffer.index;
-                    i = buffer.Next(i))
-                {
-                    if (!isFired && buffer.data[i].grip)
-                    {
-                        ball.Grab(radial.target);
-                        state = State.GRIP;
-                        break;
-                    }
-                }
-            }
         }
     }
 
