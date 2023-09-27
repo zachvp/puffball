@@ -160,9 +160,9 @@ public class BufferCircular<T>
 
     public int index { get; private set; }
 
-    public BufferCircular(int inSize)
+    public BufferCircular(int size)
     {
-        data = new T[inSize];
+        data = new T[size];
     }
 
     public void Add(T item)
@@ -173,19 +173,17 @@ public class BufferCircular<T>
 
     public int Next(int current)
     {
-        return (current + 1) % data.Length;
+        return Index(current, 1);
     }
 
     public int Previous(int current)
     {
-        var result = current - 1;
+        return Index(current, -1);
+    }
 
-        if (result < 0)
-        {
-            result = data.Length - 1;
-        }
-
-        return result;
+    public int Index(int current, int diff)
+    {
+        return CoreUtilities.Circular(current, data.Length, diff);
     }
 }
 
@@ -194,10 +192,10 @@ public class BufferInterval<T> : BufferCircular<T>
     public readonly float interval;
     public float timePrevious { get; private set; }
 
-    public BufferInterval(int inSize, float inInterval) :
-        base(inSize)
+    public BufferInterval(int size, float interval) :
+        base(size)
     {
-        interval = inInterval;
+        this.interval = interval;
     }
 
     public bool Add(T item, float time)

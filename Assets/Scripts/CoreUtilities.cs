@@ -164,6 +164,18 @@ public static class CoreUtilities
                        0.2f);
     }
 
+    public static int Circular(int current, int size)
+    {
+        Debug.Assert(size > 0, $"invalid value for {nameof(size)}: {size}");
+
+        return (current % size + size) % size;
+    }
+
+    public static int Circular(int current, int size, int diff)
+    {
+        return Circular(current + diff, size);
+    }
+
     #endregion
 
     #region Unity Object content duplication

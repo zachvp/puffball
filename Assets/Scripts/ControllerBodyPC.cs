@@ -24,13 +24,13 @@ public class ControllerBodyPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.JUMP:
-                if (args.vBool)
+                if (args.jump)
                 {
                     body.velocity = CoreUtilities.SetY(body.velocity, jumpStrength);
                 }
                 break;
             case CoreActionMap.Player.Action.MOVE:
-                body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * args.vFloat);
+                body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * args.move);
                 break;
         }
     }

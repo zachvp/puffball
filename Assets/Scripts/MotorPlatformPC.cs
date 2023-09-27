@@ -34,7 +34,7 @@ public class MotorPlatformPC : MonoBehaviour
         {
             case CoreActionMap.Player.Action.JUMP:
                 // ground jump
-                if (args.vBool && state.trigger.down.isTriggered)
+                if (args.jump && state.trigger.down.isTriggered)
                 {
                     state.platformState |= PlatformState.JUMP;
                     state.platformState &= ~PlatformState.WALL_JUMPING;
@@ -50,7 +50,7 @@ public class MotorPlatformPC : MonoBehaviour
                 break;
 
             case CoreActionMap.Player.Action.MOVE:
-                state.inputMove = args.vFloat;
+                state.inputMove = args.move;
 
                 if (Mathf.Abs(state.inputMove) > CoreConstants.DEADZONE_FLOAT_0)
                 {

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class ControllerHandPC : MonoBehaviour
@@ -21,13 +20,8 @@ public class ControllerHandPC : MonoBehaviour
     // state
     public State state;
 
-    // debug
-    public TrackMinMax tracker;
-
     public void Awake()
     {
-        tracker = new TrackMinMax();
-
         meta.onInitialized += () =>
         {
             meta.commandEmitter.onPCCommand += HandleCommand;
@@ -65,7 +59,14 @@ public class ControllerHandPC : MonoBehaviour
                 break;
 
             case CoreActionMap.Player.Action.GRIP:
-                if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
+                var hasBall = triggerGrab.triggeredTraits.HasFlag(Trait.BALL);
+
+                //foreach (var n in triggerGrab.buffer)
+                //{
+                //    hasBall |= n.triggeredTraits.HasFlag(Trait.BALL);
+                //}
+
+                if (args.grip && ball && hasBall)
                 {
                     if (state == State.NONE)
                     {
@@ -81,25 +82,12 @@ public class ControllerHandPC : MonoBehaviour
                 break;
 
             case CoreActionMap.Player.Action.HAND_ACTION:
-                if (args.vBool && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
+                if (args.handAction && ball && triggerGrab.triggeredTraits.HasFlag(Trait.BALL))
                 {
-                    var handVelocity = args.handMove * throwDirectionCoefficient;
-                    var total = handVelocity * throwBoost;
+                    var handVelocity = args.handMove * throwDirectionCoefficient * throwBoost;
 
-                    ball.Throw(total);
-
-                    // todo: debug
-                    if (TestDefault.Instance.isDebug)
-                    {
-                        tracker.Update(handVelocity.magnitude);
-                        //var text =
-                        //    $"vel: {handVelocity}\n" +
-                        //    $"total: {total}\n" +
-                        //    $"start idx: {indexHandSwingStart}\n" +
-                        //    $"curr idx: {buffer.index}";
-
-                        //SceneRefs.instance.uiDebug.text = text;
-                    }
+                    ball.Throw(handVelocity);
+                    state = State.NONE;
                 }
                 break;
         }
@@ -110,6 +98,32 @@ public class ControllerHandPC : MonoBehaviour
         if (trait.value.HasFlag(Trait.BALL))
         {
             ball = trait.GetComponentInChildren<ActorBall>();
+
+            //ball.Grab(radial.target);
+            //state = State.GRIP;
+
+            
+
+            if (ball != null && state == State.NONE)
+            {
+                // check if input happened in the past
+                var buffer = meta.commandEmitter.buffer;
+                var window = 32;
+                for (var i = buffer.Index(buffer.index, -window);
+                    i <= buffer.index;
+                    i = buffer.Next(i))
+                {
+                    Debug.Log($"check buffered grab: curr: {buffer.index} start: {buffer.Index(buffer.index, -window)} itr: {i}");
+
+                    if (buffer.data[i].grip)
+                    {
+                        ball.Grab(radial.target);
+                        state = State.GRIP;
+                        Debug.Log($"buffered grab success");
+                        break;
+                    }
+                }
+            }
         }
     }
 

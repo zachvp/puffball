@@ -2,19 +2,22 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
+// todo: refactor to separate lightweight and heavy classes
 public class TriggerVolume : MonoBehaviour
 {
     // config
     public LayerMask mask;
     public bool ignoreEventsInHierarchy = true;
-    
+    public HashSet<Collider2D> ignoredColliders;
 
     // state
+    public LinkedList<State> buffer = new LinkedList<State>();
+    public float bufferLifetime = 0.5f;
+
     public bool isTriggered;
     public Collider2D[] triggeredObjects = new Collider2D[1];
     public Trait triggeredTraits;
     public LayerMask triggeredLayers;
-    public HashSet<Collider2D> ignoredColliders;
 
     // Events
     public Action<ContainerTrait> onTraitFound;
@@ -25,19 +28,15 @@ public class TriggerVolume : MonoBehaviour
     new public Collider2D collider;
 
     // debug
+#if DEBUG
     public DebugDraw debugDraw;
+#endif
 
     public void Awake()
     {
         collider = GetComponent<Collider2D>();
 
-        Debug.AssertFormat(collider != null, $"Script:{nameof(TriggerVolume)} requires collider attached to the same game object");
-        Debug.AssertFormat(triggeredObjects.Length > 0, "non-zero length required for trigger");
-        Debug.AssertFormat(collider.isTrigger, "attached collider required to be trigger");
-    }
-
-    public void OnEnable()
-    {
+        // based on config, populate the ignored colliders
         if (ignoreEventsInHierarchy)
         {
             var root = CoreUtilities.FindRoot(gameObject);
@@ -51,6 +50,10 @@ public class TriggerVolume : MonoBehaviour
             // store the hierarchy's colliders
             ignoredColliders = new HashSet<Collider2D>(colliders);
         }
+
+        Debug.AssertFormat(collider != null, $"Script:{nameof(TriggerVolume)} requires collider attached to the same game object");
+        Debug.AssertFormat(triggeredObjects.Length > 0, "non-zero length required for trigger");
+        Debug.AssertFormat(collider.isTrigger, "attached collider required to be trigger");
     }
 
 #if DEBUG
@@ -117,6 +120,21 @@ public class TriggerVolume : MonoBehaviour
                 isTriggered = false;
                 ClearState();
             }
+
+            // store state in buffer
+            var state = new State()
+            {
+                isTriggered = isTriggered,
+                triggeredTraits = triggeredTraits,
+                triggeredLayers = triggeredLayers
+            };
+            triggeredObjects.CopyTo(state.triggeredObjects, 0);
+            var stateNode = buffer.AddLast(state);
+
+            StartCoroutine(CoreUtilities.TaskDelayed(bufferLifetime, stateNode, (node) =>
+            {
+                buffer.Remove(node);
+            }));
         }
 
         Emitter.Send(onUpdateState);
@@ -126,10 +144,20 @@ public class TriggerVolume : MonoBehaviour
     {
         triggeredTraits = Trait.NONE;
         triggeredLayers = 0;
+        isTriggered = false;
 
         for (var i = 0; i < triggeredObjects.Length; i++)
         {
             triggeredObjects[i] = null;
         }
+    }
+
+    [Serializable]
+    public class State
+    {
+        public bool isTriggered;
+        public Collider2D[] triggeredObjects = new Collider2D[1];
+        public Trait triggeredTraits;
+        public LayerMask triggeredLayers;
     }
 }

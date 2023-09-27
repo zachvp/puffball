@@ -34,7 +34,7 @@ public class MovementFollowTransform : MonoBehaviour
     {
         var toAnchor = anchor.position - transform.position;
 
-        if (toAnchor.sqrMagnitude < CoreConstants.DEADZONE_FLOAT_3)
+        if (toAnchor.sqrMagnitude < Mathf.Epsilon)
         {
             UpdatePosition(anchor.position);
             t = 0;
@@ -67,10 +67,8 @@ public class MovementFollowTransform : MonoBehaviour
         {
             StartCoroutine(CoreUtilities.TaskFixedUpdate(() =>
             {
-                body.position = position;
+                body.MovePosition(position);
             }));
-
-            //body.MoveKinematic(position);
         }
         else
         {

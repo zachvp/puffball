@@ -15,7 +15,7 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // This buffer can and will diverge from the 'data' property;
     // i.e. the most recent buffer entry does not necessarily equal the current data value.
-    public BufferInterval<PCInputArgs> liveBuffer = new BufferInterval<PCInputArgs>(128, CoreConstants.UNIT_TIME_SLICE);
+    public BufferInterval<PCInputArgs> buffer = new BufferInterval<PCInputArgs>(128, CoreConstants.UNIT_TIME_SLICE);
 
     // Mouse-specific data
     // todo: separate into new class
@@ -93,7 +93,7 @@ public class PCInputCommandEmitter : MonoBehaviour
         }
 
         data = args;
-        liveBuffer.Add(args, Time.time);
+        buffer.Add(args, Time.time);
     }
 
     public void HandleActionTriggered(InputAction.CallbackContext context)
@@ -119,14 +119,21 @@ public class PCInputCommandEmitter : MonoBehaviour
         switch (actionType)
         {
             case CoreActionMap.Player.Action.JUMP:
+                data.jump = IsPressed(context);
+                break;
             case CoreActionMap.Player.Action.GRIP:
+                data.grip = IsPressed(context);
+                break;
             case CoreActionMap.Player.Action.START:
+                data.start = IsPressed(context);
+                break;
+
             case CoreActionMap.Player.Action.HAND_ACTION:
-                data.vBool = context.phase == InputActionPhase.Performed;
+                data.handAction = IsPressed(context);
                 break;
 
             case CoreActionMap.Player.Action.MOVE:
-                data.vFloat = context.ReadValue<float>();
+                data.move = context.ReadValue<float>();
                 break;
 
             case CoreActionMap.Player.Action.MOVE_HAND:
@@ -148,6 +155,11 @@ public class PCInputCommandEmitter : MonoBehaviour
                 break;
         }
 
-        liveBuffer.Add(data, Time.time);
+        buffer.Add(data, Time.time);
+    }
+
+    public bool IsPressed(InputAction.CallbackContext context)
+    {
+        return context.phase == InputActionPhase.Performed;
     }
 }

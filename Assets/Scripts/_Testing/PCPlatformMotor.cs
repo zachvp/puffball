@@ -50,7 +50,7 @@ public class PCPlatformMotor : MonoBehaviour
                 break;
 
             case CoreActionMap.Player.Action.MOVE:
-                state.inputMove = args.vFloat;
+                state.inputMove = args.move;
 
                 if (Mathf.Abs(state.inputMove) > CoreConstants.DEADZONE_FLOAT_0)
                 {

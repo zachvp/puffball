@@ -32,8 +32,11 @@ public struct PCInputArgs
 
     public Vector2 handMove;
     // todo: define others and refactor
-    public float vFloat;
-    public bool vBool;
+    public float move;
+    public bool handAction;
+    public bool grip;
+    public bool jump;
+    public bool start;
 
     public override string ToString()
     {
