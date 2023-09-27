@@ -13,6 +13,7 @@ public class ControllerHandPC : MonoBehaviour
     public MovementRadial radial;
     public TriggerVolume triggerGrab;
     public Collider2D colliderBody;
+    public Transform anchorHold;
 
     // dynamic links
     private ActorBall ball;
@@ -65,7 +66,7 @@ public class ControllerHandPC : MonoBehaviour
                 {
                     if (state == State.NONE)
                     {
-                        ball.Grab(radial.target);
+                        ball.Grab(anchorHold);
                         state = State.GRIP;
                     }
                     else

@@ -17,6 +17,13 @@ public class ControllerBodyPC : MonoBehaviour
         };
     }
 
+    public void Update()
+    {
+        var currentInputData = meta.commandEmitter.data;
+
+        body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * currentInputData.move);
+    }
+
     public void HandleCommand(PCInputArgs args)
     {
         switch (args.type)
@@ -26,9 +33,6 @@ public class ControllerBodyPC : MonoBehaviour
                 {
                     body.velocity = CoreUtilities.SetY(body.velocity, jumpStrength);
                 }
-                break;
-            case CoreActionMap.Player.Action.MOVE:
-                body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * args.move);
                 break;
         }
     }

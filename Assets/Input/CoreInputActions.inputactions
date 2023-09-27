@@ -117,7 +117,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Arrow Keys",
                     "id": "33f6fa7e-7b5e-444c-b990-8b4e9c3ff1cb",
                     "path": "2DVector",
                     "interactions": "",
@@ -172,7 +172,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Mouse",
                     "id": "e5ef7457-bd83-41fc-829e-8d3ccaccecbf",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
