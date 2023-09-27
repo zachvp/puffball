@@ -19,9 +19,9 @@ public class ControllerBodyPC : MonoBehaviour
 
     public void Update()
     {
-        var currentInputData = meta.commandEmitter.data;
+        var inputData = meta.commandEmitter.data;
 
-        body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * currentInputData.move);
+        body.velocity = CoreUtilities.SetX(body.velocity, walkSpeed * inputData.move);
     }
 
     public void HandleCommand(PCInputArgs args)

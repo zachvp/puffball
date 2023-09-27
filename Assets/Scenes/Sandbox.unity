@@ -576,11 +576,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f91c634a038f48d2820d8f4930e3f97, type: 3}
---- !u!4 &719192283 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3766451985742564434, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-  m_PrefabInstance: {fileID: 1661658053}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &818791845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1035,14 +1030,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RootPlayerCharacterNew
       objectReference: {fileID: 0}
-    - target: {fileID: 3766451985742564434, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339582117997691477, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
-      propertyPath: anchorHold
-      value: 
-      objectReference: {fileID: 719192283}
     - target: {fileID: 4620669926381334129, guid: 3b70b406d89cd4794adba97948783d66, type: 3}
       propertyPath: m_RootOrder
       value: 7
