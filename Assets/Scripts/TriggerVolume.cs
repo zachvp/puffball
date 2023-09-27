@@ -57,16 +57,6 @@ public class TriggerVolume : MonoBehaviour
         Debug.AssertFormat(collider.isTrigger, "attached collider required to be trigger");
     }
 
-#if DEBUG
-    public void Update()
-    {
-        if (debugDraw)
-        {
-            debugDraw.enabled = isTriggered;
-        }
-    }
-#endif
-
     public void OnTriggerEnter2D(Collider2D other)
     {
         ClearState();
@@ -90,6 +80,11 @@ public class TriggerVolume : MonoBehaviour
         var ignoreCount = 0;
         var overlapCount = collider.OverlapCollider(filter, triggeredObjects);
         isTriggered = overlapCount > 0;
+
+        if (debugDraw)
+        {
+            debugDraw.enabled = isTriggered;
+        }
 
         if (isTriggered)
         {
