@@ -980,7 +980,7 @@ Transform:
   - {fileID: 1175399134390209156}
   - {fileID: 214037104567599892}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4869647977523428041
 MonoBehaviour:
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meta: {fileID: 2467396169662780557}
   body: {fileID: 5415144965076204952}
-  ground: {fileID: 0}
+  ground: {fileID: 2923392615513560546}
   jumpStrength: 10
   walkSpeed: 8
 --- !u!1 &3024671689002050588
@@ -3398,11 +3398,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7324267189143895909}
   - {fileID: 5753371151785211549}
   - {fileID: 2681855775827187638}
   - {fileID: 6160896147907180811}
   - {fileID: 4219448618250452626}
-  - {fileID: 7324267189143895909}
   - {fileID: 2320461314008816826}
   - {fileID: 4460472971462808578}
   m_Father: {fileID: 214037104567599892}
