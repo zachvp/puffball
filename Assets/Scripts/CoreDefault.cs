@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -207,6 +209,29 @@ public class BufferInterval<T> : BufferCircular<T>
             return true;
         }
         return false;
+    }
+}
+
+public class BufferQueue<T>
+{
+    public readonly LinkedList<T> buffer = new LinkedList<T>();
+    public readonly MonoBehaviour behavior;
+    public readonly float lifetime; // todo: rename
+
+    public BufferQueue(MonoBehaviour behavior, float lifetime)
+    {
+        this.behavior = behavior;
+        this.lifetime = lifetime;
+    }
+
+    public void Add(T item)
+    {
+        var node = buffer.AddLast(item);
+
+        behavior.StartCoroutine(CoreUtilities.TaskDelayed(lifetime, node, (n) =>
+        {
+            buffer.Remove(n);
+        }));
     }
 }
 

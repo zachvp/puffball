@@ -11,8 +11,7 @@ public class TriggerVolume : MonoBehaviour
     public HashSet<Collider2D> ignoredColliders;
 
     // state
-    public LinkedList<State> buffer = new LinkedList<State>();
-    public float bufferLifetime = 0.5f;
+    public BufferQueue<State> buffer;
 
     public bool isTriggered;
     public Collider2D[] triggeredObjects = new Collider2D[1];
@@ -34,6 +33,8 @@ public class TriggerVolume : MonoBehaviour
 
     public void Awake()
     {
+        buffer = new BufferQueue<State>(this, 0.5f);
+
         collider = GetComponent<Collider2D>();
 
         // based on config, populate the ignored colliders
@@ -129,12 +130,7 @@ public class TriggerVolume : MonoBehaviour
                 triggeredLayers = triggeredLayers
             };
             triggeredObjects.CopyTo(state.triggeredObjects, 0);
-            var stateNode = buffer.AddLast(state);
-
-            StartCoroutine(CoreUtilities.TaskDelayed(bufferLifetime, stateNode, (node) =>
-            {
-                buffer.Remove(node);
-            }));
+            buffer.Add(state);
         }
 
         Emitter.Send(onUpdateState);
