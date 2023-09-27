@@ -1,12 +1,10 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementAxis))]
 public class ControllerBodyPC : MonoBehaviour
 {
     public PCMetadata meta;
     public Rigidbody2D body;
-    public MovementAxis movement;
+    public TriggerVolume ground;
 
     public float jumpStrength = 10;
     public float walkSpeed = 8;
@@ -24,7 +22,7 @@ public class ControllerBodyPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.JUMP:
-                if (args.jump)
+                if (args.jump && ground.isTriggered)
                 {
                     body.velocity = CoreUtilities.SetY(body.velocity, jumpStrength);
                 }

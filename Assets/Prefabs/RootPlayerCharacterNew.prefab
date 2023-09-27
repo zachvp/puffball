@@ -600,7 +600,8 @@ GameObject:
   - component: {fileID: 4460472971462808578}
   - component: {fileID: 9174558643890512866}
   - component: {fileID: 2923392615513560546}
-  m_Layer: 0
+  - component: {fileID: 1161481850642691367}
+  m_Layer: 8
   m_Name: trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +616,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453140371666675623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -651,10 +652,10 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.005, y: -0.83}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!114 &2923392615513560546
@@ -671,7 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   ignoreEventsInHierarchy: 1
   isTriggered: 0
   triggeredObjects:
@@ -680,7 +681,23 @@ MonoBehaviour:
   triggeredLayers:
     serializedVersion: 2
     m_Bits: 0
-  debugDraw: {fileID: 0}
+  debugDraw: {fileID: 1161481850642691367}
+--- !u!114 &1161481850642691367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453140371666675623}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9792406e35811423f87c3fd492cb3dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 1, a: 1}
+  size: 0.5
+  style: 1
+  offset: {x: 0.005, y: -0.83, z: 0}
 --- !u!1 &1498335622211844197
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +980,7 @@ Transform:
   - {fileID: 1175399134390209156}
   - {fileID: 214037104567599892}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4869647977523428041
 MonoBehaviour:
@@ -1372,7 +1389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meta: {fileID: 2467396169662780557}
   body: {fileID: 5415144965076204952}
-  movement: {fileID: 5947851127972274785}
+  ground: {fileID: 0}
   jumpStrength: 10
   walkSpeed: 8
 --- !u!1 &3024671689002050588
