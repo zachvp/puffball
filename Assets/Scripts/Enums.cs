@@ -1,40 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-namespace ZCore
-{
-    [Flags]
-    public enum Direction2D
-    {
-        NONE = 0,
-        UP = 1 << 0,
-        DOWN = 1 << 1,
-        LEFT = 1 << 2,
-        RIGHT = 1 << 3
-    }
-
-    public static class EnumHelper
-    {
-        public static string GetStringID(Enum value)
-        {
-            return Convert.ToInt32(value).ToString();
-        }
-
-        public static Direction2D FromBool(bool left, bool right, bool down, bool up)
-        {
-            var result = Direction2D.NONE;
-
-            result |= left ? Direction2D.LEFT : Direction2D.NONE;
-            result |= right ? Direction2D.RIGHT : Direction2D.NONE;
-            result |= down ? Direction2D.DOWN : Direction2D.NONE;
-            result |= up ? Direction2D.UP : Direction2D.NONE;
-
-            return result;
-        }
-    }
-}
-
-
 [Flags]
 public enum Trait
 {
