@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class ControllerBodyPC : MonoBehaviour
 {
+    // fixed links
     public PCMetadata meta;
     public Rigidbody2D body;
     public TriggerVolume ground;
+    new public Collider2D collider;
 
     public float jumpStrength = 10;
     public float walkSpeed = 8;
@@ -14,6 +16,7 @@ public class ControllerBodyPC : MonoBehaviour
         meta.onInitialized += () =>
         {
             meta.commandEmitter.onPCCommand += HandleCommand;
+            //meta.controllerBody = this;
         };
     }
 

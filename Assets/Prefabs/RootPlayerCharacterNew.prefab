@@ -1390,7 +1390,7 @@ MonoBehaviour:
   meta: {fileID: 2467396169662780557}
   body: {fileID: 5415144965076204952}
   ground: {fileID: 2923392615513560546}
-  jumpStrength: 12
+  jumpStrength: 13
   walkSpeed: 8
 --- !u!1 &3024671689002050588
 GameObject:
@@ -2472,6 +2472,37 @@ Transform:
   m_Father: {fileID: 3150613710458167395}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5214882987523186710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3762286958702299387}
+  m_Layer: 0
+  m_Name: sticky
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3762286958702299387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5214882987523186710}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3320046293342660262}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5218752615544211558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,6 +2892,7 @@ Transform:
   m_Children:
   - {fileID: 4049920321636093988}
   - {fileID: 1440170132223941540}
+  - {fileID: 3762286958702299387}
   m_Father: {fileID: 3451219659084403233}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2880,7 +2912,7 @@ MonoBehaviour:
   throwBoost: {x: 1.5, y: 3}
   throwDirectionCoefficient: 10
   meta: {fileID: 2467396169662780557}
-  neutral: {fileID: 2639827434189376547}
+  neutral: {fileID: 2836312093592893296}
   radial: {fileID: 1371341122118845785}
   triggerGrab: {fileID: 6053326687293841967}
   colliderBody: {fileID: 8920531886859060632}

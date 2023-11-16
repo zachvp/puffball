@@ -43,13 +43,13 @@ public class TriggerVolume : MonoBehaviour
             var root = CoreUtilities.FindRoot(gameObject);
             var colliders = root.GetComponentsInChildren<Collider2D>();
 
-            foreach (var c in colliders)
-            {
-                Physics2D.IgnoreCollision(collider, c);
-            }
-
             // store the hierarchy's colliders
             ignoredColliders = new HashSet<Collider2D>(colliders);
+            UpdateIgnored(ignoredColliders);
+        }
+        else
+        {
+            ignoredColliders = new HashSet<Collider2D>();
         }
 
         Debug.AssertFormat(collider != null, $"Script:{nameof(TriggerVolume)} requires collider attached to the same game object");
@@ -141,6 +141,26 @@ public class TriggerVolume : MonoBehaviour
         {
             triggeredObjects[i] = null;
         }
+    }
+
+    public void UpdateIgnored(IEnumerable<Collider2D> collection)
+    {
+        foreach (var c in collection)
+        {
+            Physics2D.IgnoreCollision(collider, c);
+        }
+    }
+
+    public void Ignore(Collider2D c)
+    {
+        Physics2D.IgnoreCollision(collider, c);
+        ignoredColliders.Add(c);
+    }
+
+    public void Listen(Collider2D c)
+    {
+        Physics2D.IgnoreCollision(collider, c, false);
+        ignoredColliders.Remove(c);
     }
 
     [Serializable]

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class ControllerHandPC : MonoBehaviour
 {
@@ -9,10 +10,9 @@ public class ControllerHandPC : MonoBehaviour
 
     // fixed links
     public PCMetadata meta;
-    public GameObject neutral;
+    public MovementFollowTransform neutral;
     public MovementRadial radial;
     public TriggerVolume triggerGrab;
-    public Collider2D colliderBody;
     public Transform anchorHold;
 
     // dynamic links
@@ -26,6 +26,7 @@ public class ControllerHandPC : MonoBehaviour
         meta.onInitialized += () =>
         {
             meta.commandEmitter.onPCCommand += HandleCommand;
+            //meta.controllerHand = this;
 
             UIDebug.Instance.Register("handMove", () => { return meta.commandEmitter.data.handMove; });
             UIDebug.Instance.Register("handMoveSqrMag", () => { return meta.commandEmitter.data.handMove.sqrMagnitude; });
@@ -38,7 +39,7 @@ public class ControllerHandPC : MonoBehaviour
     {
         if (!meta.commandEmitter.isCursor && meta.commandEmitter.data.handMove.sqrMagnitude < Mathf.Epsilon)
         {
-            neutral.SetActive(true);
+            neutral.gameObject.SetActive(true);
 
             radial.gameObject.SetActive(false);
             radial.ResetState();
@@ -50,9 +51,9 @@ public class ControllerHandPC : MonoBehaviour
         switch (args.type)
         {
             case CoreActionMap.Player.Action.MOVE_HAND:
-                if (args.handMove.sqrMagnitude > 0)
+                if (state != State.STICK && args.handMove.sqrMagnitude > 0)
                 {
-                    neutral.SetActive(false);
+                    neutral.gameObject.SetActive(false);
 
                     radial.gameObject.SetActive(true);
                     radial.Move(args.handMove);
@@ -62,14 +63,17 @@ public class ControllerHandPC : MonoBehaviour
             case CoreActionMap.Player.Action.GRIP:
                 var hasBall = triggerGrab.triggeredTraits.HasFlag(Trait.BALL);
 
-                if (args.grip && ball && hasBall)
+                if (state != State.STICK && args.grip && ball && hasBall)
                 {
                     if (state == State.NONE)
                     {
+                        neutral.type = MovementFollowTransform.FollowType.SNAP;
+                        neutral.anchor = neutral.initialAnchor;
+                        neutral.offset = neutral.initialOffset;
                         ball.Grab(anchorHold);
                         state = State.GRIP;
                     }
-                    else
+                    else if (state == State.GRIP)
                     {
                         ball.Drop();
                         state = State.NONE;
@@ -85,8 +89,14 @@ public class ControllerHandPC : MonoBehaviour
                 {
                     var handVelocity = args.handMove * throwDirectionCoefficient * throwBoost;
 
+                    neutral.type = MovementFollowTransform.FollowType.SNAP;
+                    neutral.anchor = ball.transform;
+                    neutral.offset.y += 0.3f;
+                    neutral.gameObject.SetActive(true);
+                    radial.gameObject.SetActive(false);
+                    // todo: 
                     ball.Throw(handVelocity);
-                    state = State.NONE;
+                    state = State.STICK;
                 }
                 break;
         }
@@ -98,6 +108,24 @@ public class ControllerHandPC : MonoBehaviour
         {
             ball = trait.GetComponentInChildren<ActorBall>();
         }
+        if (trait.value.HasFlag(Trait.PLAYER))
+        {
+            // todo: create 'toast'/popup type UI to display message
+            Debug.Log("overlap player");
+
+        }
+    }
+
+    // todo: streamline state toggling
+    public void Toggle(State s)
+    {
+        switch (s)
+        {
+            case State.GRIP:
+                break;
+            case State.STICK:
+                break;
+        }
     }
 
     // -- Class definitions
@@ -105,5 +133,6 @@ public class ControllerHandPC : MonoBehaviour
     {
         NONE = 0,
         GRIP = 1,
+        STICK = 2
     }
 }

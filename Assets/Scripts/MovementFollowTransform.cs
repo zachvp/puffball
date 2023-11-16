@@ -16,6 +16,16 @@ public class MovementFollowTransform : MonoBehaviour
 
     [NonSerialized]
     public float t;
+    [NonSerialized]
+    public Transform initialAnchor;
+    [NonSerialized]
+    public Vector3 initialOffset;
+
+    public void Awake()
+    {
+        initialAnchor = anchor;
+        initialOffset = offset;
+    }
 
     public void Update()
     {
