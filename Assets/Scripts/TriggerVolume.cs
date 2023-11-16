@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using ZCore;
 
 // todo: refactor to separate lightweight and heavy classes
 public class TriggerVolume : MonoBehaviour

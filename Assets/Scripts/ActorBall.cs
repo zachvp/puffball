@@ -1,4 +1,5 @@
 using UnityEngine;
+using ZCore;
 
 public class ActorBall : MonoBehaviour
 {
@@ -23,9 +24,9 @@ public class ActorBall : MonoBehaviour
     {
         if (state == State.PICKUP)
         {
-            gameObject.layer = CoreConstants.LAYER_PROP;
+            gameObject.layer = Constants.LAYER_PROP;
         }
-        else if (!CoreUtilities.LayerExistsInMask(CoreConstants.LAYER_PLAYER, trigger.triggeredLayers))
+        else if (!CoreUtilities.LayerExistsInMask(Constants.LAYER_PLAYER, trigger.triggeredLayers))
         {
             gameObject.layer = initLayer;
         }
@@ -36,7 +37,7 @@ public class ActorBall : MonoBehaviour
         joint.anchor = parent;
         joint.enabled = true;
 
-        gameObject.layer = CoreConstants.LAYER_PROP;
+        gameObject.layer = Constants.LAYER_PROP;
         state = State.PICKUP;
     }
 

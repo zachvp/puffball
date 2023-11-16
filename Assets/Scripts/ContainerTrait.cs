@@ -1,4 +1,5 @@
 using UnityEngine;
+using ZCore;
 
 public class ContainerTrait : MonoBehaviour
 {

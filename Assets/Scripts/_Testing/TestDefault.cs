@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using ZCore;
 
 public class TestDefault : CoreSingletonBehavior<TestDefault>
 {

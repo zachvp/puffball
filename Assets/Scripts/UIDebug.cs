@@ -2,45 +2,48 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 
-public class UIDebug : CoreSingletonBehavior<UIDebug>
+namespace ZCore
 {
-    public TextMeshProUGUI ui;
-    public List<Entry> entriesNew = new List<Entry>();
-
-    public void Update()
+    public class UIDebug : CoreSingletonBehavior<UIDebug>
     {
-        Refresh();
-    }
+        public TextMeshProUGUI ui;
+        public List<Entry> entriesNew = new List<Entry>();
 
-    public void OnDrawGizmos()
-    {
-        //UnityEditor.Handles.Label()
-    }
-
-    public void Register(string inName, Func<object> getLatestValue)
-    {
-        var entry = new Entry()
+        public void Update()
         {
-            name = inName,
-            value = getLatestValue
-        };
-        entriesNew.Add(entry);
-    }    
-
-    public void Refresh()
-    {
-        var text = "";
-        foreach (var entry in entriesNew)
-        {
-            text += $"{entry.name}: {entry.value()}\n";
+            Refresh();
         }
 
-        ui.text = text;
-    }
+        public void OnDrawGizmos()
+        {
+            //UnityEditor.Handles.Label()
+        }
 
-    public class Entry
-    {
-        public string name;
-        public Func<object> value;
+        public void Register(string inName, Func<object> getLatestValue)
+        {
+            var entry = new Entry()
+            {
+                name = inName,
+                value = getLatestValue
+            };
+            entriesNew.Add(entry);
+        }
+
+        public void Refresh()
+        {
+            var text = "";
+            foreach (var entry in entriesNew)
+            {
+                text += $"{entry.name}: {entry.value()}\n";
+            }
+
+            ui.text = text;
+        }
+
+        public class Entry
+        {
+            public string name;
+            public Func<object> value;
+        }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using ZCore;
 
 public class SceneRefs : Singleton<SceneRefs>
 {

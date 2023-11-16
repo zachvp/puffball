@@ -1,7 +1,7 @@
-using System;
 using UnityEngine;
+using ZCore;
 
-[CreateAssetMenu(fileName = nameof(TestScriptableObject), menuName = CoreConstants.DEFAULT_MENU + nameof(TestScriptableObject))]
+[CreateAssetMenu(fileName = nameof(TestScriptableObject), menuName = Constants.DEFAULT_MENU + nameof(TestScriptableObject))]
 public class TestScriptableObject : ScriptableObject
 {
     public int number;

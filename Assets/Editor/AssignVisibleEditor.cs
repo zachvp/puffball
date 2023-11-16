@@ -1,4 +1,4 @@
-using System;
+using ZCore;
 using UnityEngine;
 using UnityEditor;
 
@@ -11,7 +11,7 @@ public class AssignVisibleEditor : Editor
         {
             var response = EditorUtility.DisplayDialog(
                 "This is a destructive Action, continue?",
-                $"The GameObjects named {CoreConstants.NAME_OBJECT_VIS} from the existing targets will be removed.",
+                $"The GameObjects named {Constants.NAME_OBJECT_VIS} from the existing targets will be removed.",
                 "Confirm",
                 "Cancel");
 

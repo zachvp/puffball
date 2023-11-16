@@ -1,29 +1,31 @@
 using UnityEngine;
 
-public class CoreSingletonBehavior<T> : MonoBehaviour where T : MonoBehaviour
+namespace ZCore
 {
-    protected static T _instance;
-
-    public static T Instance
+    public class CoreSingletonBehavior<T> : MonoBehaviour where T : MonoBehaviour
     {
-        get
+        protected static T _instance;
+
+        public static T Instance
         {
-            Debug.AssertFormat(_instance != null, "{0}: No instance of MonoSingleton exists in the scene",
+            get
+            {
+                Debug.AssertFormat(_instance != null, "{0}: No instance of MonoSingleton exists in the scene",
+                                                       typeof(CoreSingletonBehavior<T>).Name);
+                return _instance;
+            }
+        }
+
+        public virtual void Awake()
+        {
+            Debug.AssertFormat(_instance == null, "{0}: More than one instance of MonoSingleton exists in the scene",
                                                    typeof(CoreSingletonBehavior<T>).Name);
-            return _instance;
+            _instance = this as T;
+        }
+
+        public virtual void OnDestroy()
+        {
+            _instance = null;
         }
     }
-
-    public virtual void Awake()
-    {
-        Debug.AssertFormat(_instance == null, "{0}: More than one instance of MonoSingleton exists in the scene",
-                                               typeof(CoreSingletonBehavior<T>).Name);
-        _instance = this as T;
-    }
-
-    public virtual void OnDestroy()
-    {
-        _instance = null;
-    }
 }
-

@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEditor;
 using System;
+using ZCore;
 
 [Tooltip("Use to generate a collider on a target GameObject, then assign that collider to this GameObject.")]
 public class AssignSpriteCollider : MonoBehaviour
@@ -95,8 +96,8 @@ public class AssignSpriteCollider : MonoBehaviour
         T original;
 
         // find the implied child object in the target - default to 'fill'
-        var implicitSource = CoreUtilities.FindChild(config.source.transform, CoreConstants.NAME_FILL_PREFIX);
-        var implicitTarget = CoreUtilities.FindChild(config.target.transform, CoreConstants.NAME_OBJECT_COLL);
+        var implicitSource = CoreUtilities.FindChild(config.source.transform, Constants.NAME_FILL_PREFIX);
+        var implicitTarget = CoreUtilities.FindChild(config.target.transform, Constants.NAME_OBJECT_COLL);
 
         // delete the previous collider container if it exists
         if (implicitTarget)
@@ -106,7 +107,7 @@ public class AssignSpriteCollider : MonoBehaviour
 
         // create a fresh collider container
         implicitTarget = Instantiate(emptyPrefab, config.target.transform);
-        implicitTarget.name = CoreConstants.NAME_OBJECT_COLL;
+        implicitTarget.name = Constants.NAME_OBJECT_COLL;
 
         // Configure the source reference component based on config.
         if (config.useExisting)

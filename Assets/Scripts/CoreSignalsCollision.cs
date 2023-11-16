@@ -1,33 +1,36 @@
 using System;
 using UnityEngine;
 
-public class CoreSignalsCollision : MonoBehaviour
+namespace ZCore
 {
-    public Action<Collider2D> onAnyColliderEnter;
-    public Action<Collision2D> onCollisionBodyEnter;
-    public Action<Collision2D> onCollisionBodyExit;
-    public Action<Collision2D> onCollisionBodyStay;
-
-    // -- collision events
-    public void OnCollisionStay2D(Collision2D c)
+    public class CoreSignalsCollision : MonoBehaviour
     {
-        Emitter.Send(onCollisionBodyStay, c);
-    }
+        public Action<Collider2D> onAnyColliderEnter;
+        public Action<Collision2D> onCollisionBodyEnter;
+        public Action<Collision2D> onCollisionBodyExit;
+        public Action<Collision2D> onCollisionBodyStay;
 
-    public void OnCollisionEnter2D(Collision2D c)
-    {
-        Emitter.Send(onAnyColliderEnter, c.collider);
-        Emitter.Send(onCollisionBodyEnter, c);
-    }
+        // -- collision events
+        public void OnCollisionStay2D(Collision2D c)
+        {
+            Emitter.Send(onCollisionBodyStay, c);
+        }
 
-    public void OnCollisionExit2D(Collision2D c)
-    {
-        Emitter.Send(onCollisionBodyExit, c);
-    }
+        public void OnCollisionEnter2D(Collision2D c)
+        {
+            Emitter.Send(onAnyColliderEnter, c.collider);
+            Emitter.Send(onCollisionBodyEnter, c);
+        }
 
-    // -- trigger events
-    public void OnTriggerEnter2D(Collider2D c)
-    {
-        Emitter.Send(onAnyColliderEnter, c);
+        public void OnCollisionExit2D(Collision2D c)
+        {
+            Emitter.Send(onCollisionBodyExit, c);
+        }
+
+        // -- trigger events
+        public void OnTriggerEnter2D(Collider2D c)
+        {
+            Emitter.Send(onAnyColliderEnter, c);
+        }
     }
 }

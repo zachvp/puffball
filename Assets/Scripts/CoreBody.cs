@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using ZCore;
 
 [RequireComponent(typeof(CoreSignalsCollision))]
 public class CoreBody : MonoBehaviour

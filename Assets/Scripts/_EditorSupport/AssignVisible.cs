@@ -1,6 +1,8 @@
 #if UNITY_EDITOR
 
 using UnityEngine;
+using ZCore;
+
 
 [Tooltip("Use to generate a limb hierarchy from a source limb GameObject root.")]
 public class AssignVisible : MonoBehaviour
@@ -18,14 +20,14 @@ public class AssignVisible : MonoBehaviour
 
     public void Generate(GameObject source, GameObject target)
     {
-        var existing = CoreUtilities.FindChild(target.transform, CoreConstants.NAME_OBJECT_VIS);
+        var existing = CoreUtilities.FindChild(target.transform, Constants.NAME_OBJECT_VIS);
 
         // clean any existing hierarchy
         CoreUtilities.DestroyDependents(existing);
 
         // create limb from source, assign as child
         var limb = Instantiate(source, target.transform);
-        limb.name = CoreConstants.NAME_OBJECT_VIS;
+        limb.name = Constants.NAME_OBJECT_VIS;
 
         // set this Transform's current position to be the fill offset,
         // then zero out the instantiated Transform hiarchy positions
@@ -35,7 +37,7 @@ public class AssignVisible : MonoBehaviour
         {
             var child = limb.transform.GetChild(i);
             // the 'fill' child is the source of truth for position
-            if (child.name.StartsWith(CoreConstants.NAME_FILL_PREFIX))
+            if (child.name.StartsWith(Constants.NAME_FILL_PREFIX))
             {
                 newPos = child.localPosition;
             }

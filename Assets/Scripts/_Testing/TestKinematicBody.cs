@@ -1,5 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using ZCore;
 
 using System;
 
@@ -92,7 +93,7 @@ public class TestKinematicBody : MonoBehaviour
 
         newPos += velocity * (Time.fixedDeltaTime * stepCoefficient);
 
-        newPos = CoreUtilities.RoundTo(newPos, CoreConstants.UNIT_ROUND_POSITION);
+        newPos = CoreUtilities.RoundTo(newPos, Constants.UNIT_ROUND_POSITION);
 
         body.MovePosition(newPos);
 

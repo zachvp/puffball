@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ZCore;
 
 public class PCIDRegistry : Singleton<PCIDRegistry>
 {

@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using ZCore;
 
 public class MotorPlatformPC : MonoBehaviour
 {
@@ -52,7 +52,7 @@ public class MotorPlatformPC : MonoBehaviour
             case CoreActionMap.Player.Action.MOVE:
                 state.inputMove = args.move;
 
-                if (Mathf.Abs(state.inputMove) > CoreConstants.DEADZONE_FLOAT_0)
+                if (Mathf.Abs(state.inputMove) > Constants.DEADZONE_FLOAT_0)
                 {
                     state.platformState |= PlatformState.MOVE;
                     state.platformState &= ~PlatformState.MOVE_NEUTRAL;
@@ -109,8 +109,8 @@ public class MotorPlatformPC : MonoBehaviour
     public bool IsWallClingState()
     {
         // check if next to a wall and input is pressing into wall.
-        var right = state.inputMove > CoreConstants.DEADZONE_FLOAT_0 && state.triggerState.HasFlag(Direction2D.RIGHT);
-        var left = state.inputMove < -CoreConstants.DEADZONE_FLOAT_0 && state.triggerState.HasFlag(Direction2D.LEFT);
+        var right = state.inputMove > Constants.DEADZONE_FLOAT_0 && state.triggerState.HasFlag(Direction2D.RIGHT);
+        var left = state.inputMove < -Constants.DEADZONE_FLOAT_0 && state.triggerState.HasFlag(Direction2D.LEFT);
 
         return left || right;
     }
@@ -125,11 +125,11 @@ public class MotorPlatformPC : MonoBehaviour
         {
             foreach (var item in state.inputMoveBuffer)
             {
-                if (item > CoreConstants.DEADZONE_FLOAT_0)
+                if (item > Constants.DEADZONE_FLOAT_0)
                 {
                     right &= true;
                 }
-                if (item < -CoreConstants.DEADZONE_FLOAT_0)
+                if (item < -Constants.DEADZONE_FLOAT_0)
                 {
                     left &= true;
                 }
@@ -142,8 +142,8 @@ public class MotorPlatformPC : MonoBehaviour
     public bool IsCurrentWallJumpState()
     {
         // check if next to a wall and input is pressing away from wall.
-        var right = state.inputMove > CoreConstants.DEADZONE_FLOAT_0 && state.triggerStateBuffer.Contains(Direction2D.LEFT);
-        var left = state.inputMove < -CoreConstants.DEADZONE_FLOAT_0 && state.triggerStateBuffer.Contains(Direction2D.RIGHT);
+        var right = state.inputMove > Constants.DEADZONE_FLOAT_0 && state.triggerStateBuffer.Contains(Direction2D.LEFT);
+        var left = state.inputMove < -Constants.DEADZONE_FLOAT_0 && state.triggerStateBuffer.Contains(Direction2D.RIGHT);
 
         return left || right;
     }

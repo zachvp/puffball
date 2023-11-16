@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
+using ZCore;
 
 public class PCInputCommandEmitter : MonoBehaviour
 {
@@ -15,11 +16,11 @@ public class PCInputCommandEmitter : MonoBehaviour
 
     // This buffer can and will diverge from the 'data' property;
     // i.e. the most recent buffer entry does not necessarily equal the current data value.
-    public BufferInterval<PCInputArgs> buffer = new BufferInterval<PCInputArgs>(128, CoreConstants.UNIT_TIME_SLICE);
+    public BufferInterval<PCInputArgs> buffer = new BufferInterval<PCInputArgs>(128, Constants.UNIT_TIME_SLICE);
 
     // Mouse-specific data
     // todo: separate into new class
-    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(4, CoreConstants.UNIT_TIME_SLICE);
+    private BufferInterval<Vector2> bufferMouse = new BufferInterval<Vector2>(4, Constants.UNIT_TIME_SLICE);
     public Vector2 relativeOrigin;
     public float mouseLength = 4;
 

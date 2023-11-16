@@ -3,6 +3,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using ZCore;
 
 public class AssignTransform : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class AssignTransform : MonoBehaviour
 
     public void Assign(Config c)
     {
-        var implicitSource = CoreUtilities.FindChild(c.binding.source.transform, CoreConstants.NAME_FILL_PREFIX);
+        var implicitSource = CoreUtilities.FindChild(c.binding.source.transform, Constants.NAME_FILL_PREFIX);
 
         CoreUtilities.CopyTransform(implicitSource.transform, c.binding.target.transform);
     }

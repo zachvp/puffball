@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using ZCore;
 
 public class MovementFollowTransform : MonoBehaviour
 {
