@@ -17,7 +17,7 @@ namespace ZCore
     {
         public static string GetStringID(Enum value)
         {
-            Debug.Assert(value.GetType() == typeof(int), $"unhandled type for enum: {value}");
+            Debug.Assert(value.GetType() == typeof(int), $"unhandled type '{value.GetType()}' for enum value '{value}'");
             
             return Convert.ToInt32(value).ToString();
         }
