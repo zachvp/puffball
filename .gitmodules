@@ -1,0 +1,3 @@
+[submodule "Assets/Scripts/ZCore"]
+	path = Assets/Scripts/ZCore
+	url = git@github.com:zachvp/ZCore.git
