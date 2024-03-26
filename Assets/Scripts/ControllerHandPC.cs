@@ -21,7 +21,7 @@ public class ControllerHandPC : MonoBehaviour
     // state
     public State state;
 
-    public void Awake()
+    public void Start()
     {
         meta.onInitialized += () =>
         {
